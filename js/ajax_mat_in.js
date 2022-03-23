@@ -63,7 +63,35 @@ $(document).ready(function () {
 });
 
 
-
+$( function() {
+  var availableRacks = [
+    "Rack 1-A",
+    "Rack 2-A",
+    "Rack 3-A",
+    "Rack 4-A",
+    "Rack 5-A",
+    "Rack 6-A",
+    "Rack 7-A",
+    "Rack 8-A",
+    "Rack 9-A",
+    "Rack 10-A",
+    "Rack 1-B",
+    "Rack 1-C",
+    "Rack 2-B",
+    "Rack 3-B",
+    "Rack 4-B",
+    "Rack 5-B",
+    "Rack 6-B",
+    "Rack 7-B",
+    "Rack 8-B",
+    "Rack 9-B",
+    "Rack 10-B"
+    
+  ];
+  $( "#location" ).autocomplete({
+    source: availableRacks
+  });
+} );
 
 
 

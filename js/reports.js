@@ -45,9 +45,10 @@ $(document).ready(function(){
                         url: "reports_info.php",
                         data: {codeResult: codeResult},
                         dataType: "text",
-                        success: function(data)
+                        success: function(data, response)
                         {
                             $("#formDiv").html(data);
+                            $('#messageDisplay2').text(response);
                         }
                     });
 
@@ -91,4 +92,3 @@ $(document).ready(function () {
       });
 });
 
-          

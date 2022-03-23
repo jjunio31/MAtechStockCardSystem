@@ -199,7 +199,7 @@ if (isset($_POST['codeResult'])) {
                 </div>
 
                 <div class="result-container d-flex justify-content-center">
-                <h5 id="messageDisplay" class="text-warning"></h5>
+                <h6 id="messageDisplay" class="text-warning"></h6>
                 </div>
 
                 <div class="result-container d-flex justify-content-center" id="btnDiv1">

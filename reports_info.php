@@ -211,7 +211,7 @@ if (isset($_POST['codeResult'])) {
     sqlsrv_free_stmt( $stmt);
 }
 ?>
-<script src="js/ajax_mat_in.js"></script>
+<script src="js/reports.js"></script>
 </body>
 </html>
 

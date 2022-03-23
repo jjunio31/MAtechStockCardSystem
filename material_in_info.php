@@ -10,7 +10,11 @@
     <link rel="stylesheet" type="text/css" href="css/styles.css" />
     <!-- Jquery CDN-->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+
+  
     <style>
+
 
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
 .control {
@@ -104,11 +108,39 @@
             padding: 15px; 
             height: 11px;
         }
-        
-        
 
-       
+        .ui-state-active,
+        .ui-widget-content .ui-state-active,
+        .ui-widget-header .ui-state-active,
+        a.ui-button:active,
+        .ui-button:active,
+        .ui-button.ui-state-active:hover {
+        border: none!important;
+        background: grey;
+        width: 10rem;
+        font-weight: normal;
+        color: blue;
+        }
+        ul.ui-autocomplete {
+            list-style: none;
+            list-style-type: none;
+            padding: .7rem;
+            margin: .5rem 0px;
+            background-color: lightblue;
+            width: 10rem;
+            border-radius: 10px;
+        }
+        li:nth-child(even){
+            background: #6c757d;
+            
+        }
+        li:nth-child(odd){
+            background: #343a40;
+            
+        }
+        
     </style>
+
 </head>
 <body>
     
@@ -199,12 +231,17 @@ if (isset($_POST['codeResult'])) {
                 </div>
 
                 <div class="result-container ">
+                <label class="text-white pr-2">Location</label>
+                <input type="text" class="txtbox" name="location" id="location" value="">
+                </div>
+
+                <div class="result-container ">
                 <label class="text-white pr-2">Invoice/Kit No.</label>
                 <input type="text"  class="txtbox" name="invoiceKit" id="invoiceKit" value="">
                 </div>
 
                 <div class="result-container d-flex justify-content-center">
-                <h5 id="messageDisplay" class="text-warning"></h5>
+                <h6 id="messageDisplay" class="text-warning"></h6>
                 </div>
 
                 <div class="result-container d-flex justify-content-center" id="btnDiv1">
@@ -213,9 +250,7 @@ if (isset($_POST['codeResult'])) {
 
                 <div class="result-container d-flex justify-content-center" id="btnDiv2">
                 <button type="submit" class="btn btn-primary btn-block control" id="btn_showReport">Show Transactions</button>
-                </div>
-
-                
+                </div>  
 
             </div>
             </form>
