@@ -11,7 +11,7 @@ $(document).ready(function () {
         var receivedQTY = $('input[id=receivedQTY]').val();
         var invoiceKit = $('input[id=invoiceKit]').val();
         var location = $('input[id=location]').val();
-        var qtyStored = $('input[id=qtyStored]').val();
+        // var qtyStored = $('input[id=qtyStored]').val();
         // var pt_date = $('input[id=pt_date]').val();
        
         if(receivedQTY == 0){
@@ -31,8 +31,8 @@ $(document).ready(function () {
                     partNumber:partNumber,
                     partName:partName,
                     invoiceKit:invoiceKit,
-                    location:location,
-                    qtyStored:qtyStored
+                    location:location
+                    // qtyStored:qtyStored
                     // pt_date:pt_date
                 },
                 dataType: "text",
@@ -97,9 +97,16 @@ $( function() {
   });
 } );
 
+// $(document).ready(function(){
+//     $("#receivedQTY").keyup(function(){
+//         $("#qtyStored").val($("#receivedQTY").val());
+//     });
+    
+// });
 
-
-
+// $('#qtyStored').on('click focusin', function() {
+//     this.value = '';
+// });
 
 
 

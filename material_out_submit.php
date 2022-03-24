@@ -20,7 +20,7 @@ if (!empty($_POST["partNumber"])){ $partNumber = $_POST['partNumber']; }
 if (!empty($_POST["currentQty"])){ $currentQty = $_POST['currentQty']; }
 if (!empty($_POST["issuedQty"])){ $issuedQty = $_POST['issuedQty']; }
 if (!empty($_POST["invoiceKit"])){ $invoiceKit = $_POST['invoiceKit']; }
-
+ 
 
 
 $sql_select = "SELECT * From stocks_record_tbl"; 

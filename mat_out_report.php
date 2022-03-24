@@ -55,7 +55,8 @@ if (!empty($_POST["itemCode"])){
             if( $stmt === false) {
             die( print_r( sqlsrv_errors(), true) );
             }
-
+            
+            $date = date('M d, Y');
             echo '<h3 class="text-center text-dark">Transaction Report</h3>
             <div class="c2" id=""><table class="table table-bordered">
             
@@ -65,14 +66,15 @@ if (!empty($_POST["itemCode"])){
                 <th scope="col">RECEIVED</th>
                 <th scope="col">ISSUED</th>
                 <th scope="col">STOCK</th>
+                <th scope="col">LOCATION</th>
                 <th scope="col">INVOICE / KIT NO.</th>
                 </tr>
                 <tr>
                 <td scope="col"></td>
                 <td scope="col"></td>
                 <td scope="col"></td>
-                <td scope="col">STOCK</td>
-                <td scope="col">INVOICE / KIT NO.</td>
+                <td scope="col"></td>
+                <td scope="col"></td>
                 </tr>
               </thead>
             
@@ -87,6 +89,7 @@ if (!empty($_POST["itemCode"])){
                                       <td class="success">'.$row['QTY_RECEIVED'].'</td>
                                       <td class="warning">'.$row['QTY_ISSUED'].'</td>
                                       <td class="danger">'.$row['TOTAL_STOCK'].'</td>
+                                      <td class="danger">'.$row['LOCATION'].'</td>
                                       <td class="danger">'.$row['INVOICE_KIT'].'</td>
                                 </tr>';
                 }

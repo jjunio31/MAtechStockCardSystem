@@ -104,7 +104,7 @@
             height: 11px;
         }
         
-
+ 
        
     </style>
 </head>
@@ -130,6 +130,7 @@ if (isset($_POST['codeResult'])) {
     
     $sql_select = "SELECT * From stocks_record_tbl
     WHERE GOODS_CODE = '$qrResult'or PART_NUMBER = '$qrResult' or ITEM_CODE = '$qrResult' or ITEM_NUMBER = '$qrResult'";
+    
     $stmt = sqlsrv_query( $conn, $sql_select );
 
     
@@ -177,8 +178,13 @@ if (isset($_POST['codeResult'])) {
                 </div>
 
                 <div class="result-container ">
-                <label class="text-white pr-2">Current Stock</label>
+                <label class="text-white pr-2">Total Stock</label>
                 <input type="text" readonly class="txtbox bg-secondary text-white" name="qty" id="qty" value="<?php echo $row['TOTAL_STOCK']?>">
+                </div>
+
+                <div class="result-container ">
+                <label class="text-white pr-2">Invoice / Kit No.</label>
+                <input type="text"  class="txtbox" name="invoiceKit" id="invoiceKit" value="">
                 </div>
 
                 <div class="result-container ">
@@ -191,10 +197,7 @@ if (isset($_POST['codeResult'])) {
                 <input  type="number" min="1" step="1" onkeypress="return event.keyCode === 8 || event.charCode >= 48 && event.charCode <= 57" id="issuedQty">
                 </div>
 
-                <div class="result-container ">
-                <label class="text-white pr-2">Invoice / Kit No.</label>
-                <input type="text"  class="txtbox" name="invoiceKit" id="invoiceKit" value="">
-                </div>
+                
 
                 <div class="result-container d-flex justify-content-center">
                 <h6 id="messageDisplay" class="text-warning"></h6>

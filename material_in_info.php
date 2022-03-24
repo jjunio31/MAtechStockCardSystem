@@ -230,19 +230,19 @@ if (isset($_POST['codeResult'])) {
                 </div> -->
 
                 <div class="result-container ">
-                <label class="text-white pr-2">Invoice/Kit No.</label>
-                <input type="text"  class="txtbox" name="invoiceKit" id="invoiceKit" value="">
-                </div>
-
-                <div class="result-container ">
                 <label class="text-white pr-2">QTY Received</label>
                 <input  type="number" min="1" step="1" onkeypress="return event.keyCode === 8 || event.charCode >= 48 && event.charCode <= 57" id="receivedQTY">
                 </div>
 
                 <div class="result-container locationDivIn">
                 <label class="text-white pr-2">Location</label> 
-                <input type="text" class="txtbox" name="location" id="location" value="Location">
-                <input type="text" class="txtbox" name="qtyStored" id="qtyStored" value="QTY Stored">
+                <input type="text" class="txtbox" name="location" id="location" value="" placeholder="">
+                
+                </div>
+
+                <div class="result-container ">
+                <label class="text-white pr-2">Invoice/Kit No.</label>
+                <input type="text"  class="txtbox" name="invoiceKit" id="invoiceKit" value="">
                 </div>
 
             

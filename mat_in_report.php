@@ -67,7 +67,8 @@ if (!empty($_POST["itemCode"])){
                 <th scope="col">RECEIVED</th>
                 <th scope="col">ISSUED</th>
                 <th scope="col">STOCK</th>
-                <th scope="col">INVOICE / KIT NO.</th>
+                <th scope="col">LOCATION</th>
+                <th scope="col">INVOICE/KIT NO.</th>
                 </tr>
               </thead>
             
@@ -82,6 +83,7 @@ if (!empty($_POST["itemCode"])){
                                       <td class="success">'.$row['QTY_RECEIVED'].'</td>
                                       <td class="warning">'.$row['QTY_ISSUED'].'</td>
                                       <td class="danger">'.$row['TOTAL_STOCK'].'</td>
+                                      <td class="warning">'.$row['LOCATION'].'</td>
                                       <td class="danger">'.$row['INVOICE_KIT'].'</td>
                                 </tr>';
                 }

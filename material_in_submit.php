@@ -21,7 +21,7 @@ if (!empty($_POST["currentStock"])){ $currentStock = $_POST['currentStock']; }
 if (!empty($_POST["receivedQTY"])){ $receivedQTY = $_POST['receivedQTY']; }
 if (!empty($_POST["invoiceKit"])){ $invoiceKit = $_POST['invoiceKit']; }
 if (!empty($_POST["location"])){ $location = $_POST['location']; }
-if (!empty($_POST["qtyStored"])){ $qtyStored = $_POST['qtyStored']; }
+// if (!empty($_POST["qtyStored"])){ $qtyStored = $_POST['qtyStored']; }
 // if (!empty($_POST["pt_date"])){ $pt_date = $_POST['pt_date']; }
 
 
@@ -58,7 +58,13 @@ if( $sql_select_run === false) {
 
                 $sql_insert = "INSERT INTO transaction_reports_tbl (id, TRANSACTION_DATE, GOODS_CODE, ITEM_CODE, QTY_RECEIVED, TOTAL_STOCK, PART_NUMBER, PART_NAME, INVOICE_KIT) 
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) ";
-                $params1 = array($currentRow, $date, $goodsCode, $itemCode, $receivedQTY, $updatedStock, $partNumber, $partName, $invoiceKit );
+                $params1 = array($currentRow, $date, $goodsCode, $itemCode, $receivedQTY, $updatedStock, $partNumber, $partName, $invoiceKit);
+
+                // $sql_insert = "INSERT INTO stocks_location_tbl (id, GOODS_CODE, ITEM_CODE, QTY_RECEIVED, TRANSACTION_DATE, TOTAL_STOCK, PART_NUMBER, PART_NAME, INVOICE_KIT) 
+                // VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
+                // $params1 = array($currentRow, $date, $goodsCode, $itemCode, $receivedQTY, $updatedStock, $partNumber, $partName, $invoiceKit,);
+
+
                 $sql_insert_run = sqlsrv_query($conn, $sql_insert, $params1);
                 
                 if( $sql_insert_run === false) {
@@ -71,7 +77,7 @@ if( $sql_select_run === false) {
             }
         }
         
-
+ 
 
 
 ?> 
