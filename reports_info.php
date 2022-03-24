@@ -65,8 +65,6 @@
         }
         label{
             margin-bottom: 0;
-            font-family: 'Open Sans', sans-serif;
-            font-weight: 400;
         }
         .result-container{
             display: flex;

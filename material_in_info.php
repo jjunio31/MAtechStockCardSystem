@@ -7,7 +7,8 @@
     <title>Scan Result</title>
     <!-- bootstrap CDN and CSS-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="css/styles.css" />
+    
+ 
     <!-- Jquery CDN-->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
@@ -69,8 +70,6 @@
         }
         label{
             margin-bottom: 0;
-            font-family: 'Open Sans', sans-serif;
-            font-weight: 400;
         }
         .result-container{
             display: flex;
@@ -116,31 +115,36 @@
         .ui-button:active,
         .ui-button.ui-state-active:hover {
         border: none!important;
-        background: grey;
+        background: white;
         width: 10rem;
         font-weight: normal;
-        color: blue;
+        color: black;
+        padding: .5rem;
+        font-size: 1.5rem;
+        border-radius: 10px;
         }
         ul.ui-autocomplete {
             list-style: none;
             list-style-type: none;
             padding: .7rem;
             margin: .5rem 0px;
-            background-color: lightblue;
-            width: 10rem;
+            background-color: #6c757d;
+            max-width: 11rem;
             border-radius: 10px;
         }
-        li:nth-child(even){
-            background: #6c757d;
+        ul.ui-autocomplete{
+            color: white;
             
         }
-        li:nth-child(odd){
-            background: #343a40;
-            
+        li{
+            padding: .2rem;
         }
+        .ui-helper-hidden-accessible { display:none; 
+        }
+  
         
     </style>
-
+<link rel="stylesheet" type="text/css" href="css/styles.css" />
 </head>
 <body>
     
@@ -226,20 +230,22 @@ if (isset($_POST['codeResult'])) {
                 </div> -->
 
                 <div class="result-container ">
-                <label class="text-white pr-2">QTY Received</label>
-                <input  type="number" min="1" step="1" onkeypress="return event.keyCode === 8 || event.charCode >= 48 && event.charCode <= 57" id="receivedQTY">
-                </div>
-
-                <div class="result-container ">
-                <label class="text-white pr-2">Location</label>
-                <input type="text" class="txtbox" name="location" id="location" value="">
-                </div>
-
-                <div class="result-container ">
                 <label class="text-white pr-2">Invoice/Kit No.</label>
                 <input type="text"  class="txtbox" name="invoiceKit" id="invoiceKit" value="">
                 </div>
 
+                <div class="result-container ">
+                <label class="text-white pr-2">QTY Received</label>
+                <input  type="number" min="1" step="1" onkeypress="return event.keyCode === 8 || event.charCode >= 48 && event.charCode <= 57" id="receivedQTY">
+                </div>
+
+                <div class="result-container locationDivIn">
+                <label class="text-white pr-2">Location</label> 
+                <input type="text" class="txtbox" name="location" id="location" value="Location">
+                <input type="text" class="txtbox" name="qtyStored" id="qtyStored" value="QTY Stored">
+                </div>
+
+            
                 <div class="result-container d-flex justify-content-center">
                 <h6 id="messageDisplay" class="text-warning"></h6>
                 </div>

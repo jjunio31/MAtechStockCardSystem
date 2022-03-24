@@ -7,7 +7,7 @@
 
 $(function(){
     $('#logout').click(function(){
-        if(confirm('Do you really want to log out?')) {
+        if(confirm('Are you sure you want to log out?')) {
             return true;
         }
 

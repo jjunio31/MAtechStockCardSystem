@@ -98,3 +98,5 @@ $(document).ready(function () {
     
 });
           
+
+document.getElementById("#location").value = "white";

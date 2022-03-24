@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans&family=Poppins:wght@400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lobster&family=Open+Sans&family=Poppins:wght@500&display=swap');
 
 body{
     box-sizing: border-box;
@@ -18,6 +18,10 @@ a, button{
     outline: none;
 }
 
+.companyName{
+    font-family: 'Lobster', cursive;
+    margin-left: 2rem;
+}
 
 
 .scandiv{
@@ -156,3 +160,81 @@ input{
     background-repeat: no-repeat;
     background-position: center;
   }
+  .nav-item{
+      padding: .4rem;
+      margin: .1rem .5rem;
+      width: 10rem;
+      text-align: center;
+      border-radius: 25px;
+  }
+  .navbar-nav{
+      margin-left: auto;
+      margin-right: 1rem;
+  }
+  #logout{
+      margin-right: 2rem;
+  }
+
+  #location, #qtyStored{
+    width: 25%;
+  }
+
+
+
+  @media (max-width:950px) and (min-width:765px){
+    .nav-item{
+        padding: .2rem;
+        margin: .1rem .3rem;
+        width: 7rem;
+        text-align: center;
+        border-radius: 25px;
+        font-size: 1rem;
+        
+    }
+    #logout{
+        margin-right: 0;
+    }
+    .companyName{
+        font-family: 'Lobster', cursive;
+        margin-left: 0;
+    }
+
+  }
+
+  @media (min-width:767px){
+      .previewDiv{
+          height: 500px;
+          width: 700px;
+      }
+      .scandiv{
+          max-height: 600px;
+      }
+  }
+
+  @media (max-width:767px){
+    .nav-item{
+        padding: .3rem;
+        margin: .1rem .3rem;
+        text-align: left;
+        border-radius: 25px;
+        font-size: 1rem;
+        font-weight: 550;
+        width: 45%;
+        text-indent: 1.5rem;
+        
+    }
+    .companyName{
+        font-family: 'Lobster', cursive;
+        margin-left: 0;
+    }
+    
+    .navbar-nav{
+        align-items: left;
+    }
+    #logout{
+        margin-right: 0;
+       
+    }
+
+  }
+  

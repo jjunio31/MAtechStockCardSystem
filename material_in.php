@@ -19,23 +19,25 @@
     <!-- Jquery CDN-->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+    
+   
     <title>Material In</title>
 
   </head>
   <body>    
             <!-- topnav -->
             <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-            <a class="navbar-brand" href="#">M.A. Technology Inc.</a>
+            <div class="companyNameDiv"><a class="navbar-brand companyName" href="#">M.A. Technology Inc.</a></div>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-              <a class="nav-item nav-link text-info" href="reports.php">Reports</a>
-              <a class="nav-item nav-link text-info" href="material_in.php">Material-In</a>
-              <a class="nav-item nav-link text-info" href="material_out.php">Material-Out</a>
+              <a class="nav-item nav-link text-white bg-primary" href="reports.php">Reports</a>
+              <a class="nav-item nav-link text-white bg-primary" href="material_in.php">Material-In</a>
+              <a class="nav-item nav-link text-white bg-primary" href="material_out.php">Material-Out</a>
               <!-- <a class="nav-item nav-link text-info" href="stocks.php">Stocks</a> -->
-              <a class="nav-item nav-link text-info" id="logout" href="logOut.php">Logout</a>
+              <a class="nav-item nav-link text-white bg-primary" id="logout" href="logOut.php">Logout<i class="fa-solid fa-power-off fa-lg"></i></a>
             </div>
             </div>
             </nav>
@@ -44,6 +46,7 @@
   <div class="container-fluid">
                 
               <div class="scandiv bg-dark">
+              <p class="text-info font-italic" id="date">Today is <span><?php $date = date('M d, Y'); echo $date; ?></span> </p>
               <h3 class="text-center text-white">QR Code Scanner</h3>
                     <div class="previewDiv">
                         <video id="preview" class="reportsPreview" style="background-image: url('img/packing.png');"></video>

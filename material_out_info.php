@@ -66,8 +66,6 @@
         }
         label{
             margin-bottom: 0;
-            font-family: 'Open Sans', sans-serif;
-            font-weight: 400;
         }
         .result-container{
             display: flex;
@@ -189,7 +187,7 @@ if (isset($_POST['codeResult'])) {
                 </div>
 
                 <div class="result-container ">
-                <label class="text-white pr-2">Enter Issued QTY</label>
+                <label class="text-white pr-2">Issued QTY</label>
                 <input  type="number" min="1" step="1" onkeypress="return event.keyCode === 8 || event.charCode >= 48 && event.charCode <= 57" id="issuedQty">
                 </div>
 

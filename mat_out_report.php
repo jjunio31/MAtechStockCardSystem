@@ -18,7 +18,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
     <title>Reports</title>
-    <link rel="stylesheet" href="css/materialOut.css">
+    <link rel="stylesheet" href="css/styles.css">
     <style>
       .c2{
         overflow-x: scroll;

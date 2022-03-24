@@ -20,6 +20,8 @@ if (!empty($_POST["partNumber"])){ $partNumber = $_POST['partNumber']; }
 if (!empty($_POST["currentStock"])){ $currentStock = $_POST['currentStock']; }
 if (!empty($_POST["receivedQTY"])){ $receivedQTY = $_POST['receivedQTY']; }
 if (!empty($_POST["invoiceKit"])){ $invoiceKit = $_POST['invoiceKit']; }
+if (!empty($_POST["location"])){ $location = $_POST['location']; }
+if (!empty($_POST["qtyStored"])){ $qtyStored = $_POST['qtyStored']; }
 // if (!empty($_POST["pt_date"])){ $pt_date = $_POST['pt_date']; }
 
 
@@ -42,7 +44,7 @@ if( $sql_select_run === false) {
             $sql_update_run = sqlsrv_query($conn, $sql_update);
             if($sql_update_run){
                 echo "Successful! Stock is updated to $updatedStock.";
-
+                
                 // //Query for Insert
                 $sql_select_reports = "SELECT * FROM transaction_reports_tbl";
                 $params = array();
