@@ -8,6 +8,8 @@
     <!-- bootstrap CDN and CSS-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     
+    <!-- Font AWESOME -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
  
     <!-- Jquery CDN-->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
@@ -18,7 +20,7 @@
 
 
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
-.control {
+.control{
   appearance: button;
   backface-visibility: hidden;
   border-radius: 25px;
@@ -60,6 +62,7 @@
             height: 100%;
             width: 100%;
             border-radius: 10px;
+            
         }
         .result-container input{
             width: 50%;
@@ -67,10 +70,9 @@
        
         label{
             width: 9rem;
-        }
-        label{
             margin-bottom: 0;
         }
+        
         .result-container{
             display: flex;
             justify-content: center;
@@ -84,6 +86,7 @@
             border-radius: 10px;
             width: 100%;
             height: auto;
+            
         }
 
         #btn_showReport{
@@ -140,6 +143,37 @@
             padding: .2rem;
         }
         .ui-helper-hidden-accessible { display:none; 
+        }
+        #LocQRbtn{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 25px;
+            padding: 17px; 
+            height: 11px;
+            width: 15%;
+            /* width: 2.8rem;
+            font-size: 1.5rem; */
+            border-top-left-radius:0 ;
+            border-bottom-left-radius:0 ;
+        }
+        #location{
+            width: 9rem;
+            border-top-right-radius: 0 ;
+            border-bottom-right-radius: 0 ;
+        } 
+
+        #location{
+            width: 35%;
+            border-top-right-radius: 0 ;
+            border-bottom-right-radius: 0 ;
+        } 
+
+        @media (max-width:767px){
+    
+            label{
+            width: 7.5rem;
+            }
         }
   
         
@@ -237,11 +271,11 @@ if (isset($_POST['codeResult'])) {
                 <div class="result-container locationDivIn">
                 <label class="text-white pr-2">Location</label> 
                 <input type="text" class="txtbox" name="location" id="location" value="" placeholder="" >
-                
+                <button type="button" class="btn btn-primary btn-block control" id="LocQRbtn"><i class="fa-solid fa-qrcode"></i></button>
                 </div>
 
                 <div class="result-container ">
-                <label class="text-white pr-2">Invoice/Kit No.</label>
+                <label class="text-white pr-2">Invoice/Kit</label>
                 <input type="text"  class="txtbox" name="invoiceKit" id="invoiceKit" value="" autocomplete="off">
                 </div>
 

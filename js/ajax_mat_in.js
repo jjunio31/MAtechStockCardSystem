@@ -12,6 +12,7 @@ $(document).ready(function () {
         var receivedQTY = $('input[id=receivedQTY]').val();
         var invoiceKit = $('input[id=invoiceKit]').val();
         var location = $('input[id=location]').val();
+        var itemNumber = $('input[id=itemNumber]').val();
         // var qtyStored = $('input[id=qtyStored]').val();
         // var pt_date = $('input[id=pt_date]').val();
        
@@ -34,7 +35,8 @@ $(document).ready(function () {
                     partNumber:partNumber,
                     partName:partName,
                     invoiceKit:invoiceKit,
-                    location:location
+                    location:location,
+                    itemNumber:itemNumber
                     // qtyStored:qtyStored
                     // pt_date:pt_date
                 },
