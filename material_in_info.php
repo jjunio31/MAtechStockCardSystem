@@ -228,7 +228,7 @@ if (isset($_POST['codeResult'])) {
                 <label class="text-white pr-2">Date Received</label>
                 <input type="date" class="txtbox" name="pt_date" id="pt_date" value="">
                 </div> -->
-
+                
                 <div class="result-container ">
                 <label class="text-white pr-2">QTY Received</label>
                 <input  type="number" min="1" step="1" onkeypress="return event.keyCode === 8 || event.charCode >= 48 && event.charCode <= 57" id="receivedQTY">
@@ -236,13 +236,13 @@ if (isset($_POST['codeResult'])) {
 
                 <div class="result-container locationDivIn">
                 <label class="text-white pr-2">Location</label> 
-                <input type="text" class="txtbox" name="location" id="location" value="" placeholder="">
+                <input type="text" class="txtbox" name="location" id="location" value="" placeholder="" >
                 
                 </div>
 
                 <div class="result-container ">
                 <label class="text-white pr-2">Invoice/Kit No.</label>
-                <input type="text"  class="txtbox" name="invoiceKit" id="invoiceKit" value="">
+                <input type="text"  class="txtbox" name="invoiceKit" id="invoiceKit" value="" autocomplete="off">
                 </div>
 
             
@@ -253,6 +253,7 @@ if (isset($_POST['codeResult'])) {
                 <div class="result-container d-flex justify-content-center" id="btnDiv1">
                 <button type="submit" class="btn btn-primary btn-block control" id="saveBTN">Save Data</button>
                 </div>
+                
 
                 <div class="result-container d-flex justify-content-center" id="btnDiv2">
                 <button type="submit" class="btn btn-primary btn-block control" id="btn_showReport">Show Transactions</button>
@@ -277,4 +278,4 @@ if (isset($_POST['codeResult'])) {
 </html>
 
 
-              
+               

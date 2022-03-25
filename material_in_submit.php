@@ -56,9 +56,9 @@ if( $sql_select_run === false) {
                 date_default_timezone_set('Asia/Hong_Kong');  
                 $date = date('m-d-Y H:i:s');
 
-                $sql_insert = "INSERT INTO transaction_reports_tbl (id, TRANSACTION_DATE, GOODS_CODE, ITEM_CODE, QTY_RECEIVED, TOTAL_STOCK, PART_NUMBER, PART_NAME, INVOICE_KIT) 
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) ";
-                $params1 = array($currentRow, $date, $goodsCode, $itemCode, $receivedQTY, $updatedStock, $partNumber, $partName, $invoiceKit);
+                $sql_insert = "INSERT INTO transaction_reports_tbl (id, TRANSACTION_DATE, GOODS_CODE, ITEM_CODE, QTY_RECEIVED, TOTAL_STOCK, PART_NUMBER, PART_NAME, INVOICE_KIT, [LOCATION]) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
+                $params1 = array($currentRow, $date, $goodsCode, $itemCode, $receivedQTY, $updatedStock, $partNumber, $partName, $invoiceKit, $location);
 
                 // $sql_insert = "INSERT INTO stocks_location_tbl (id, GOODS_CODE, ITEM_CODE, QTY_RECEIVED, TRANSACTION_DATE, TOTAL_STOCK, PART_NUMBER, PART_NAME, INVOICE_KIT) 
                 // VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";

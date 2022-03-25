@@ -44,7 +44,7 @@ $(document).ready(function(){
 
                        $.ajax({
                         type: "POST",
-                        url: "material_int_info.php",
+                        url: "material_in_info.php",
                         data: {codeResult: codeResult},
                         dataType: "text",
                         success: function(data)
