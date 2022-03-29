@@ -1,16 +1,16 @@
-
+/* 
 .scandiv{
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    /* background-color: bisque; */
+  
     margin-top: .3rem;
     margin-bottom: .3rem;
     height: auto;
     border-radius: 10px;
     padding: 1rem;
-    /* background-color: #405cf5 !important; */
+    
 }
 
 
@@ -21,7 +21,7 @@
 }
 
 #preview{
-    /* background-color: aqua; */
+  
     height: 80%!important;
     width: 100% !important;
     
@@ -39,7 +39,7 @@
 
 .scanresultdiv{
     min-height: 45vh;
-    /* background-color: aqua; */
+   
     border-radius: 10px;   
 }
 #formDiv{
@@ -47,7 +47,7 @@
 }
 
 .qrResultDiv{
-    /* background-color: aqua; */
+    
     padding: .7rem;
  
 }
@@ -103,7 +103,7 @@
 }
 
 
-/* Styles for transaction report div */
+
 #reportDiv{
     height: auto;
     width: 100%;
@@ -114,4 +114,4 @@
     display: none;
 }
 
-
+ */

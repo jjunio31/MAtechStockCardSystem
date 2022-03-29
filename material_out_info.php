@@ -12,44 +12,6 @@
     <!-- Jquery CDN-->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <style>
-
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
-.control {
-  appearance: button;
-  backface-visibility: hidden;
-  border-radius: 25px;
-  border-width: 0;
-  box-shadow: rgba(50, 50, 93, .1) 0 0 0 1px inset,rgba(50, 50, 93, .1) 0 2px 5px 0,rgba(0, 0, 0, .07) 0 1px 1px 0;
-  box-sizing: border-box;
-  color: #fff;
-  cursor: pointer;
-  font-family: -apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Ubuntu,sans-serif;
-  font-size: 100%;
-  height: 44px;
-  line-height: 1.15;
-  margin: 0;
-  outline: none;
-  overflow: hidden;
-  padding:  0 ;
-  position: relative;
-  text-align: center;
-  text-transform: none;
-  transform: translateZ(0);
-  transition: all .2s,box-shadow .08s ease-in;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  width: 100%;
-}
-
-        .button-9:disabled {
-        cursor: default;
-        }
-
-        .button-9:focus {
-        box-shadow: rgba(50, 50, 93, .1) 0 0 0 1px inset, rgba(50, 50, 93, .2) 0 6px 15px 0, rgba(0, 0, 0, .1) 0 2px 2px 0, rgba(50, 151, 211, .3) 0 0 0 4px;
-        }
-
         
         .scan-result{
             padding: 1rem;
@@ -108,16 +70,14 @@
             width: 7.5rem;
             }
         }
-        
- 
        
     </style>
 </head>
 <body>
-    
+<form  id="formInfo" method="post">
 <?php
 $serverName = "192.168.2.15,40001";
-$connectionInfo = array( "UID" => "iqc_db_user_dev", "PWD" => "iqcdbuserdev", "Database" => "StockCard");
+$connectionInfo = array( "UID" => "iqc_db_user_dev", "PWD" => "iqcdbuserdev", "Database" => "MA_Receiving");
 $conn = sqlsrv_connect($serverName, $connectionInfo);
 
 if( $conn === false )
@@ -125,33 +85,27 @@ if( $conn === false )
 echo "Could not connect.\n";
 die( print_r( sqlsrv_errors(), true));
 }
-// else {
-//     echo "connection established";
-// }
-
 
 if (isset($_POST['codeResult'])) {
     $qrResult = $_POST['codeResult'];
     
-    $sql_select = "SELECT * From stocks_record_tbl
-    WHERE GOODS_CODE = '$qrResult'or PART_NUMBER = '$qrResult' or ITEM_CODE = '$qrResult' or ITEM_NUMBER = '$qrResult'";
-
-    $stmt = sqlsrv_query( $conn, $sql_select );
-
+    $sql_select1 = "SELECT * From Total_Stock
+    WHERE GOODS_CODE = '$qrResult'or PART_NUMBER = '$qrResult' or ITEM_CODE = '$qrResult'";
+    $sql_select1_run = sqlsrv_query( $conn, $sql_select1 );
     
-    if( $stmt === false) {
+
+    if( $sql_select1_run === false) {
         die( print_r( sqlsrv_errors(), true) );
     }
 
-    if($stmt)
-    {
-        while($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC))
+
+    if($sql_select1_run){
+        while($row = sqlsrv_fetch_array($sql_select1_run, SQLSRV_FETCH_ASSOC))
         {
             
            ?>
-           <form  id="formInfo" method="post">
+           
            <div class="scan-result bg-dark">
-
 
                 <div class="result-container">
                 
@@ -161,11 +115,6 @@ if (isset($_POST['codeResult'])) {
                 <label class="text-white label">Goods Code</label>
                 <input type="text" readonly class="txtbox bg-secondary text-white" name="goodscode" id="goodsCode" value="<?php echo $row['GOODS_CODE']?>">
                 </div>
-                
-                <div class="result-container ">
-                <label class="text-white label">Item Number</label>
-                <input type="text" readonly class="txtbox bg-secondary text-white" name="itemNumber" id="itemNumber" value="<?php echo $row['ITEM_NUMBER']?>">
-                </div>
                
                 <div class="result-container ">
                 <label class="text-white label">Item Code</label>
@@ -174,7 +123,7 @@ if (isset($_POST['codeResult'])) {
 
                 <div class="result-container ">
                 <label class="text-white pr-2">Part Name</label>
-                <input type="text" readonly class="txtbox bg-secondary text-white" name="partName" id="partName" value="<?php echo $row['PART_NAME']?>">
+                <input type="text" readonly class="txtbox bg-secondary text-white" name="partName" id="partName" value="<?php echo $row['MATERIALS']?>">
                 </div>
 
                 <div class="result-container ">
@@ -193,16 +142,11 @@ if (isset($_POST['codeResult'])) {
                 </div>
 
                 <div class="result-container ">
-                <label class="text-white pr-2">Location</label>
-                <input type="text" readonly class="txtbox" name="location" id="location" value="">
-                </div>
-
-                <div class="result-container ">
                 <label class="text-white pr-2">Invoice/Kit</label>
                 <input type="text"  class="txtbox" name="invoiceKit" id="invoiceKit" value="">
                 </div>
-
-                <div class="result-container d-flex justify-content-center">
+            
+                <div class="result-container d-flex justify-content-center"> 
                 <h6 id="messageDisplay" class="text-warning"></h6>
                 </div>
 
@@ -215,9 +159,9 @@ if (isset($_POST['codeResult'])) {
                 </div>
 
                 
-
+            
             </div>
-            </form>
+            
            <?php
         }
     }
@@ -226,10 +170,11 @@ if (isset($_POST['codeResult'])) {
         echo $qrResult . " Not Found";
     }
 
-    sqlsrv_free_stmt( $stmt);
 }
 
 ?>
+</form>
+
 <script src="js/ajax_mat_out.js"></script>
 </body>
 </html>

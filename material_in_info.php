@@ -19,44 +19,6 @@
     <style>
 
 
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
-.control{
-  appearance: button;
-  backface-visibility: hidden;
-  border-radius: 25px;
-  border-width: 0;
-  box-shadow: rgba(50, 50, 93, .1) 0 0 0 1px inset,rgba(50, 50, 93, .1) 0 2px 5px 0,rgba(0, 0, 0, .07) 0 1px 1px 0;
-  box-sizing: border-box;
-  color: #fff;
-  cursor: pointer;
-  font-family: -apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Ubuntu,sans-serif;
-  font-size: 100%;
-  height: 44px;
-  line-height: 1.15;
-  margin: 0;
-  outline: none;
-  overflow: hidden;
-  padding:  0 ;
-  position: relative;
-  text-align: center;
-  text-transform: none;
-  transform: translateZ(0);
-  transition: all .2s,box-shadow .08s ease-in;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  width: 100%;
-}
-
-        .button-9:disabled {
-        cursor: default;
-        }
-
-        .button-9:focus {
-        box-shadow: rgba(50, 50, 93, .1) 0 0 0 1px inset, rgba(50, 50, 93, .2) 0 6px 15px 0, rgba(0, 0, 0, .1) 0 2px 2px 0, rgba(50, 151, 211, .3) 0 0 0 4px;
-        }
-
-        
         .scan-result{
             padding: 1rem;
             height: 100%;
@@ -158,7 +120,6 @@
             border-bottom-left-radius:0 ;
         }
         #location{
-            width: 9rem;
             border-top-right-radius: 0 ;
             border-bottom-right-radius: 0 ;
         } 
@@ -254,7 +215,7 @@ if (isset($_POST['codeResult'])) {
                 </div>
 
                 <div class="result-container ">
-                <label class="text-white pr-2">Current Stock</label>
+                <label class="text-white pr-2">Total Stock</label>
                 <input type="text" readonly class="txtbox bg-secondary text-white" name="qty" id="currentStock" value="<?php echo $row['TOTAL_STOCK']?>">
                 </div>
 
@@ -271,7 +232,7 @@ if (isset($_POST['codeResult'])) {
                 <div class="result-container locationDivIn">
                 <label class="text-white pr-2">Location</label> 
                 <input type="text" class="txtbox" name="location" id="location" value="" placeholder="" >
-                <button type="button" class="btn btn-primary btn-block control" id="LocQRbtn"><i class="fa-solid fa-qrcode"></i></button>
+                <button type="button" class="control" id="LocQRbtn"><i class="fa-solid fa-qrcode"></i></button>
                 </div>
 
                 <div class="result-container ">
@@ -285,12 +246,12 @@ if (isset($_POST['codeResult'])) {
                 </div>
 
                 <div class="result-container d-flex justify-content-center" id="btnDiv1">
-                <button type="submit" class="btn btn-primary btn-block control" id="saveBTN">Save Data</button>
+                <button type="submit" class="control" id="saveBTN">Save Data</button>
                 </div>
                 
 
                 <div class="result-container d-flex justify-content-center" id="btnDiv2">
-                <button type="submit" class="btn btn-primary btn-block control" id="btn_showReport">Show Transactions</button>
+                <button type="submit" class="control" id="btn_showReport">Show Transactions</button>
                 </div>  
 
             </div>
@@ -308,6 +269,7 @@ if (isset($_POST['codeResult'])) {
 
 ?>
 <script src="js/ajax_mat_in.js"></script>
+<script src="js/materialIn.js"></script>
 </body>
 </html>
 

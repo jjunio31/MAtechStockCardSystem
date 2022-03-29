@@ -29,16 +29,28 @@
 
   <?php
 $serverName = "192.168.2.15,40001";
-$connectionInfo = array( "UID" => "iqc_db_user_dev", "PWD" => "iqcdbuserdev", "Database" => "StockCard");
-$conn = sqlsrv_connect($serverName, $connectionInfo);
+$connectionInfo1 = array( "UID" => "iqc_db_user_dev", "PWD" => "iqcdbuserdev", "Database" => "MA_Receiving");
+$conn1 = sqlsrv_connect($serverName, $connectionInfo1);
 
-if( $conn === false )
+$connectionInfo2 = array( "UID" => "iqc_db_user_dev", "PWD" => "iqcdbuserdev", "Database" => "StockCard");
+$conn2 = sqlsrv_connect($serverName, $connectionInfo2);
+
+if( $conn1 === false )
 {
 echo "Could not connect.\n";
 die( print_r( sqlsrv_errors(), true));
 }
 else {
-   //echo "connection established";
+//    echo "connection established 1";
+}
+
+if( $conn2 === false )
+{
+echo "Could not connect.\n";
+die( print_r( sqlsrv_errors(), true));
+}
+else {
+//    echo "connection established 2";
 }
 
 if (!empty($_POST["goodsCode"])){ 
@@ -50,9 +62,9 @@ if (!empty($_POST["itemCode"])){
 
   
 
-    $sql = "SELECT * FROM transaction_reports_tbl WHERE [GOODS_CODE] = '$goodsCode' AND [ITEM_CODE] = '$itemCode' ORDER BY id ASC";
-            $stmt = sqlsrv_query( $conn, $sql );
-            if( $stmt === false) {
+    $sql_select1 = "SELECT * FROM transaction_record_tbl WHERE [GOODS_CODE] = '$goodsCode' AND [ITEM_CODE] = '$itemCode' ORDER BY ID ASC";
+    $sql_select1_run = sqlsrv_query( $conn2, $sql_select1 );
+            if( $sql_select1_run  === false) {
             die( print_r( sqlsrv_errors(), true) );
             }
             
@@ -66,7 +78,6 @@ if (!empty($_POST["itemCode"])){
                 <th scope="col">RECEIVED</th>
                 <th scope="col">ISSUED</th>
                 <th scope="col">STOCK</th>
-                <th scope="col">LOCATION</th>
                 <th scope="col">INVOICE / KIT NO.</th>
                 </tr>
                 <tr>
@@ -79,9 +90,9 @@ if (!empty($_POST["itemCode"])){
               </thead>
             
             <tbody>';
-            if($stmt)
+            if($sql_select1_run)
             {
-                while($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC))
+                while($row = sqlsrv_fetch_array($sql_select1_run, SQLSRV_FETCH_ASSOC))
                 {
 
             echo '<tr class="active">
@@ -89,7 +100,6 @@ if (!empty($_POST["itemCode"])){
                                       <td class="success">'.$row['QTY_RECEIVED'].'</td>
                                       <td class="warning">'.$row['QTY_ISSUED'].'</td>
                                       <td class="danger">'.$row['TOTAL_STOCK'].'</td>
-                                      <td class="danger">'.$row['LOCATION'].'</td>
                                       <td class="danger">'.$row['INVOICE_KIT'].'</td>
                                 </tr>';
                 }
@@ -98,7 +108,7 @@ if (!empty($_POST["itemCode"])){
             echo '</tbody></table></div>';
         
 
-            sqlsrv_free_stmt( $stmt);
+            sqlsrv_free_stmt( $sql_select1_run);
 
     
         ?>

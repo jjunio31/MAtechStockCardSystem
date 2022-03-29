@@ -29,23 +29,11 @@ if (!empty($_POST["itemNumber"])){ $itemNumber = $_POST['itemNumber']; }
 $sql_select = "SELECT * From stocks_record_tbl"; 
 $sql_select_run = sqlsrv_query($conn, $sql_select);
 
-
- 
-if( $sql_select_run === false) {
-    die( print_r( sqlsrv_errors(), true) );
-}
+    date_default_timezone_set('Asia/Hong_Kong'); 
+    $updatedStock = $currentStock + $receivedQTY;
+    $date = date('m-d-Y H:i:s');
 
     if ($sql_select_run){
-
-            $updatedStock = $currentStock + $receivedQTY;
-
-            $sql_update= "UPDATE stocks_record_tbl set TOTAL_STOCK = $updatedStock
-            WHERE GOODS_CODE = '$goodsCode' AND ITEM_CODE = '$itemCode' ";
-
-            $sql_update_run = sqlsrv_query($conn, $sql_update);
-            if($sql_update_run){
-                echo "Successful! Stock is updated to $updatedStock.";
-                
                 // //Query for Insert
                 $sql_select_reports = "SELECT * FROM transaction_reports_tbl";
                 $params = array();
@@ -54,29 +42,34 @@ if( $sql_select_run === false) {
                 $row_count = sqlsrv_num_rows( $stmt );
                 $currentRow = $row_count + 1;
 
-                date_default_timezone_set('Asia/Hong_Kong');  
-                $date = date('m-d-Y H:i:s');
-
-                $sql_insert = "INSERT INTO transaction_reports_tbl (id, TRANSACTION_DATE, GOODS_CODE, ITEM_CODE, QTY_RECEIVED, TOTAL_STOCK, PART_NUMBER, PART_NAME, INVOICE_KIT, [LOCATION], ITEM_NUMBER) 
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
-                $params1 = array($currentRow, $date, $goodsCode, $itemCode, $receivedQTY, $updatedStock, $partNumber, $partName, $invoiceKit, $location, $itemNumber);
-
-                // $sql_insert2 = "INSERT INTO stocks_location_tbl (id, GOODS_CODE, ITEM_CODE, QTY_STORED, [LOCATION], ITEM_NUMBER) 
-                // VALUES (?, ?, ?, ?, ?, ?) ";
-                // $params2 = array($currentRow, $goodsCode, $itemCode, $receivedQTY, $location,);
-
+                $sql_insert = "INSERT INTO transaction_reports_tbl (id, TRANSACTION_DATE, GOODS_CODE, ITEM_CODE, QTY_RECEIVED, TOTAL_STOCK, PART_NUMBER, PART_NAME, INVOICE_KIT, ITEM_NUMBER) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
+                $params1 = array($currentRow, $date, $goodsCode, $itemCode, $receivedQTY, $updatedStock, $partNumber, $partName, $invoiceKit, $itemNumber);
 
                 $sql_insert_run = sqlsrv_query($conn, $sql_insert, $params1);
-                
+
+                if($sql_insert_run){
+                    $sql_insert2 = "INSERT INTO stocks_location_tbl (id, GOODS_CODE, ITEM_CODE, QTY_STORED, DATE_STORED, LOCATION_NAME, ITEM_NUMBER) 
+                    VALUES (?, ?, ?, ?, ?, ?, ?)";
+                    $params2 = array($currentRow, $goodsCode, $itemCode, $receivedQTY, $date, $location, $itemNumber);
+                    $sql_insert2_run= sqlsrv_query($conn, $sql_insert2, $params2);
+
+                    $sql_update = "UPDATE stocks_record_tbl set TOTAL_STOCK = $updatedStock
+                    WHERE GOODS_CODE = '$goodsCode' AND ITEM_CODE = '$itemCode' ";
+                    $sql_update_run = sqlsrv_query($conn, $sql_update);
+                    
+                    if($sql_update_run){
+                        echo "Successful! Stock is updated to $updatedStock.";
+                    }
+                }
                 if( $sql_insert_run === false) {
                     die( print_r( sqlsrv_errors(), true) );
                 }
 
-                //Query for Insert
             }else{
                 echo "Unable to process" . die( print_r( sqlsrv_errors(), true) );
             }
-        }
+        
         
  
 

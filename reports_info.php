@@ -11,61 +11,17 @@
     <!-- Jquery CDN-->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <style>
-
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
-.control {
-  appearance: button;
-  backface-visibility: hidden;
-  border-radius: 25px;
-  border-width: 0;
-  box-shadow: rgba(50, 50, 93, .1) 0 0 0 1px inset,rgba(50, 50, 93, .1) 0 2px 5px 0,rgba(0, 0, 0, .07) 0 1px 1px 0;
-  box-sizing: border-box;
-  color: #fff;
-  cursor: pointer;
-  font-family: -apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Ubuntu,sans-serif;
-  font-size: 100%;
-  height: 44px;
-  line-height: 1.15;
-  margin: 0;
-  outline: none;
-  overflow: hidden;
-  padding:  0 ;
-  position: relative;
-  text-align: center;
-  text-transform: none;
-  transform: translateZ(0);
-  transition: all .2s,box-shadow .08s ease-in;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  width: 100%;
-}
-
-        .button-9:disabled {
-        cursor: default;
-        }
-
-        .button-9:focus {
-        box-shadow: rgba(50, 50, 93, .1) 0 0 0 1px inset, rgba(50, 50, 93, .2) 0 6px 15px 0, rgba(0, 0, 0, .1) 0 2px 2px 0, rgba(50, 151, 211, .3) 0 0 0 4px;
-        }
-
-        
-        .scan-result{
-            padding: 1rem;
-            height: 100%;
-            width: 100%;
-            border-radius: 10px;
-        }
+    
+    
         .result-container input{
             width: 50%;
         }
        
         label{
             width: 9rem;
-        }
-        label{
             margin-bottom: 0;
         }
+       
         .result-container{
             display: flex;
             justify-content: center;
@@ -79,22 +35,10 @@
             border-radius: 10px;
             width: 100%;
             height: auto;
-        }
-
-        #btn_showReport{
-            margin: 0;
-            display: none;
-        }
-        #btnDiv1, #btnDiv2{
-            margin: 0;
-            padding: 0;
+            padding: .3rem;
         }
         #submitIssued{
             margin: 0;
-        }
-        #btnDiv2{
-            margin-top: .3rem;
-            
         }
         input{
             border-radius: 25px;
@@ -102,10 +46,7 @@
             padding: 15px; 
             height: 11px;
         }
-        
-        
-
-       
+      
     </style>
 </head>
 <body>
@@ -185,16 +126,6 @@ if (isset($_POST['codeResult'])) {
                 <label class="text-white pr-2">Current Stock</label>
                 <input type="text" readonly class="txtbox bg-secondary text-white" name="qty" id="currentStock" value="<?php echo $row['TOTAL_STOCK']?>">
                 </div>
-
-                <div class="result-container d-flex justify-content-center" id="btnDiv1">
-                <button type="submit" class="btn btn-primary btn-block control" id="saveBTN">Check full report</button>
-                </div>
-
-                <div class="result-container d-flex justify-content-center" id="btnDiv2">
-                <button type="submit" class="btn btn-primary btn-block control" id="btn_showReport">Show Transactions</button>
-                </div>
-
-                
 
             </div>
             </form>

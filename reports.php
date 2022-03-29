@@ -57,8 +57,8 @@
                         
                     </div>
                     <div class="controlsDiv">
-                      <button  class="btn btn-primary btn-md control" id="on-camera">Open Camera</button>
-                      <button  class="btn btn-primary btn-md control" id="off-camera">Close Camera</button>
+                      <button  class="control" id="on-camera">Open Camera</button>
+                      <button  class="control" id="off-camera">Close Camera</button>
                       <button  class="btn btn-dark btn-md control switch" id="flashlight-icon"><i class="fa-solid fa-lightbulb fa-xl"></i></button>
                       
                     </div>

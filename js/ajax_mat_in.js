@@ -101,19 +101,19 @@ $( function() {
     });
   } );
 
-  $("#location").prop('required',true);
+//   $("#location").prop('required',true);
 
-  $(".category").autocomplete({
-    source: availableTags,
-    change: function (event, ui) {
-        if(!ui.item){
-            $(event.target).val("");
-        }
-    }, 
-    focus: function (event, ui) {
-        return false;
-    }
-});
+//   $(".category").autocomplete({
+//     source: availableTags,
+//     change: function (event, ui) {
+//         if(!ui.item){
+//             $(event.target).val("");
+//         }
+//     }, 
+//     focus: function (event, ui) {
+//         return false;
+//     }
+// });
 
 
 // $(document).ready(function(){
