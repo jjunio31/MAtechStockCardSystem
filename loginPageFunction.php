@@ -26,7 +26,7 @@ else{
         // echo "Username and Password not found!";
         // header("Location: loginPage.php");
         // echo '<script>alert("Username and Password not found!")</script>';
-        echo '<script type="text/javascript">alert("Wrong Username or Password");window.location=\'loginPage.php\';</script>';
+        echo '<script type="text/javascript">alert("Wrong Username or Password");window.location=\'index.php\';</script>';
          
          
      }else{

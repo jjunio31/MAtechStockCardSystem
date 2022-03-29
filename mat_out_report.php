@@ -78,7 +78,7 @@ if (!empty($_POST["itemCode"])){
                 <th scope="col">RECEIVED</th>
                 <th scope="col">ISSUED</th>
                 <th scope="col">STOCK</th>
-                <th scope="col">INVOICE / KIT NO.</th>
+                <th scope="col">INVOICE NO.</th>
                 </tr>
                 <tr>
                 <td scope="col"></td>

@@ -90,8 +90,7 @@ if( $sql_select_run === false) {
             }else{
             echo "Unable to record transaction" . die( print_r( sqlsrv_errors(), true) );
             }
-        }
-        
+        }   
 
 }
 

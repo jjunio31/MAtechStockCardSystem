@@ -142,7 +142,7 @@ if (isset($_POST['codeResult'])) {
                 </div>
 
                 <div class="result-container ">
-                <label class="text-white pr-2">Invoice/Kit</label>
+                <label class="text-white pr-2">Invoice No.</label>
                 <input type="text"  class="txtbox" name="invoiceKit" id="invoiceKit" value="">
                 </div>
             

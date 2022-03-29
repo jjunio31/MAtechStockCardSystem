@@ -73,63 +73,6 @@
             height: 11px;
         }
 
-        .ui-state-active,
-        .ui-widget-content .ui-state-active,
-        .ui-widget-header .ui-state-active,
-        a.ui-button:active,
-        .ui-button:active,
-        .ui-button.ui-state-active:hover {
-        border: none!important;
-        background: white;
-        width: 10rem;
-        font-weight: normal;
-        color: black;
-        padding: .5rem;
-        font-size: 1.5rem;
-        border-radius: 10px;
-        }
-        ul.ui-autocomplete {
-            list-style: none;
-            list-style-type: none;
-            padding: .7rem;
-            margin: .5rem 0px;
-            background-color: #6c757d;
-            max-width: 11rem;
-            border-radius: 10px;
-        }
-        ul.ui-autocomplete{
-            color: white;
-            
-        }
-        li{
-            padding: .2rem;
-        }
-        .ui-helper-hidden-accessible { display:none; 
-        }
-        #LocQRbtn{
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 25px;
-            padding: 17px; 
-            height: 11px;
-            width: 15%;
-            /* width: 2.8rem;
-            font-size: 1.5rem; */
-            border-top-left-radius:0 ;
-            border-bottom-left-radius:0 ;
-        }
-        #location{
-            border-top-right-radius: 0 ;
-            border-bottom-right-radius: 0 ;
-        } 
-
-        #location{
-            width: 35%;
-            border-top-right-radius: 0 ;
-            border-bottom-right-radius: 0 ;
-        } 
-
         @media (max-width:767px){
     
             label{
@@ -143,9 +86,10 @@
 </head>
 <body>
     
+<form  id="formInfo" method="post">
 <?php
 $serverName = "192.168.2.15,40001";
-$connectionInfo = array( "UID" => "iqc_db_user_dev", "PWD" => "iqcdbuserdev", "Database" => "StockCard");
+$connectionInfo = array( "UID" => "iqc_db_user_dev", "PWD" => "iqcdbuserdev", "Database" => "MA_Receiving");
 $conn = sqlsrv_connect($serverName, $connectionInfo);
 
 if( $conn === false )
@@ -153,32 +97,27 @@ if( $conn === false )
 echo "Could not connect.\n";
 die( print_r( sqlsrv_errors(), true));
 }
-else {
-    //echo "connection established";
-}
-
 
 if (isset($_POST['codeResult'])) {
     $qrResult = $_POST['codeResult'];
     
-    $sql_select = "SELECT * From stocks_record_tbl
-    WHERE GOODS_CODE = '$qrResult'or PART_NUMBER = '$qrResult' or ITEM_CODE = '$qrResult' or ITEM_NUMBER = '$qrResult'";
-    $stmt = sqlsrv_query( $conn, $sql_select );
-
+    $sql_select1 = "SELECT * From Total_Stock
+    WHERE GOODS_CODE = '$qrResult'or PART_NUMBER = '$qrResult' or ITEM_CODE = '$qrResult'";
+    $sql_select1_run = sqlsrv_query( $conn, $sql_select1 );
     
-    if( $stmt === false) {
+
+    if( $sql_select1_run === false) {
         die( print_r( sqlsrv_errors(), true) );
     }
 
-    if($stmt)
-    {
-        while($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC))
+
+    if($sql_select1_run){
+        while($row = sqlsrv_fetch_array($sql_select1_run, SQLSRV_FETCH_ASSOC))
         {
             
            ?>
-           <form  id="formInfo" method="post">
+           
            <div class="scan-result bg-dark">
-
 
                 <div class="result-container">
                 
@@ -188,25 +127,15 @@ if (isset($_POST['codeResult'])) {
                 <label class="text-white label">Goods Code</label>
                 <input type="text" readonly class="txtbox bg-secondary text-white" name="goodscode" id="goodsCode" value="<?php echo $row['GOODS_CODE']?>">
                 </div>
-
-                <div class="result-container ">
-                <label class="text-white label">Item Number</label>
-                <input type="text" readonly class="txtbox bg-secondary text-white" name="itemNumber" id="itemNumber" value="<?php echo $row['ITEM_NUMBER']?>">
-                </div>
                
                 <div class="result-container ">
                 <label class="text-white label">Item Code</label>
                 <input type="text" readonly class="txtbox bg-secondary text-white" name="itemCode" id="itemCode" value="<?php echo $row['ITEM_CODE']?>">
                 </div>
 
-                <!-- <div class="result-container ">
-                <label class="text-white label">Item Number</label>
-                <input type="text" readonly class="txtbox" name="itemNumber" id="itemNumber" value="<?php echo $row['ITEM_NUMBER']?>">
-                </div> -->
-
                 <div class="result-container ">
                 <label class="text-white pr-2">Part Name</label>
-                <input type="text" readonly class="txtbox bg-secondary text-white" name="partName" id="partName" value="<?php echo $row['PART_NAME']?>">
+                <input type="text" readonly class="txtbox bg-secondary text-white" name="partName" id="partName" value="<?php echo $row['MATERIALS']?>">
                 </div>
 
                 <div class="result-container ">
@@ -215,47 +144,25 @@ if (isset($_POST['codeResult'])) {
                 </div>
 
                 <div class="result-container ">
-                <label class="text-white pr-2">Total Stock</label>
-                <input type="text" readonly class="txtbox bg-secondary text-white" name="qty" id="currentStock" value="<?php echo $row['TOTAL_STOCK']?>">
+                <label class="text-white pr-2">Returned QTY</label>
+                <input  type="number" min="1" step="1" onkeypress="return event.keyCode === 8 || event.charCode >= 48 && event.charCode <= 57" id="returnedqty">
                 </div>
 
-                <!-- <div class="result-container ">
-                <label class="text-white pr-2">Date Received</label>
-                <input type="date" class="txtbox" name="pt_date" id="pt_date" value="">
-                </div> -->
+                <div class="result-container ">
+                <label class="text-white pr-2">Reason</label>
+                <input type="text" class="txtbox bg-white text-black" name="reason" id="reason" value="">
+                </div>
                 
-                <div class="result-container ">
-                <label class="text-white pr-2">QTY Received</label>
-                <input  type="number" min="1" step="1" onkeypress="return event.keyCode === 8 || event.charCode >= 48 && event.charCode <= 57" id="receivedQTY">
-                </div>
-
-                <div class="result-container locationDivIn">
-                <label class="text-white pr-2">Location</label> 
-                <input type="text" class="txtbox" name="location" id="location" value="" placeholder="" >
-                <button type="button" class="control" id="LocQRbtn"><i class="fa-solid fa-qrcode"></i></button>
-                </div>
-
-                <div class="result-container ">
-                <label class="text-white pr-2">Invoice/Kit</label>
-                <input type="text"  class="txtbox" name="invoiceKit" id="invoiceKit" value="" autocomplete="off">
-                </div>
-
-            
-                <div class="result-container d-flex justify-content-center">
+                <div class="result-container d-flex justify-content-center"> 
                 <h6 id="messageDisplay" class="text-warning"></h6>
                 </div>
 
                 <div class="result-container d-flex justify-content-center" id="btnDiv1">
-                <button type="submit" class="control" id="saveBTN">Save Data</button>
+                <button type="submit" class="btn btn-primary btn-block control" id="saveBTN">Save Data</button>
                 </div>
-                
-
-                <div class="result-container d-flex justify-content-center" id="btnDiv2">
-                <button type="submit" class="control" id="btn_showReport">Show Transactions</button>
-                </div>  
-
+            
             </div>
-            </form>
+            
            <?php
         }
     }
@@ -264,10 +171,10 @@ if (isset($_POST['codeResult'])) {
         echo $qrResult . " Not Found";
     }
 
-    sqlsrv_free_stmt( $stmt);
 }
 
 ?>
+</form>
 <script src="js/ajax_mat_in.js"></script>
 <script src="js/materialIn.js"></script>
 </body>
