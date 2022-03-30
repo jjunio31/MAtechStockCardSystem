@@ -150,7 +150,7 @@ if (isset($_POST['codeResult'])) {
         if( $sql_select_run2 === false) {
             die( print_r( sqlsrv_errors(), true) );
         }
-
+        
         echo '<div class="table_reports bg-light">';
         $date = date('M d, Y');
             echo '<div class="c2" id=""><table class="table table-bordered">
@@ -164,7 +164,16 @@ if (isset($_POST['codeResult'])) {
                 <th scope="col">INVOICE</th>
                 </tr>
               </thead>
-            
+              
+              <thead class="thead bg-secondary">
+                <tr>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                </tr>
+              </thead>
             <tbody>';
             if($sql_select_run2)
             {
@@ -188,7 +197,23 @@ if (isset($_POST['codeResult'])) {
 
             echo '</div>';
 }
-?>
+ ?>
+ <?php 
+ $today = new DateTime();
+ $currentMonth = $today->format('F');
+        echo $currentMonth;?>
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th><?php Echo $currentMonth . " " ."BOH"?></th>
+                </tr>
+            </thead>
+        </table>
 <script src="js/reports.js"></script>
 </body>
 </html>

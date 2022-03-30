@@ -51,8 +51,6 @@ if (!empty($_POST["itemCode"])){
      $itemCode = $_POST['itemCode']; 
 }
 
-  
-
     $sql = "SELECT * FROM transaction_reports_tbl WHERE [GOODS_CODE] = '$goodsCode' AND [ITEM_CODE] = '$itemCode' ORDER BY id ASC";
             $stmt = sqlsrv_query( $conn, $sql );
             if( $stmt === false) {
