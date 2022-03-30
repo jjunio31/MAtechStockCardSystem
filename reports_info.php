@@ -46,6 +46,9 @@
             padding: 15px; 
             height: 11px;
         }
+        .table_reports{
+            overflow: scroll;
+        }
       
     </style>
 </head>
@@ -53,7 +56,7 @@
     
 <?php
 $serverName = "192.168.2.15,40001";
-$connectionInfo = array( "UID" => "iqc_db_user_dev", "PWD" => "iqcdbuserdev", "Database" => "StockCard");
+$connectionInfo = array( "UID" => "iqc_db_user_dev", "PWD" => "iqcdbuserdev", "Database" => "MA_Receiving");
 $conn = sqlsrv_connect($serverName, $connectionInfo);
 
 if( $conn === false )
@@ -69,18 +72,17 @@ else {
 if (isset($_POST['codeResult'])) {
     $qrResult = $_POST['codeResult'];
     
-    $sql_select = "SELECT * From stocks_record_tbl
-    WHERE GOODS_CODE = '$qrResult'or PART_NUMBER = '$qrResult' or ITEM_CODE = '$qrResult' or ITEM_NUMBER = '$qrResult'";
-    $stmt = sqlsrv_query( $conn, $sql_select );
+    $sql_select = "SELECT * From Total_Stock
+    WHERE GOODS_CODE = '$qrResult'or PART_NUMBER = '$qrResult' or ITEM_CODE = '$qrResult'";
+    $sql_select_run = sqlsrv_query( $conn, $sql_select );
 
-    
-    if( $stmt === false) {
+    if( $sql_select_run === false) {
         die( print_r( sqlsrv_errors(), true) );
     }
 
-    if($stmt)
+    if($sql_select_run)
     {
-        while($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC))
+        while($row = sqlsrv_fetch_array($sql_select_run, SQLSRV_FETCH_ASSOC))
         {
             
            ?>
@@ -96,25 +98,15 @@ if (isset($_POST['codeResult'])) {
                 <label class="text-white label">Goods Code</label>
                 <input type="text" readonly class="txtbox bg-secondary text-white" name="goodscode" id="goodsCode" value="<?php echo $row['GOODS_CODE']?>">
                 </div>
-
-                <div class="result-container ">
-                <label class="text-white label">Item Number</label>
-                <input type="text" readonly class="txtbox bg-secondary text-white" name="itemNumber" id="itemNumber" value="<?php echo $row['ITEM_NUMBER']?>">
-                </div>
                
                 <div class="result-container ">
                 <label class="text-white label">Item Code</label>
                 <input type="text" readonly class="txtbox bg-secondary text-white" name="itemCode" id="itemCode" value="<?php echo $row['ITEM_CODE']?>">
                 </div>
 
-                <!-- <div class="result-container ">
-                <label class="text-white label">Item Number</label>
-                <input type="text" readonly class="txtbox" name="itemNumber" id="itemNumber" value="<?php echo $row['ITEM_NUMBER']?>">
-                </div> -->
-
                 <div class="result-container ">
                 <label class="text-white pr-2">Part Name</label>
-                <input type="text" readonly class="txtbox bg-secondary text-white" name="partName" id="partName" value="<?php echo $row['PART_NAME']?>">
+                <input type="text" readonly class="txtbox bg-secondary text-white" name="partName" id="partName" value="<?php echo $row['MATERIALS']?>">
                 </div>
 
                 <div class="result-container ">
@@ -137,7 +129,64 @@ if (isset($_POST['codeResult'])) {
         echo $qrResult . " Not Found";
     }
 
-    sqlsrv_free_stmt( $stmt);
+    if (isset($_POST['codeResult'])) {
+        $qrResult = $_POST['codeResult'];
+    }
+        
+        $serverName = "192.168.2.15,40001";
+        $connectionInfo = array( "UID" => "iqc_db_user_dev", "PWD" => "iqcdbuserdev", "Database" => "StockCard");
+        $conn = sqlsrv_connect($serverName, $connectionInfo);
+        
+        if( $conn === false )
+        {
+        echo "Could not connect.\n";
+        die( print_r( sqlsrv_errors(), true));
+        }
+        
+        $sql_select2 = "SELECT * From [transaction_record_tbl]
+        WHERE GOODS_CODE = '$qrResult'or PART_NUMBER = '$qrResult' or ITEM_CODE = '$qrResult'";
+        $sql_select_run2 = sqlsrv_query( $conn, $sql_select2 );
+
+        if( $sql_select_run2 === false) {
+            die( print_r( sqlsrv_errors(), true) );
+        }
+
+        echo '<div class="table_reports bg-light">';
+        $date = date('M d, Y');
+            echo '<div class="c2" id=""><table class="table table-bordered">
+            
+            <thead class="thead bg-secondary">
+                <tr class="text-white">
+                <th scope="col">DATE</th>
+                <th scope="col">RECEIVED</th>
+                <th scope="col">ISSUED</th>
+                <th scope="col">STOCK</th>
+                <th scope="col">INVOICE</th>
+                </tr>
+              </thead>
+            
+            <tbody>';
+            if($sql_select_run2)
+            {
+                while($row = sqlsrv_fetch_array($sql_select_run2, SQLSRV_FETCH_ASSOC))
+                {
+
+            echo '<tr class="active">
+                                      <td class="active">'.$row['TRANSACTION_DATE']->format("m-d-Y (h:i:sa)").'</td>
+                                      <td class="success">'.$row['QTY_RECEIVED'].'</td>
+                                      <td class="warning">'.$row['QTY_ISSUED'].'</td>
+                                      <td class="danger">'.$row['TOTAL_STOCK'].'</td>
+                                      <td class="danger">'.$row['INVOICE_KIT'].'</td>
+                                </tr>';
+                }
+            }               
+              
+            echo '</tbody></table></div>';
+        
+
+            sqlsrv_free_stmt( $sql_select_run2);
+
+            echo '</div>';
 }
 ?>
 <script src="js/reports.js"></script>
