@@ -62,7 +62,7 @@ if (!empty($_POST["itemCode"])){
 
   
 
-    $sql_select1 = "SELECT * FROM transaction_record_tbl WHERE [GOODS_CODE] = '$goodsCode' AND [ITEM_CODE] = '$itemCode' ORDER BY ID ASC";
+    $sql_select1 = "SELECT * FROM transaction_record_tbl WHERE [GOODS_CODE] = '$goodsCode' ORDER BY ID ASC";
     $sql_select1_run = sqlsrv_query( $conn2, $sql_select1 );
             if( $sql_select1_run  === false) {
             die( print_r( sqlsrv_errors(), true) );
@@ -78,14 +78,8 @@ if (!empty($_POST["itemCode"])){
                 <th scope="col">RECEIVED</th>
                 <th scope="col">ISSUED</th>
                 <th scope="col">STOCK</th>
-                <th scope="col">INVOICE NO.</th>
-                </tr>
-                <tr>
-                <td scope="col"></td>
-                <td scope="col"></td>
-                <td scope="col"></td>
-                <td scope="col"></td>
-                <td scope="col"></td>
+                <th scope="col">INVOICE</th>
+                
                 </tr>
               </thead>
             
@@ -101,6 +95,7 @@ if (!empty($_POST["itemCode"])){
                                       <td class="warning">'.$row['QTY_ISSUED'].'</td>
                                       <td class="danger">'.$row['TOTAL_STOCK'].'</td>
                                       <td class="danger">'.$row['INVOICE_KIT'].'</td>
+                                      
                                 </tr>';
                 }
             }               

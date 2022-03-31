@@ -1,6 +1,5 @@
 $(document).ready(function(){
     $("#on-camera").click(function(){
-        // let scanner = new Instascan.Scanner({ video: document.getElementById('preview')});
         var scanner = new Instascan.Scanner({ video: document.getElementById('preview'),backgroundScan:true, continuous: true, mirror:false});
                    Instascan.Camera.getCameras().then(function(cameras){
                     if (cameras.length > 0) {
@@ -26,7 +25,6 @@ $(document).ready(function(){
                    });
                    scanner.addListener('scan',function(c){
                        document.getElementById('qrResult').value=c;
-                    //    document.forms[0].submit();
 
                     //code for beep sound
                     function play() {   
