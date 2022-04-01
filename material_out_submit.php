@@ -26,7 +26,7 @@ if (!empty($_POST["partNumber"])){ $partNumber = $_POST['partNumber']; }
 
 if (!empty($_POST["currentQty"])){ $currentQty = $_POST['currentQty']; }
 if (!empty($_POST["issuedQty"])){ $issuedQty = $_POST['issuedQty']; }
-if (!empty($_POST["invoiceKit"])){ $invoiceKit = $_POST['invoiceKit']; }
+if (!empty($_POST["orderNum"])){ $orderNum = $_POST['orderNum']; }
 
 //SELECT Total_Stock
 $sql_select = "SELECT * From Total_Stock"; 
@@ -52,28 +52,29 @@ if($sql_select_run && $sql_select_stock_run){
             $total_stock = $row['TOTAL_STOCK'];
         }
 
-        $new_total_stock = $total_stock - $issuedQty;
+            $new_total_stock = $total_stock - $issuedQty;
 
-        $sql_update= "UPDATE Total_Stock set TOTAL_STOCK = $new_total_stock
-        WHERE GOODS_CODE = '$goodsCode'";
-        $sql_update_run = sqlsrv_query($conn1, $sql_update);
-            if($sql_update_run){
-                echo "Successful! Stock is updated to $new_total_stock.";
-            }else{
-                die( print_r( sqlsrv_errors(), true) );
+            $sql_update= "UPDATE Total_Stock set TOTAL_STOCK = $new_total_stock
+            WHERE GOODS_CODE = '$goodsCode'";
+            $sql_update_run = sqlsrv_query($conn1, $sql_update);
+                if($sql_update_run){
+                    echo "Successful! Stock is updated to $new_total_stock.";
+                }else{
+                    die( print_r( sqlsrv_errors(), true) );
+                }
+    
+            date_default_timezone_set('Asia/Hong_Kong');  
+            $date = date('m-d-Y H:i:s');
+    
+            $sql_insert = "INSERT INTO transaction_record_tbl (TRANSACTION_DATE, GOODS_CODE, QTY_ISSUED, TOTAL_STOCK, PART_NUMBER, PART_NAME, ORDER_NO) 
+            VALUES (?, ?, ?, ?, ?, ?, ?) ";
+            $params1 = array($date, $goodsCode, $issuedQty, $new_total_stock, $partNumber, $partName, $orderNum );
+            $sql_insert_run = sqlsrv_query($conn2, $sql_insert, $params1);
+    
+            if( $sql_insert_run === false) {
+                 echo "Unable to process transaction" . die( print_r( sqlsrv_errors(), true) );
             }
-
-        date_default_timezone_set('Asia/Hong_Kong');  
-        $date = date('m-d-Y H:i:s');
-
-        $sql_insert = "INSERT INTO transaction_record_tbl (TRANSACTION_DATE, GOODS_CODE, QTY_ISSUED, TOTAL_STOCK, PART_NUMBER, PART_NAME, INVOICE_KIT) 
-        VALUES (?, ?, ?, ?, ?, ?, ?) ";
-        $params1 = array($date, $goodsCode, $issuedQty, $new_total_stock, $partNumber, $partName, $invoiceKit );
-        $sql_insert_run = sqlsrv_query($conn2, $sql_insert, $params1);
-
-        if( $sql_insert_run === false) {
-             echo "Unable to process transaction" . die( print_r( sqlsrv_errors(), true) );
-        }
+       
 
 
 //END of if($sql_select_run && $sql_select_stock_run)

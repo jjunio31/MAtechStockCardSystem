@@ -8,15 +8,17 @@ $(document).ready(function () {
         var partName = $('input[id=partName]').val();
         var currentQty = $('input[id=qty]').val();
         var issuedQty = $('input[id=issuedQty]').val();
-        var invoiceKit = $('input[id=invoiceKit]').val();
+        var orderNum = $('input[id=orderNum]').val();
+
+        
        
 
-        if(currentQty == 0){
-            alert("There is no stock available");
+        if(currentQty < issuedQty){
+            alert("Not enough stock");
         }else if(issuedQty == 0){
             alert("Please input quantity");
-        }else if(invoiceKit == ""){
-            alert("Please input Invoice/Kit NO.");
+        }else if(orderNum == ""){
+            alert("Please input order number");
         }else{
 
             $.ajax({
@@ -29,7 +31,7 @@ $(document).ready(function () {
                     itemCode:itemCode,
                     partNumber:partNumber,
                     partName:partName,
-                    invoiceKit:invoiceKit
+                    orderNum:orderNum
                 },
                 dataType: "text",
                 success: function (response) {

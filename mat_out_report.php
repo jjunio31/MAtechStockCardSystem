@@ -62,14 +62,14 @@ if (!empty($_POST["itemCode"])){
 
   
 
-    $sql_select1 = "SELECT * FROM transaction_record_tbl WHERE [GOODS_CODE] = '$goodsCode' ORDER BY ID ASC";
+    $sql_select1 = "SELECT * FROM transaction_record_tbl WHERE [GOODS_CODE] = '$goodsCode' ORDER BY TRANSACTION_DATE ASC";
     $sql_select1_run = sqlsrv_query( $conn2, $sql_select1 );
             if( $sql_select1_run  === false) {
             die( print_r( sqlsrv_errors(), true) );
             }
             
             $date = date('M d, Y');
-            echo '<h3 class="text-center text-dark">Transaction Report</h3>
+            echo '<h3 class="text-center text-white bg-secondary rounded py-1">Transaction Report</h3>
             <div class="c2" id=""><table class="table table-bordered">
             
             <thead class="thead-dark">
@@ -78,7 +78,8 @@ if (!empty($_POST["itemCode"])){
                 <th scope="col">RECEIVED</th>
                 <th scope="col">ISSUED</th>
                 <th scope="col">STOCK</th>
-                <th scope="col">INVOICE</th>
+                <th scope="col">INVOICE NO.</th>
+                <th scope="col">ORDER NO.</th>
                 
                 </tr>
               </thead>
@@ -89,18 +90,171 @@ if (!empty($_POST["itemCode"])){
                 while($row = sqlsrv_fetch_array($sql_select1_run, SQLSRV_FETCH_ASSOC))
                 {
 
-            echo '<tr class="active">
-                                      <td class="active">'.$row['TRANSACTION_DATE']->format("m-d-Y (h:i:sa)").'</td>
-                                      <td class="success">'.$row['QTY_RECEIVED'].'</td>
-                                      <td class="warning">'.$row['QTY_ISSUED'].'</td>
-                                      <td class="danger">'.$row['TOTAL_STOCK'].'</td>
-                                      <td class="danger">'.$row['INVOICE_KIT'].'</td>
-                                      
+                  if($row['TRANSACTION_DATE']->format("m") == '01'){
+
+                    echo '<tr class="active bg-primary text-white">
+                                      <td class="">'.$row['TRANSACTION_DATE']->format("m-d-Y (h:i:sa)").'</td>
+                                      <td class="">'.$row['QTY_RECEIVED'].'</td>
+                                      <td class="">'.$row['QTY_ISSUED'].'</td>
+                                      <td class="">'.$row['TOTAL_STOCK'].'</td>
+                                      <td class="">'.$row['INVOICE_KIT'].'</td>
+                                      <td class="">'.$row['ORDER_NO'].'</td>
                                 </tr>';
+                    }
+
+                else if($row['TRANSACTION_DATE']->format("m") == '02'){
+
+                    echo '<tr class="active text-white" style = "background-color: #8a2be2;">
+                                      <td class="">'.$row['TRANSACTION_DATE']->format("m-d-Y (h:i:sa)").'</td>
+                                      <td class="">'.$row['QTY_RECEIVED'].'</td>
+                                      <td class="">'.$row['QTY_ISSUED'].'</td>
+                                      <td class="">'.$row['TOTAL_STOCK'].'</td>
+                                      <td class="">'.$row['INVOICE_KIT'].'</td>
+                                      <td class="">'.$row['ORDER_NO'].'</td>
+                                </tr>';
+                    }
+
+               else if($row['TRANSACTION_DATE']->format("m") == '03'){
+
+                    // if($count == 0){
+                    //             echo '<tr class="bg-warning">
+                    //                 <td></td>
+                    //                 <td></td>
+                    //                 <td></td>
+                    //                 <td>'.$row['TOTAL_STOCK'].'</td>
+                    //                 <td>MARCH BOH</td>
+                    //             </tr>';
+                    //             $count = 1;
+                    //         }
+
+                echo '<tr class="active text-white" style = "background-color:#FF6347;">
+                                      <td class="">'.$row['TRANSACTION_DATE']->format("m-d-Y (h:i:sa)").'</td>
+                                      <td class="">'.$row['QTY_RECEIVED'].'</td>
+                                      <td class="">'.$row['QTY_ISSUED'].'</td>
+                                      <td class="">'.$row['TOTAL_STOCK'].'</td>
+                                      <td class="">'.$row['INVOICE_KIT'].'</td>
+                                      <td class="">'.$row['ORDER_NO'].'</td>
+                            </tr>';
+
                 }
-            }               
-              
-            echo '</tbody></table></div>';
+
+
+                else if($row['TRANSACTION_DATE']->format("m") == '04'){
+
+                    echo '<tr class="active bg-secondary text-white">
+                                      <td class="">'.$row['TRANSACTION_DATE']->format("m-d-Y (h:i:sa)").'</td>
+                                      <td class="">'.$row['QTY_RECEIVED'].'</td>
+                                      <td class="">'.$row['QTY_ISSUED'].'</td>
+                                      <td class="">'.$row['TOTAL_STOCK'].'</td>
+                                      <td class="">'.$row['INVOICE_KIT'].'</td>
+                                      <td class="">'.$row['ORDER_NO'].'</td>
+                                </tr>';
+                    }
+
+                    else if($row['TRANSACTION_DATE']->format("m") == '05'){
+
+                        echo '<tr class="active bg-success">
+                                      <td class="">'.$row['TRANSACTION_DATE']->format("m-d-Y (h:i:sa)").'</td>
+                                      <td class="">'.$row['QTY_RECEIVED'].'</td>
+                                      <td class="">'.$row['QTY_ISSUED'].'</td>
+                                      <td class="">'.$row['TOTAL_STOCK'].'</td>
+                                      <td class="">'.$row['INVOICE_KIT'].'</td>
+                                      <td class="">'.$row['ORDER_NO'].'</td>
+                                    </tr>';
+                        }
+
+                    else if($row['TRANSACTION_DATE']->format("m") == '06'){
+
+                        echo '<tr class="active bg-dark text-white">
+                                          <td class="">'.$row['TRANSACTION_DATE']->format("m-d-Y (h:i:sa)").'</td>
+                                          <td class="">'.$row['QTY_RECEIVED'].'</td>
+                                          <td class="">'.$row['QTY_ISSUED'].'</td>
+                                          <td class="">'.$row['TOTAL_STOCK'].'</td>
+                                          <td class="">'.$row['INVOICE_KIT'].'</td>
+                                          <td class="">'.$row['ORDER_NO'].'</td>
+                                    </tr>';
+                        }
+
+                    else if($row['TRANSACTION_DATE']->format("m") == '07'){
+
+                        echo '<tr class="active text-white" style = "background-color:#FFC0CB;" >
+                                          <td class="">'.$row['TRANSACTION_DATE']->format("m-d-Y (h:i:sa)").'</td>
+                                          <td class="">'.$row['QTY_RECEIVED'].'</td>
+                                          <td class="">'.$row['QTY_ISSUED'].'</td>
+                                          <td class="">'.$row['TOTAL_STOCK'].'</td>
+                                          <td class="">'.$row['INVOICE_KIT'].'</td>
+                                          <td class="">'.$row['ORDER_NO'].'</td>
+                                    </tr>';
+                        }
+
+                    else if($row['TRANSACTION_DATE']->format("m") == '08'){
+
+                        echo '<tr class="active text-white" style = "background-color:#964B00;" >
+                                          <td class="">'.$row['TRANSACTION_DATE']->format("m-d-Y (h:i:sa)").'</td>
+                                          <td class="">'.$row['QTY_RECEIVED'].'</td>
+                                          <td class="">'.$row['QTY_ISSUED'].'</td>
+                                          <td class="">'.$row['TOTAL_STOCK'].'</td>
+                                          <td class="">'.$row['INVOICE_KIT'].'</td>
+                                          <td class="">'.$row['ORDER_NO'].'</td>
+                                    </tr>';
+                        }
+
+                    else if($row['TRANSACTION_DATE']->format("m") == '09'){
+
+                        echo '<tr class="active text-white bg-warning";" >
+                                          <td class="">'.$row['TRANSACTION_DATE']->format("m-d-Y (h:i:sa)").'</td>
+                                          <td class="">'.$row['QTY_RECEIVED'].'</td>
+                                          <td class="">'.$row['QTY_ISSUED'].'</td>
+                                          <td class="">'.$row['TOTAL_STOCK'].'</td>
+                                          <td class="">'.$row['INVOICE_KIT'].'</td>
+                                          <td class="">'.$row['ORDER_NO'].'</td>
+                                    </tr>';
+                        }
+
+                    else if($row['TRANSACTION_DATE']->format("m") == '10'){
+
+                        echo '<tr class="active text-white" style = "background-color:#ADD8E6;" >
+                                          <td class="">'.$row['TRANSACTION_DATE']->format("m-d-Y (h:i:sa)").'</td>
+                                          <td class="">'.$row['QTY_RECEIVED'].'</td>
+                                          <td class="">'.$row['QTY_ISSUED'].'</td>
+                                          <td class="">'.$row['TOTAL_STOCK'].'</td>
+                                          <td class="">'.$row['INVOICE_KIT'].'</td>
+                                          <td class="">'.$row['ORDER_NO'].'</td>
+                                    </tr>';
+                        }
+
+                    else if($row['TRANSACTION_DATE']->format("m") == '11'){
+
+                        echo '<tr class="active text-black bg-white">
+                                          <td class="">'.$row['TRANSACTION_DATE']->format("m-d-Y (h:i:sa)").'</td>
+                                          <td class="">'.$row['QTY_RECEIVED'].'</td>
+                                          <td class="">'.$row['QTY_ISSUED'].'</td>
+                                          <td class="">'.$row['TOTAL_STOCK'].'</td>
+                                          <td class="">'.$row['INVOICE_KIT'].'</td>
+                                          <td class="">'.$row['ORDER_NO'].'</td>
+                                    </tr>';
+                        }
+
+                    else if($row['TRANSACTION_DATE']->format("m") == '12'){
+
+                        echo '<tr class="active text-white bg-danger">
+                                          <td class="">'.$row['TRANSACTION_DATE']->format("m-d-Y (h:i:sa)").'</td>
+                                          <td class="">'.$row['QTY_RECEIVED'].'</td>
+                                          <td class="">'.$row['QTY_ISSUED'].'</td>
+                                          <td class="">'.$row['TOTAL_STOCK'].'</td>
+                                          <td class="">'.$row['INVOICE_KIT'].'</td>
+                                          <td class="">'.$row['ORDER_NO'].'</td>
+                                    </tr>';
+                        }
+
+                        
+
+            }
+
+        }               
+          
+        echo '</tbody></table></div>';
+    
         
 
             sqlsrv_free_stmt( $sql_select1_run);

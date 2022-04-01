@@ -70,6 +70,18 @@
             width: 7.5rem;
             }
         }
+
+        thead th, tr, td {
+        font-size: .9rem;
+        padding: .5rem !important;
+        height: 15px;
+        }
+
+        thead th{
+        font-size: .8rem;
+        padding: .2rem !important;
+     
+        }
        
     </style>
 </head>
@@ -91,7 +103,7 @@ if (isset($_POST['codeResult'])) {
 
     $timestamp = date('Y-m-d H:i:s');
     
-    $sql_select1 = "SELECT * From Total_Stock
+    $sql_select1 = "SELECT TOP 1 * From Total_Stock
     WHERE GOODS_CODE = '$qrResult'or PART_NUMBER = '$qrResult' or ITEM_CODE = '$qrResult' ";
     $sql_select1_run = sqlsrv_query( $conn, $sql_select1 );
     
@@ -148,34 +160,37 @@ if (isset($_POST['codeResult'])) {
                 </div>
 
                 <div class="result-container ">
-                <label class="text-white pr-2">Invoice No.</label>
-                <input type="text"  class="txtbox" name="invoiceKit" id="invoiceKit" value="">
+                <label class="text-white pr-2">Order No.</label>
+                <input type="text"  class="txtbox" name="orderNum" id="orderNum" value="">
                 </div>
 
+                <!-- THIS IS WHERE TO PLACE CODE FOR INVOICE -->
                 
+
                 <?php 
                     
                     date_default_timezone_set('Asia/Hong_Kong');  
                     $date = date('m-d-Y H:i:s');
 
-                     $sql_select1 = "SELECT *  FROM [Receive] WHERE GOODS_CODE = '$qrResult' AND DATE_RECEIVE <= '$date'";
+                    //  $sql_select1 = "SELECT *  FROM [Receive] WHERE GOODS_CODE = '$qrResult'";
+
+                     $sql_select1 = "SELECT GOODS_CODE,INVOICE, SUM(QTY_S) as total_qty FROM [Receive] WHERE GOODS_CODE = '$qrResult' GROUP BY [INVOICE], [GOODS_CODE] ";
                      $sql_select1_run = sqlsrv_query( $conn, $sql_select1 );
                              if( $sql_select1_run  === false) {
                              die( print_r( sqlsrv_errors(), true) );
                              }
                              
                              $date = date('M d, Y');
-                             echo '<h3 class="text-center text-dark">Transaction Report</h3>
-                             <div class="c2" id=""><table class="table table-bordered">
+                             echo '
+                             <div class="c2" id=""><table class="rounded table table-bordered">
                              
-                             <thead class="thead-light">
-                                 <tr>
+                             <thead class="thead bg-secondary">
+                                 <tr class="text-white ">
                                  <th scope="col">DATE RECEIVED</th>
                                  <th scope="col">QTY RECEIVED</th>
                                  <th scope="col">INVOICE NO.</th>       
                                  </tr>
                                </thead>
-                             
                              <tbody>';
                              if($sql_select1_run)
                              {
@@ -183,8 +198,8 @@ if (isset($_POST['codeResult'])) {
                                  {
                  
                              echo '<tr class="active">
-                                                       <td class="text-white">'.$row['DATE_RECEIVE']->format("m-d-Y (h:i:sa)").'</td>
-                                                       <td class="text-white">'.$row['QTY'].'</td>
+                                                       <td class="text-white">'.$row['DATE_RECEIVE'].'</td>
+                                                       <td class="text-white">'.$row['total_qty'].'</td>
                                                        <td class="text-white">'.$row['INVOICE'].'</td>
                                                        
                                                  </tr>';
@@ -193,6 +208,7 @@ if (isset($_POST['codeResult'])) {
                                
                              echo '</tbody></table></div>';
                 ?>
+              
             
                 <div class="result-container d-flex justify-content-center"> 
                 <h6 id="messageDisplay" class="text-warning"></h6>

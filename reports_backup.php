@@ -224,3 +224,49 @@ if (isset($_POST['codeResult'])) {
 
 
               
+
+
+
+<!-- DO NOT DELETE -->
+<!-- CODE FOR INVOICE RECORD -->
+
+<?php 
+                    
+                    date_default_timezone_set('Asia/Hong_Kong');  
+                    $date = date('m-d-Y H:i:s');
+
+                     $sql_select1 = "SELECT *  FROM [Receive] WHERE GOODS_CODE = '$qrResult' AND DATE_RECEIVE <= '$date'";
+                     $sql_select1_run = sqlsrv_query( $conn, $sql_select1 );
+                             if( $sql_select1_run  === false) {
+                             die( print_r( sqlsrv_errors(), true) );
+                             }
+                             
+                             $date = date('M d, Y');
+                             echo '<h3 class="text-center text-dark">Transaction Report</h3>
+                             <div class="c2" id=""><table class="table table-bordered">
+                             
+                             <thead class="thead-light">
+                                 <tr>
+                                 <th scope="col">DATE RECEIVED</th>
+                                 <th scope="col">QTY RECEIVED</th>
+                                 <th scope="col">INVOICE NO.</th>       
+                                 </tr>
+                               </thead>
+                             
+                             <tbody>';
+                             if($sql_select1_run)
+                             {
+                                 while($row = sqlsrv_fetch_array($sql_select1_run, SQLSRV_FETCH_ASSOC))
+                                 {
+                 
+                             echo '<tr class="active">
+                                                       <td class="text-white">'.$row['DATE_RECEIVE']->format("m-d-Y (h:i:sa)").'</td>
+                                                       <td class="text-white">'.$row['QTY'].'</td>
+                                                       <td class="text-white">'.$row['INVOICE'].'</td>
+                                                       
+                                                 </tr>';
+                                 }
+                             }               
+                               
+                             echo '</tbody></table></div>';
+                ?>

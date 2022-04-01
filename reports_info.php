@@ -49,6 +49,12 @@
         .table_reports{
             overflow: scroll;
         }
+
+        thead th, tr, td {
+        font-size: 1rem;
+        padding: .5rem !important;
+        height: 15px;
+        }
       
     </style>
 </head>
@@ -72,7 +78,7 @@ else {
 if (isset($_POST['codeResult'])) {
     $qrResult = $_POST['codeResult'];
     
-    $sql_select = "SELECT * From Total_Stock
+    $sql_select = "SELECT TOP 1 * From Total_Stock
     WHERE GOODS_CODE = '$qrResult'or PART_NUMBER = '$qrResult' or ITEM_CODE = '$qrResult'";
     $sql_select_run = sqlsrv_query( $conn, $sql_select );
 
@@ -141,7 +147,7 @@ if (isset($_POST['codeResult'])) {
         $serverName = "192.168.2.15,40001";
         $connectionInfo = array( "UID" => "iqc_db_user_dev", "PWD" => "iqcdbuserdev", "Database" => "StockCard");
         $conn = sqlsrv_connect($serverName, $connectionInfo);
-        
+         
         if( $conn === false )
         {
         echo "Could not connect.\n";
@@ -149,7 +155,7 @@ if (isset($_POST['codeResult'])) {
         }
         
         $sql_select2 = "SELECT * From [transaction_record_tbl]
-        WHERE GOODS_CODE = '$qrResult'or PART_NUMBER = '$qrResult' or ITEM_CODE = '$qrResult' ORDER BY TRANSACTION_DATE ASC";
+        WHERE GOODS_CODE = '$qrResult'or PART_NUMBER = '$qrResult' or ITEM_CODE = '$qrResult' ORDER BY id ASC";
         $sql_select_run2 = sqlsrv_query( $conn, $sql_select2 );
 
         if( $sql_select_run2 === false) {
@@ -160,13 +166,14 @@ if (isset($_POST['codeResult'])) {
         $date = date('M d, Y');
 
             echo '<div class="c2" id=""><table class="table table-bordered">
-            <thead class="thead bg-secondary">
+            <thead class="thead bg-primary py-1">
                 <tr class="text-white">
-                <th scope="col">DATE</th>
-                <th scope="col">RECEIVED</th>
-                <th scope="col">ISSUED</th>
-                <th scope="col">STOCK</th>
-                <th scope="col">INVOICE</th>
+                <th scope="col" class="w-25 text-center">DATE</th>
+                <th scope="col" class="w-25">RECEIVED</th>
+                <th scope="col" class="w-25">ISSUED</th>
+                <th scope="col" class="w-25">STOCK</th>
+                <th scope="col" class="w-25">INVOICE#</th>
+                <th scope="col" class="w-25">ORDER#</th>
                 </tr>
               </thead>
 
@@ -186,6 +193,7 @@ if (isset($_POST['codeResult'])) {
                                           <td class="">'.$row['QTY_ISSUED'].'</td>
                                           <td class="">'.$row['TOTAL_STOCK'].'</td>
                                           <td class="">'.$row['INVOICE_KIT'].'</td>
+                                          <td class="">'.$row['ORDER_NO'].'</td>
                                     </tr>';
                         }
 
@@ -197,6 +205,7 @@ if (isset($_POST['codeResult'])) {
                                           <td class="">'.$row['QTY_ISSUED'].'</td>
                                           <td class="">'.$row['TOTAL_STOCK'].'</td>
                                           <td class="">'.$row['INVOICE_KIT'].'</td>
+                                          <td class="">'.$row['ORDER_NO'].'</td>
                                     </tr>';
                         }
 
@@ -213,12 +222,13 @@ if (isset($_POST['codeResult'])) {
                         //             $count = 1;
                         //         }
 
-                    echo '<tr class="active text-white" style = "background-color:#964B00;">
+                    echo '<tr class="active text-white" style = "background-color:#FF6347;">
                                       <td class="">'.$row['TRANSACTION_DATE']->format("m-d-Y (h:i:sa)").'</td>
                                       <td class="">'.$row['QTY_RECEIVED'].'</td>
                                       <td class="">'.$row['QTY_ISSUED'].'</td>
                                       <td class="">'.$row['TOTAL_STOCK'].'</td>
                                       <td class="">'.$row['INVOICE_KIT'].'</td>
+                                      <td class="">'.$row['ORDER_NO'].'</td>
                                 </tr>';
 
                     }
@@ -232,6 +242,7 @@ if (isset($_POST['codeResult'])) {
                                           <td class="">'.$row['QTY_ISSUED'].'</td>
                                           <td class="">'.$row['TOTAL_STOCK'].'</td>
                                           <td class="">'.$row['INVOICE_KIT'].'</td>
+                                          <td class="">'.$row['ORDER_NO'].'</td>
                                     </tr>';
                         }
 
@@ -243,6 +254,7 @@ if (isset($_POST['codeResult'])) {
                                               <td class="warning">'.$row['QTY_ISSUED'].'</td>
                                               <td class="danger">'.$row['TOTAL_STOCK'].'</td>
                                               <td class="danger">'.$row['INVOICE_KIT'].'</td>
+                                              <td class="">'.$row['ORDER_NO'].'</td>
                                         </tr>';
                             }
 
@@ -254,6 +266,7 @@ if (isset($_POST['codeResult'])) {
                                               <td class="">'.$row['QTY_ISSUED'].'</td>
                                               <td class="">'.$row['TOTAL_STOCK'].'</td>
                                               <td class="">'.$row['INVOICE_KIT'].'</td>
+                                              <td class="">'.$row['ORDER_NO'].'</td>
                                         </tr>';
                             }
 
@@ -265,6 +278,7 @@ if (isset($_POST['codeResult'])) {
                                               <td class="">'.$row['QTY_ISSUED'].'</td>
                                               <td class="">'.$row['TOTAL_STOCK'].'</td>
                                               <td class="">'.$row['INVOICE_KIT'].'</td>
+                                              <td class="">'.$row['ORDER_NO'].'</td>
                                         </tr>';
                             }
 
@@ -276,6 +290,7 @@ if (isset($_POST['codeResult'])) {
                                               <td class="">'.$row['QTY_ISSUED'].'</td>
                                               <td class="">'.$row['TOTAL_STOCK'].'</td>
                                               <td class="">'.$row['INVOICE_KIT'].'</td>
+                                              <td class="">'.$row['ORDER_NO'].'</td>
                                         </tr>';
                             }
 
@@ -287,6 +302,7 @@ if (isset($_POST['codeResult'])) {
                                               <td class="">'.$row['QTY_ISSUED'].'</td>
                                               <td class="">'.$row['TOTAL_STOCK'].'</td>
                                               <td class="">'.$row['INVOICE_KIT'].'</td>
+                                              <td class="">'.$row['ORDER_NO'].'</td>
                                         </tr>';
                             }
 
@@ -298,6 +314,7 @@ if (isset($_POST['codeResult'])) {
                                               <td class="">'.$row['QTY_ISSUED'].'</td>
                                               <td class="">'.$row['TOTAL_STOCK'].'</td>
                                               <td class="">'.$row['INVOICE_KIT'].'</td>
+                                              <td class="">'.$row['ORDER_NO'].'</td>
                                         </tr>';
                             }
 
@@ -309,6 +326,7 @@ if (isset($_POST['codeResult'])) {
                                               <td class="">'.$row['QTY_ISSUED'].'</td>
                                               <td class="">'.$row['TOTAL_STOCK'].'</td>
                                               <td class="">'.$row['INVOICE_KIT'].'</td>
+                                              <td class="">'.$row['ORDER_NO'].'</td>
                                         </tr>';
                             }
 
@@ -320,6 +338,7 @@ if (isset($_POST['codeResult'])) {
                                               <td class="">'.$row['QTY_ISSUED'].'</td>
                                               <td class="">'.$row['TOTAL_STOCK'].'</td>
                                               <td class="">'.$row['INVOICE_KIT'].'</td>
+                                              <td class="">'.$row['ORDER_NO'].'</td>
                                         </tr>';
                             }
 
