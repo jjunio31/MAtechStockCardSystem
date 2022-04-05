@@ -9,18 +9,11 @@ $(document).ready(function () {
         var currentQty = $('input[id=qty]').val();
         var issuedQty = $('input[id=issuedQty]').val();
         var orderNum = $('input[id=orderNum]').val();
-
         
-       
-
-        if(currentQty < issuedQty){
-            alert("Not enough stock");
-        }else if(issuedQty == 0){
-            alert("Please input quantity");
-        }else if(orderNum == ""){
-            alert("Please input order number");
-        }else{
-
+        if(currentQty < issuedQty || issuedQty == 0 || orderNum == ""){
+            alert("Can't proceed transaction!");
+        }else
+            {
             $.ajax({
                 type: "post",
                 url: "material_out_submit.php",

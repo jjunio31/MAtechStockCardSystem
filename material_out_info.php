@@ -70,7 +70,7 @@
             width: 7.5rem;
             }
         }
-
+ 
         thead th, tr, td {
         font-size: .9rem;
         padding: .5rem !important;
@@ -81,6 +81,11 @@
         font-size: .8rem;
         padding: .2rem !important;
      
+        }
+
+        .old_invoice_div{
+            max-width: 850px;
+            margin: auto;
         }
        
     </style>
@@ -101,7 +106,6 @@ die( print_r( sqlsrv_errors(), true));
 if (isset($_POST['codeResult'])) {
     $qrResult = $_POST['codeResult'];
 
-    $timestamp = date('Y-m-d H:i:s');
     
     $sql_select1 = "SELECT TOP 1 * From Total_Stock
     WHERE GOODS_CODE = '$qrResult'or PART_NUMBER = '$qrResult' or ITEM_CODE = '$qrResult' ";
@@ -119,10 +123,6 @@ if (isset($_POST['codeResult'])) {
            ?>
            
            <div class="scan-result bg-dark">
-
-                <div class="result-container">
-                
-                </div>
 
                 <div class="result-container ">
                 <label class="text-white label">Goods Code</label>
@@ -156,25 +156,23 @@ if (isset($_POST['codeResult'])) {
 
                 <div class="result-container ">
                 <label class="text-white pr-2">Issued QTY</label>
-                <input  type="number" min="1" step="1" onkeypress="return event.keyCode === 8 || event.charCode >= 48 && event.charCode <= 57" id="issuedQty">
+                <input  type="number" min="1" required step="1" onkeypress="return event.keyCode === 8 || event.charCode >= 48 && event.charCode <= 57" id="issuedQty">
                 </div>
 
                 <div class="result-container ">
                 <label class="text-white pr-2">Order No.</label>
                 <input type="text"  class="txtbox" name="orderNum" id="orderNum" value="">
                 </div>
-
+                
                 <!-- THIS IS WHERE TO PLACE CODE FOR INVOICE -->
                 
-
+                <div class = "old_invoice_div">
                 <?php 
                     
                     date_default_timezone_set('Asia/Hong_Kong');  
                     $date = date('m-d-Y H:i:s');
 
-                    //  $sql_select1 = "SELECT *  FROM [Receive] WHERE GOODS_CODE = '$qrResult'";
-
-                     $sql_select1 = "SELECT GOODS_CODE,INVOICE, SUM(QTY_S) as total_qty FROM [Receive] WHERE GOODS_CODE = '$qrResult' GROUP BY [INVOICE], [GOODS_CODE] ";
+                     $sql_select1 = "SELECT DATE_RECEIVE, GOODS_CODE,INVOICE, SUM(QTY_S) as total_qty FROM [Receive] WHERE GOODS_CODE = '$qrResult' or ITEM_CODE = '$qrResult' GROUP BY DATE_RECEIVE, [INVOICE], [GOODS_CODE]";
                      $sql_select1_run = sqlsrv_query( $conn, $sql_select1 );
                              if( $sql_select1_run  === false) {
                              die( print_r( sqlsrv_errors(), true) );
@@ -197,17 +195,25 @@ if (isset($_POST['codeResult'])) {
                                  while($row = sqlsrv_fetch_array($sql_select1_run, SQLSRV_FETCH_ASSOC))
                                  {
                  
-                             echo '<tr class="active">
-                                                       <td class="text-white">'.$row['DATE_RECEIVE'].'</td>
-                                                       <td class="text-white">'.$row['total_qty'].'</td>
-                                                       <td class="text-white">'.$row['INVOICE'].'</td>
-                                                       
-                                                 </tr>';
+                                    $total_stock_qtys = $row['total_qty'];
+
+                                    if ($total_stock_qtys > 0)
+                                    {
+
+                                        echo '<tr class="active">
+                                        <td class="text-white">'.$row['DATE_RECEIVE']->format("m-d-Y (h:i:sa)").'</td>
+                                        <td class="text-white">'.$row['total_qty'].'</td>
+                                        <td class="text-white">'.$row['INVOICE'].'</td>
+                                        
+                                        </tr>';
+
+                                    }
                                  }
                              }               
                                
                              echo '</tbody></table></div>';
                 ?>
+                </div>
               
             
                 <div class="result-container d-flex justify-content-center"> 

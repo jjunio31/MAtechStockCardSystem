@@ -99,9 +99,9 @@ die( print_r( sqlsrv_errors(), true));
 }
 
 if (isset($_POST['codeResult'])) {
-    $qrResult = $_POST['codeResult'];
+    $qrResult = $_POST['codeResult'];}
     
-    $sql_select1 = "SELECT * From Total_Stock
+    $sql_select1 = "SELECT TOP 1 * From Total_Stock
     WHERE GOODS_CODE = '$qrResult'or PART_NUMBER = '$qrResult' or ITEM_CODE = '$qrResult'";
     $sql_select1_run = sqlsrv_query( $conn, $sql_select1 );
     
@@ -119,11 +119,7 @@ if (isset($_POST['codeResult'])) {
            
            <div class="scan-result bg-dark">
 
-                <div class="result-container">
-                
-                </div>
-
-                <div class="result-container ">
+           <div class="result-container ">
                 <label class="text-white label">Goods Code</label>
                 <input type="text" readonly class="txtbox bg-secondary text-white" name="goodscode" id="goodsCode" value="<?php echo $row['GOODS_CODE']?>">
                 </div>
@@ -144,21 +140,80 @@ if (isset($_POST['codeResult'])) {
                 </div>
 
                 <div class="result-container ">
+                <label class="text-white pr-2">Total Stock</label>
+                <input type="text" readonly class="txtbox bg-secondary text-white" name="currentQty" id="currentQty" value="<?php echo $row['TOTAL_STOCK']?>">
+                </div>
+
+                <div class="result-container ">
+                <label class="text-white pr-2">Location</label>
+                <input type="text" readonly class="txtbox bg-secondary text-white" name="location" id="location" value="<?php echo $row['LOC']?>">
+                </div>
+
+                <div class="result-container ">
                 <label class="text-white pr-2">Returned QTY</label>
-                <input  type="number" min="1" step="1" onkeypress="return event.keyCode === 8 || event.charCode >= 48 && event.charCode <= 57" id="returnedqty">
+                <input  type="number" min="1" required step="1" onkeypress="return event.keyCode === 8 || event.charCode >= 48 && event.charCode <= 57" name = "returnedqty" id="returnedqty">
+                </div>
+
+                <div class="result-container ">
+                <label class="text-white pr-2">Invoice No.</label>
+                <input type="text"  class="txtbox" name="invoice" id="invoice" value="">
                 </div>
 
                 <div class="result-container ">
                 <label class="text-white pr-2">Reason</label>
-                <input type="text" class="txtbox bg-white text-black" name="reason" id="reason" value="">
+                <input type="text" class="txtbox bg-white text-black" name="reason" id="reason" value="N/A">
                 </div>
                 
                 <div class="result-container d-flex justify-content-center"> 
                 <h6 id="messageDisplay" class="text-warning"></h6>
                 </div>
 
-                <div class="result-container d-flex justify-content-center" id="btnDiv1">
+                <!-- <div class="result-container d-flex justify-content-center" id="btnDiv1">
                 <button type="submit" class="btn btn-primary btn-block control" id="saveBTN">Save Data</button>
+                </div> -->
+
+                <div class="result-container d-flex justify-content-center" id="modalbtn">
+                <input type="button" name="submit" value="SAVE DATA" id="submitBtn" data-toggle="modal" data-target="#confirm-submit" class="btn btn-primary btn-block control" />
+                </div>
+
+                <div class="result-container d-flex justify-content-center" id="btnDiv2">
+                <button type="submit" class="btn btn-primary btn-block control" id="btn_showReport">Show Transactions</button>
+                </div>
+
+                <div class="modal fade" id="confirm-submit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            Confirm Submit
+                        </div>
+                        <div class="modal-body">
+                            Are you sure you want to submit the following details?
+
+                            <!-- We display the details entered by the user here -->
+                            <table class="table">
+                                <tr>
+                                    <th>Returned QTY</th>
+                                    <td id="" class="text-dark"><input type="text" readonly class="txtbox" name="returnedqty2" id="returnedqty2" value=""></td>
+                                    
+                                </tr>
+                                <tr>
+                                    <th>Invoice No.</th>
+                                    <td id=""><input type="text" readonly class="txtbox" name="invoice2" id="invoice2" value=""></td>
+                                </tr>
+                                <tr>
+                                    <th>Reason</th>
+                                    <td id=""><input type="text" readonly class="txtbox" name="reason2" id="reason2" value=""></td>
+                                </tr>
+                            </table>
+
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            <button href="#" id="saveBTN" class="btn btn-success success" data-dismiss="modal">Save</button>
+                        </div>
+                    </div>
+                </div>
                 </div>
             
             </div>
@@ -171,7 +226,6 @@ if (isset($_POST['codeResult'])) {
         echo $qrResult . " Not Found";
     }
 
-}
 
 ?>
 </form>
