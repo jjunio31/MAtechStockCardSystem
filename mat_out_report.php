@@ -62,7 +62,7 @@ if (!empty($_POST["itemCode"])){
 
   
 
-    $sql_select1 = "SELECT * FROM transaction_record_tbl WHERE [GOODS_CODE] = '$goodsCode' ORDER BY TRANSACTION_DATE ASC";
+    $sql_select1 = "SELECT * FROM transaction_record_tbl WHERE [GOODS_CODE] = '$goodsCode' ORDER BY id ASC";
     $sql_select1_run = sqlsrv_query( $conn2, $sql_select1 );
             if( $sql_select1_run  === false) {
             die( print_r( sqlsrv_errors(), true) );

@@ -9,11 +9,25 @@ $(document).ready(function () {
         var currentQty = $('input[id=qty]').val();
         var issuedQty = $('input[id=issuedQty]').val();
         var orderNum = $('input[id=orderNum]').val();
-        
-        if(currentQty < issuedQty || issuedQty == 0 || orderNum == ""){
-            alert("Can't proceed transaction!");
-        }else
-            {
+
+        if(currentQty < issuedQty){
+
+            alert('Over Quantity');
+
+        }else {
+
+            if(issuedQty == "")
+        {
+            alert ('Please input quantity');
+        }
+
+        else if (orderNum == "")
+        {
+            alert ('Please input Order Number');
+        }
+
+        else {
+
             $.ajax({
                 type: "post",
                 url: "material_out_submit.php",
@@ -30,6 +44,7 @@ $(document).ready(function () {
                 success: function (response) {
                     $('#messageDisplay').text(response);
                     $('#submitIssued').prop('disabled', true);
+                    
                 }
             })
             
@@ -50,8 +65,16 @@ $(document).ready(function () {
             })
                     
             });
-        
+
+
+
         }
+
+        }
+        
+        
+
+       
   
     })
 });

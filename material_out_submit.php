@@ -37,97 +37,196 @@ if( $sql_select_run === false) {
     die( print_r( sqlsrv_errors(), true) );
 }
 
-//SELECT Total_Stock $new_total_stock 
+//SET TOTAL STOCK INTO VARIABLE
 $sql_select_stock = "SELECT TOTAL_STOCK From Total_Stock
-WHERE GOODS_CODE = '$goodsCode'";
+WHERE GOODS_CODE = '$goodsCode' or ITEM_CODE = '$itemCode' ";
 $sql_select_stock_run = sqlsrv_query( $conn1, $sql_select_stock);
 
 if( $sql_select_stock_run === false) {
     die( print_r( sqlsrv_errors(), true) );
-}
-
-if($sql_select_run && $sql_select_stock_run){
+}else{
 
     while($row = sqlsrv_fetch_array($sql_select_stock_run, SQLSRV_FETCH_ASSOC))
         {
             $total_stock = $row['TOTAL_STOCK'];
         }
+}
 
-            $new_total_stock = $total_stock - $issuedQty;
 
-            $sql_update= "UPDATE Total_Stock set TOTAL_STOCK = $new_total_stock
-            WHERE GOODS_CODE = '$goodsCode' or ITEM_CODE = '$itemCode'";
-            $sql_update_run = sqlsrv_query($conn1, $sql_update);
-                if($sql_update_run){
-                    echo "Total Stock is updated to $new_total_stock.\n";
-                    
-                }else{
-                    die( print_r( sqlsrv_errors(), true) );
-                }                 
-                         
 
-            // // // put earliest invoice into a variable
-            $sql_select_invoice = "SELECT id, DATE_RECEIVE, GOODS_CODE,INVOICE, QTY_S FROM [Receive] WHERE QTY_S > 0 AND GOODS_CODE = '$goodsCode' or ITEM_CODE = '$itemCode' GROUP BY id, QTY_S, DATE_RECEIVE, [INVOICE], [GOODS_CODE] 
-            ORDER BY DATE_RECEIVE ASC";
-            $sql_select_invoice_run = sqlsrv_query( $conn1, $sql_select_invoice);
-            if($sql_select_invoice_run)
+
+
+//SET TOTAL STOCK of EARLIEST INVOICE INTO VARIABLE
+$sql_select1 = "SELECT DATE_RECEIVE, GOODS_CODE,INVOICE, SUM(QTY_S) as total_qty 
+FROM [Receive] WHERE GOODS_CODE = '$goodsCode' or ITEM_CODE = '$itemCode' 
+GROUP BY DATE_RECEIVE, [INVOICE], [GOODS_CODE]";
+
+$sql_select1_run = sqlsrv_query( $conn1, $sql_select1 );
+
+if( $sql_select1_run  === false) 
+{
+die( print_r( sqlsrv_errors(), true) );
+}
+
+    if($sql_select1_run)
+    {
+    while($row = sqlsrv_fetch_array($sql_select1_run, SQLSRV_FETCH_ASSOC))
+        {
+
+            $total_stock_qtys = $row['total_qty'];
+
+        if ($total_stock_qtys > 0)
+
             {
-                while($row = sqlsrv_fetch_array($sql_select_invoice_run, SQLSRV_FETCH_ASSOC))
-                {
-                   if ($row['INVOICE'] > 0){
+                $total_qtys[] = $row['total_qty']; 
+                $e_invoice[] = $row['INVOICE'];
+            }
 
-                   }
-                   $invoices[] = $row['INVOICE'];
-                   $earliest_invoice = $invoices [0];
+        }
+                
+        $earliest_qtys = $total_qtys[0];
+        $earliest_invoice = $e_invoice[0]; 
 
-                   $ids[]= $row['id'];
-                   $earliest_id = $ids [0];
+        //hidden table 
+        // $sql_99 = "SELECT * FROM [Receive]
+        //                 WHERE GOODS_CODE = '$goodsCode' or ITEM_CODE = '$itemCode' 
+        //                 ORDER BY id";
 
-                   $qtys[] = $row['total_qty'];
-                   $earliest_qtys = $qtys[0];
+        // $sql_99_run = sqlsrv_query( $conn1, $sql_99);
 
-                   $qtys[] = $row['QTY_S'];
-                   $total_qtys = array_sum($qtys);
+        // if ($sql_99_run){
+        //     while($row = sqlsrv_fetch_array($sql_99_run , SQLSRV_FETCH_ASSOC))
+        //     {
+        //                         echo '  <table>
+        //                                 <tr class="active">
+        //                                 <td class="text-white">'.$row['id'].'</td>
+        //                                 <td class="text-white">'.$row['DATE_RECEIVE']->format("m-d-Y (h:i:sa)").'</td>
+        //                                 <td class="text-white">'.$row['QTY'].'</td>
+        //                                 <td class="text-white">'.$row['INVOICE'].'</td>
+        //                                 </tr>
+        //                             </table>';
+        //     }
+        // }
 
+
+                                        
+
+        //hidden table 
+
+        //SET count of invoice that has the same value
+        $sql_invoice = "SELECT DATE_RECEIVE, INVOICE, COUNT(*) as inv_row
+        FROM [Receive] 
+        WHERE GOODS_CODE = '$goodsCode' or ITEM_CODE = '$itemCode' 
+        GROUP BY DATE_RECEIVE, INVOICE 
+        ORDER BY DATE_RECEIVE;";
+
+        $sql_invoice_run = sqlsrv_query( $conn1, $sql_invoice );
+
+        while($row = sqlsrv_fetch_array($sql_invoice_run , SQLSRV_FETCH_ASSOC))
+        {
+
+            $inv_row = $row['inv_row'];
+
+        if ($total_stock_qtys > 0)
+
+            {
+                $total_inv_row[] = $row['inv_row'];
+            }
+        }
+
+        $inv_total_c = $total_inv_row[0];
+
+    } 
+
+//UPDATE TOTAL STOCK
+if ($total_stock <  $issuedQty){
+    echo 'Unable to process request. Not enough stock';
+
+}else {
+
+    if($sql_select_stock_run && $sql_select1_run)
+    {
+    
+        if ($issuedQty < $earliest_qtys && $issuedQty < $total_stock)
+        {
+            $new_total_stock = $total_stock - $issuedQty;
+    
+            $sql_update= "UPDATE Total_Stock set TOTAL_STOCK = $new_total_stock
+                          WHERE GOODS_CODE = '$goodsCode' or ITEM_CODE = '$itemCode'";
+            $sql_update_run = sqlsrv_query($conn1, $sql_update);
+                            if($sql_update_run)
+                            {
+                                echo "Total Stock is updated to $new_total_stock.\n";
+                                
+                            }else
+                            {
+                                die( print_r( sqlsrv_errors(), true) );
+                            }  
+    
+            
+            $dif = $earliest_qtys - $issuedQty;
+            $new_qtys = (int) $dif / $inv_total_c;
+            
+    
+            $r = fmod($dif , $inv_total_c);  
+    
+                $sql_update_qtys = "UPDATE [Receive] SET QTY_S = $new_qtys
+                                    WHERE GOODS_CODE = '$goodsCode'
+                                    AND INVOICE = '$earliest_invoice'";
+    
+                $sql_update_qtys_run = sqlsrv_query($conn1, $sql_update_qtys);
+    
+        }           
+    // }         
+     
+    
+    $mod = $dif % $inv_total_c;
+    
+    // echo $earliest_invoice . " " .$new_total_stock. " " . $new_qtys . " " .$r . " " . $mod ;
+    
+    
+    
+    
+    
+    
+                    
+                // // update query for qtys 
+    
+    
+                
+                // $sql_update_qtys = "UPDATE [Receive] set QTY_S = $new_qtys
+                // WHERE GOODS_CODE = '$goodsCode' AND INVOICE = '$earliest_invoice' AND id = '$earliest_id' ";
+                // $sql_update_qtys_run= sqlsrv_query($conn1, $sql_update_qtys);
+                //     if($sql_update_qtys_run === false){
+                //         die( print_r( sqlsrv_errors(), true) );
+                //     } else{
+                //         echo  $earliest_invoice ." " . "stock is updated to" . " " . $new_qtys;
+                //     }
+    
+                
+                // QUERY to update transaction report
+                date_default_timezone_set('Asia/Hong_Kong');  
+                $date = date('m-d-Y H:i:s');
+        
+                $sql_insert = "INSERT INTO transaction_record_tbl (TRANSACTION_DATE, GOODS_CODE, QTY_ISSUED, TOTAL_STOCK, PART_NUMBER, PART_NAME, ORDER_NO) 
+                VALUES (?, ?, ?, ?, ?, ?, ?) ";
+                $params1 = array($date, $goodsCode, $issuedQty, $new_total_stock, $partNumber, $partName, $orderNum );
+                $sql_insert_run = sqlsrv_query($conn2, $sql_insert, $params1);
+        
+                if( $sql_insert_run === false) {
+                     echo 'Unable to process transaction' . die( print_r( sqlsrv_errors(), true) );
                 }
-            } else {
-               die( print_r( sqlsrv_errors(), true) );
             }
-  
-            echo $qtys;
-            // echo $earliest_invoice . $earliest_qtys;
-            // $new_qtys = $earliest_qtys - $issuedQty;
-            // // update query for qtys 
+           
 
-            
-            // $sql_update_qtys = "UPDATE [Receive] set QTY_S = $new_qtys
-            // WHERE GOODS_CODE = '$goodsCode' AND INVOICE = '$earliest_invoice' AND id = '$earliest_id' ";
-            // $sql_update_qtys_run= sqlsrv_query($conn1, $sql_update_qtys);
-            //     if($sql_update_qtys_run === false){
-            //         die( print_r( sqlsrv_errors(), true) );
-            //     } else{
-            //         echo  $earliest_invoice ." " . "stock is updated to" . " " . $new_qtys;
-            //     }
+    
+}
 
-            
-            //QUERY to update transaction report
-            date_default_timezone_set('Asia/Hong_Kong');  
-            $date = date('m-d-Y H:i:s');
-    
-            $sql_insert = "INSERT INTO transaction_record_tbl (TRANSACTION_DATE, GOODS_CODE, QTY_ISSUED, TOTAL_STOCK, PART_NUMBER, PART_NAME, ORDER_NO) 
-            VALUES (?, ?, ?, ?, ?, ?, ?) ";
-            $params1 = array($date, $goodsCode, $issuedQty, $new_total_stock, $partNumber, $partName, $orderNum );
-            $sql_insert_run = sqlsrv_query($conn2, $sql_insert, $params1);
-    
-            if( $sql_insert_run === false) {
-                 echo "Unable to process transaction" . die( print_r( sqlsrv_errors(), true) );
-            }
-       
 
 
 //END of if($sql_select_run && $sql_select_stock_run)
-}else{
-    die( print_r( sqlsrv_errors(), true) );
-}
+// }else{
+//     die( print_r( sqlsrv_errors(), true) );
+// }
 
 ?>
