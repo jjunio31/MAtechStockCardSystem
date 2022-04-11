@@ -113,7 +113,7 @@ die( print_r( sqlsrv_errors(), true) );
 
         //hidden table 
 
-        //SET count of invoice that has the same value
+        //SET count of goodscode that has the same invoice 
         $sql_invoice = "SELECT DATE_RECEIVE, INVOICE, COUNT(*) as inv_row
         FROM [Receive] 
         WHERE GOODS_CODE = '$goodsCode' or ITEM_CODE = '$itemCode' 
@@ -147,7 +147,7 @@ if ($total_stock <  $issuedQty){
     if($sql_select_stock_run && $sql_select1_run)
     {
     
-        if ($issuedQty < $earliest_qtys && $issuedQty < $total_stock)
+        if ($issuedQty < $total_stock)
         {
             $new_total_stock = $total_stock - $issuedQty;
     
@@ -162,29 +162,102 @@ if ($total_stock <  $issuedQty){
                             {
                                 die( print_r( sqlsrv_errors(), true) );
                             }  
+
+
+
+                            ////
     
+                            $query = "SELECT * FROM [MA_Receiving].[dbo].[Receive]
+
+                            WHERE GOODS_CODE = '$goodsCode' ORDER BY DATE_RECEIVE ASC";
+                
+                            $result = sqlsrv_query($conn1, $query);
+                
+                       
+                
+                            $result_number = 0;
+                
+                       
+                
+                            while($rows=sqlsrv_fetch_array($result)){
+                
+                
+                
+                                $checkid = $rows['id'];
+                
+                       
+                
+                                if($issuedQty > $rows['QTY_S']){
+                
+                
+                
+                                    $tsql = "UPDATE [Receive]
+                
+                                    SET QTY_S = '0' WHERE id = '$checkid'";
+                
+                
+                
+                                    $stmt2 = sqlsrv_query( $conn1, $tsql);
+                
+                
+                
+                                    if($stmt2){
+                
+                                        // echo ' NOICE ';
+                
+                                        $issuedQty = $issuedQty - $rows['QTY_S'] ;
+                
+                                    }
+                
+                
+                
+                                }
+                
+                
+                
+                                else{
+                
+                
+                
+                                    $NEW = $issuedQty - $rows['QTY_S'] ;
+                
+                
+                
+                                    $BASTA = $NEW * -1;
+                
+                
+                
+                                    $tsql = "UPDATE [Receive]
+                
+                                    SET QTY_S = '$BASTA'
+                
+                                    WHERE id = '$checkid'";
+                
+                
+                
+                                    $stmt2 = sqlsrv_query( $conn1, $tsql);
+                
+                
+                
+                                    if($stmt2){
+                
+                                        echo ' NOICE ';
+                
+                                    }
+                
+                                }
+                
+                       
+                
+                            }
             
-            $dif = $earliest_qtys - $issuedQty;
-            $new_qtys = (int) $dif / $inv_total_c;
-            
-    
-            $r = fmod($dif , $inv_total_c);  
-    
-                $sql_update_qtys = "UPDATE [Receive] SET QTY_S = $new_qtys
-                                    WHERE GOODS_CODE = '$goodsCode'
-                                    AND INVOICE = '$earliest_invoice'";
-    
-                $sql_update_qtys_run = sqlsrv_query($conn1, $sql_update_qtys);
     
         }           
     // }         
      
+
     
-    $mod = $dif % $inv_total_c;
-    
-    // echo $earliest_invoice . " " .$new_total_stock. " " . $new_qtys . " " .$r . " " . $mod ;
-    
-    
+  
     
     
     
