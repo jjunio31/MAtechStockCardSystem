@@ -1,4 +1,11 @@
-//type info to modal
+
+
+
+
+
+$(document).ready(function () {
+
+  //type info to modal
   $("#returnedqty").keyup(function(e){
     var val = $(this).val();
     $("#returnedqty2").val(val);
@@ -26,8 +33,6 @@ $("#returnedqty, #invoice").keyup(function () {
 
 
 
-
-$(document).ready(function () {
     $('#saveBTN').click(function (e) { 
         e.preventDefault();
         

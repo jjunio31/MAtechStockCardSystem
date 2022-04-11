@@ -74,7 +74,7 @@ if (isset($_POST['codeResult'])) {
     $qrResult = $_POST['codeResult'];
 
     
-    $sql_select1 = "SELECT TOP 1 * From Total_Stock
+    $sql_select1 = "SELECT * From Total_Stock
     WHERE GOODS_CODE = '$qrResult'or PART_NUMBER = '$qrResult' or ITEM_CODE = '$qrResult' ";
     $sql_select1_run = sqlsrv_query( $conn, $sql_select1 );
     
@@ -213,12 +213,45 @@ if (isset($_POST['codeResult'])) {
                 <h6 id="messageDisplay" class="text-warning"></h6>
                 </div>
 
-                <div class="result-container d-flex justify-content-center" id="btnDiv1">
-                <button type="submit" class="btn btn-primary btn-block control" id="submitIssued">Save Data</button>
+                <div class="result-container d-flex justify-content-center" id="modalbtn">
+                <input type="button" name="submit" value="SAVE DATA" id="submitBtn" data-toggle="modal" data-target="#confirm-submit" class="btn btn-primary btn-block control" />
                 </div>
 
                 <div class="result-container d-flex justify-content-center" id="btnDiv2">
                 <button type="submit" class="btn btn-primary btn-block control" id="btn_showReport">Show Transactions</button>
+                </div>
+
+                <div class="modal fade" id="confirm-submit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            Confirm Details
+                        </div>
+                        <div class="modal-body">
+                            Are you sure you want to save the following details?
+
+                            <!-- We display the details entered by the user here -->
+                            <table class="table">
+                                <tr>
+                                    <th>Issued QTY :</th>
+                                    <td id="" class="text-dark"><input type="text" readonly class="txtbox text-primary" name="issuedQty2" id="issuedQty2" value=""></td>
+                                    
+                                </tr>
+                                <tr>
+                                    <th>Order No. :</th>
+                                    <td id=""><input type="text" readonly class="txtbox text-primary" name="orderNum2" id="orderNum2" value=""></td>
+                                </tr>
+                                
+                            </table>
+
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            <button href="#" id="submitIssued" class="btn btn-success success" data-dismiss="modal">Save</button>
+                        </div>
+                    </div>
+                </div>
                 </div>
 
                 

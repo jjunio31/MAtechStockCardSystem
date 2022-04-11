@@ -62,7 +62,7 @@ die( print_r( sqlsrv_errors(), true));
 if (isset($_POST['codeResult'])) {
     $qrResult = $_POST['codeResult'];}
     
-    $sql_select1 = "SELECT TOP 1 * From Total_Stock
+    $sql_select1 = "SELECT * From Total_Stock
     WHERE GOODS_CODE = '$qrResult'or PART_NUMBER = '$qrResult' or ITEM_CODE = '$qrResult'";
     $sql_select1_run = sqlsrv_query( $conn, $sql_select1 );
     
@@ -102,7 +102,7 @@ if (isset($_POST['codeResult'])) {
 
                 <div class="result-container ">
                 <label class="text-warning pr-2">Total Stock</label>
-                <input type="text" readonly class="txtbox bg-secondary text-warning" name="currentQty" id="currentQty" value="<?php echo $row['TOTAL_STOCK']?>">
+                <input type="number" readonly class="txtbox bg-secondary text-warning" name="currentQty" id="currentQty" value="<?php echo $row['TOTAL_STOCK']?>">
                 </div>
 
                 <!-- <div class="result-container ">
@@ -145,7 +145,7 @@ if (isset($_POST['codeResult'])) {
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            Confirm Inputs
+                            Confirm Details
                         </div>
                         <div class="modal-body">
                             Are you sure you want to save the following details?
@@ -153,17 +153,17 @@ if (isset($_POST['codeResult'])) {
                             <!-- We display the details entered by the user here -->
                             <table class="table">
                                 <tr>
-                                    <th>Returned QTY</th>
-                                    <td id="" class="text-dark"><input type="text" readonly class="txtbox" name="returnedqty2" id="returnedqty2" value=""></td>
+                                    <th>Returned QTY :</th>
+                                    <td id="" class="text-dark"><input type="text" readonly class="txtbox text-primary" name="returnedqty2" id="returnedqty2" value=""></td>
                                     
                                 </tr>
                                 <tr>
-                                    <th>Invoice No.</th>
-                                    <td id=""><input type="text" readonly class="txtbox" name="invoice2" id="invoice2" value=""></td>
+                                    <th>Invoice No. :</th>
+                                    <td id=""><input type="text" readonly class="txtbox text-primary" name="invoice2" id="invoice2" value=""></td>
                                 </tr>
                                 <tr>
-                                    <th>Reason</th>
-                                    <td id=""><input type="text" readonly class="txtbox" name="reason2" id="reason2" value=""></td>
+                                    <th>Reason :</th>
+                                    <td id=""><input type="text" readonly class="txtbox text-primary" name="reason2" id="reason2" value=""></td>
                                 </tr>
                             </table>
 

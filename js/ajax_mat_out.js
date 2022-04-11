@@ -1,4 +1,26 @@
 $(document).ready(function () {
+
+    //type info to modal
+    $("#issuedQty").keyup(function(e){
+        var val = $(this).val();
+        $("#issuedQty2").val(val);
+      });
+    
+      $("#orderNum").keyup(function(e){
+        var val = $(this).val();
+        $("#orderNum2").val(val);
+      });
+
+      $("#issuedQty, #orderNum").keyup(function () {
+        if ($("#issuedQty").val() && $("#orderNum").val()) {
+           $("#submitBtn").show();
+        }
+        else {
+           $("#submitBtn").hide();
+        }
+     });
+      
+ 
     $('#submitIssued').click(function (e) { 
         e.preventDefault();
 
@@ -6,24 +28,31 @@ $(document).ready(function () {
         var itemCode = $('input[id=itemCode]').val();
         var partNumber = $('input[id=partNumber]').val();
         var partName = $('input[id=partName]').val();
-        var currentQty = $('input[id=qty]').val();
-        var issuedQty = $('input[id=issuedQty]').val();
+        var current_Qty = ($('input[id=qty]').val());
+        var issued_Qty = $('input[id=issuedQty]').val();
         var orderNum = $('input[id=orderNum]').val();
+        
 
-        if(currentQty < issuedQty){
+        //convert string to int 
 
-            alert('Over Quantity');
+        var currentQty = parseInt(current_Qty);
+        var issuedQty = parseInt(issued_Qty);
 
+        if(issuedQty == ""){
+
+            alert ('Please input quantity');
+            
         }else {
 
-            if(issuedQty == "")
-        {
-            alert ('Please input quantity');
-        }
-
-        else if (orderNum == "")
+            if(orderNum == "")
         {
             alert ('Please input Order Number');
+        }
+
+        else if (issuedQty > currentQty)
+        {
+            alert('Over Quantity');
+            
         }
 
         else {
@@ -71,8 +100,6 @@ $(document).ready(function () {
         }
 
         }
-        
-        
 
        
   
