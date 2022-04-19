@@ -1,7 +1,7 @@
 $(document).ready(function(){
     $("select#SelectMonth").change(function(){
-        var selectedMonth = $(this).children("option:selected").val();
 
+        var selectedMonth = $(this).children("option:selected").val();
         var goodsCode = $('input[id=goodsCode]').val();
         var itemCode = $('input[id=itemCode]').val();
         var partNumber = $('input[id=partNumber]').val();

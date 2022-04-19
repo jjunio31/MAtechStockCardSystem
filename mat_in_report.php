@@ -78,8 +78,9 @@ if (!empty($_POST["itemCode"])){
                 <th scope="col">RECEIVED</th>
                 <th scope="col">ISSUED</th>
                 <th scope="col">STOCK</th>
-                <th scope="col">INVOICE NO.</th>
-                <th scope="col">ORDER NO.</th>
+                <th scope="col">INVOICE #</th>
+                <th scope="col">ORDER #</th>
+                <th scope="col">REMARKS</th>
                 
                 </tr>
               </thead>
@@ -103,13 +104,14 @@ if (!empty($_POST["itemCode"])){
                     while($row = sqlsrv_fetch_array($sql_select1_run, SQLSRV_FETCH_ASSOC))
                     {
               
-                      echo '<tr class="active bg-primary text-white">
+                      echo '<tr class="active bg-secondary text-white">
                       <td class="">'.$row['TRANSACTION_DATE']->format("m-d-Y (h:i:sa)").'</td>
                       <td class="">'.$row['QTY_RECEIVED'].'</td>
                       <td class="">'.$row['QTY_ISSUED'].'</td>
                       <td class="">'.$row['TOTAL_STOCK'].'</td>
                       <td class="">'.$row['INVOICE_KIT'].'</td>
                       <td class="">'.$row['ORDER_NO'].'</td>
+                      <td class="">'.$row['REMARKS'].'</td>
                       </tr> </tbody>';
                     }
                   }

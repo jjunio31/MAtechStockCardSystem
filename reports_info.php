@@ -14,7 +14,18 @@
     
     
     
-      
+        thead th, tr, td {
+        font-size: .9rem;
+        padding: .5rem !important;
+        height: 15px;
+        }
+
+        thead th{
+        font-size: .8rem;
+        padding: .2rem !important;
+     
+        }
+
         .table_reports{
             overflow: scroll;
         }
@@ -102,7 +113,7 @@ if (isset($_POST['codeResult'])) {
                 <label class="text-warning pr-2">Select Month</label>
                 <form action="" method="POST">
                     <select class="text-white bg-primary" name="SelectMonth" id="SelectMonth">
-                    <option value="none" class="dropdown-item bg-primary text-white px-5">Select Month</option>
+                    <option value="none" disabled selected class="dropdown-item bg-dark text-primary px-5">Select Month</option>
                     <option value="01" id="1" class="dropdown-item bg-primary text-white">January</option>
                     <option value="02" class="dropdown-item text-white" style="background-color: #8a2be2">February</option>
                     <option value="03" class="dropdown-item text-white" style="background-color: #FF6347">March</option>

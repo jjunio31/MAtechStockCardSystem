@@ -1,8 +1,3 @@
-
-
-
-
-
 $(document).ready(function () {
 
   //type info to modal
@@ -11,26 +6,20 @@ $(document).ready(function () {
     $("#returnedqty2").val(val);
   });
 
-  $("#invoice").keyup(function(e){
-    var val = $(this).val();
-    $("#invoice2").val(val);
-  });
-
-  $("#reason").keyup(function(e){
-    var val = $(this).val();
-    $("#reason2").val(val);
+  $("#SelectRemark").change(function(e){
+    var selectedRemark = $('#SelectRemark').children("option:selected").val();
+    $("#remarks").val(selectedRemark);
   });
 
 
-$("#returnedqty, #invoice").keyup(function () {
-   if ($("#returnedqty").val() && $("#invoice").val()) {
+$("#returnedqty").keyup(function () {
+   if ($("#returnedqty").val()) {
       $("#submitBtn").show();
    }
    else {
       $("#submitBtn").hide();
    }
 });
-
 
 
     $('#saveBTN').click(function (e) { 
@@ -41,12 +30,14 @@ $("#returnedqty, #invoice").keyup(function () {
         var partNumber = $('input[id=partNumber]').val();
         var partName = $('input[id=partName]').val();
         var returnedqty = $('input[id=returnedqty]').val();
-        var reason = $('input[id=reason]').val();
-        var invoice = $('input[id=invoice]').val();
         var currentQty = $('input[id=currentQty]').val();
-        
+        var selectedRemark = $('#SelectRemark').children("option:selected").val();
+      
+        if(selectedRemark == "none"){
+          alert('Please select remark');
+        }else{
 
-            $.ajax({
+           $.ajax({
                 type: "post",
                 url: "material_in_submit.php",
                 data: { 
@@ -55,14 +46,14 @@ $("#returnedqty, #invoice").keyup(function () {
                     partName:partName,
                     partNumber:partNumber,
                     returnedqty:returnedqty,
-                    reason:reason,
-                    invoice:invoice,
-                    currentQty:currentQty
+                    currentQty:currentQty,
+                    selectedRemark:selectedRemark
                 },
                 dataType: "text",
                 success: function (response) {
                     $('#messageDisplay').text(response);
                     $('#submitBtn').hide();
+                    console.log (selectedRemark);
                 }
             })
             
@@ -83,6 +74,9 @@ $("#returnedqty, #invoice").keyup(function () {
             })
                     
             });
+
+        }
+           
     })
 });
 

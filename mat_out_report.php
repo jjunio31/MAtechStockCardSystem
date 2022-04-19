@@ -110,8 +110,9 @@ switch ($currentMonth){
                 <th scope="col">RECEIVED</th>
                 <th scope="col">ISSUED</th>
                 <th scope="col">STOCK</th>
-                <th scope="col">INVOICE NO.</th>
-                <th scope="col">ORDER NO.</th>
+                <th scope="col">INVOICE #</th>
+                <th scope="col">ORDER #</th>
+                <th scope="col">REMARKS</th>
                 
                 </tr>
               </thead>
@@ -126,13 +127,14 @@ switch ($currentMonth){
                     {
 
                     
-                    echo '<tr class="active text-dark" style="background: ">
+                    echo '<tr class="active text-white bg-secondary">
                                       <td class="">'.$row['TRANSACTION_DATE']->format("m-d-Y (h:i:sa)").'</td>
                                       <td class="">'.$row['QTY_RECEIVED'].'</td>
                                       <td class="">'.$row['QTY_ISSUED'].'</td>
                                       <td class="">'.$row['TOTAL_STOCK'].'</td>
                                       <td class="">'.$row['INVOICE_KIT'].'</td>
                                       <td class="">'.$row['ORDER_NO'].'</td>
+                                      <td class="">'.$row['REMARKS'].'</td>
                                 </tr>';
 
                     }

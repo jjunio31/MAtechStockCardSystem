@@ -11,14 +11,26 @@ $(document).ready(function () {
         $("#orderNum2").val(val);
       });
 
-      $("#issuedQty, #orderNum").keyup(function () {
-        if ($("#issuedQty").val() && $("#orderNum").val()) {
-           $("#submitBtn").show();
-        }
-        else {
-           $("#submitBtn").hide();
-        }
-     });
+      $("#SelectRemark").change(function(e){
+        var selectedRemark = $("#SelectRemark").children("option:selected").val();
+        $("#remarks").val(selectedRemark);
+        console.log(selectedRemark);
+        
+      });
+
+      
+
+    $(document).ready(function() {
+        $("#issuedQty, #orderNum").keyup(function () {
+            if ($("#issuedQty").val() && $("#orderNum").val()) {
+               $("#submitBtn").show();
+            }
+            else {
+               $("#submitBtn").hide();
+            }
+         });
+    });
+
       
  
     $('#submitIssued').click(function (e) { 
@@ -31,6 +43,7 @@ $(document).ready(function () {
         var current_Qty = ($('input[id=qty]').val());
         var issued_Qty = $('input[id=issuedQty]').val();
         var orderNum = $('input[id=orderNum]').val();
+        var selectedRemark = $("#SelectRemark").children("option:selected").val();
         
 
         //convert string to int 
@@ -53,6 +66,8 @@ $(document).ready(function () {
         {
             alert('Over Quantity');
             
+        }else if(selectedRemark == "none"){
+            alert('Please Select Remarks');
         }
 
         else {
@@ -67,12 +82,13 @@ $(document).ready(function () {
                     itemCode:itemCode,
                     partNumber:partNumber,
                     partName:partName,
-                    orderNum:orderNum
+                    orderNum:orderNum,
+                    selectedRemark:selectedRemark
                 },
                 dataType: "text",
                 success: function (response) {
                     $('#messageDisplay').text(response);
-                    $('#submitIssued').prop('disabled', true);
+                    $('#submitBtn').hide();
                     
                 }
             })

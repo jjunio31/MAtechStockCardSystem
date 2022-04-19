@@ -47,13 +47,23 @@
         thead th{
         font-size: .8rem;
         padding: .2rem !important;
-     
         }
 
         .old_invoice_div{
             max-width: 850px;
             margin: auto;
         }
+
+        #SelectRemark{
+            width: 50%;
+            border-radius: 25px;
+            border: 2px solid white;
+            padding: .2rem; 
+        }
+
+        .c2{
+        overflow-x: scroll;
+      }
        
     </style>
 </head>
@@ -61,14 +71,31 @@
 <form  id="formInfo" method="post">
 <?php
 $serverName = "192.168.2.15,40001";
-$connectionInfo = array( "UID" => "iqc_db_user_dev", "PWD" => "iqcdbuserdev", "Database" => "MA_Receiving");
-$conn = sqlsrv_connect($serverName, $connectionInfo);
+$connectionInfo1 = array( "UID" => "iqc_db_user_dev", "PWD" => "iqcdbuserdev", "Database" => "MA_Receiving");
+$conn1 = sqlsrv_connect($serverName, $connectionInfo1);
 
-if( $conn === false )
+$connectionInfo2 = array( "UID" => "iqc_db_user_dev", "PWD" => "iqcdbuserdev", "Database" => "StockCard");
+$conn2 = sqlsrv_connect($serverName, $connectionInfo2);
+
+if( $conn1 === false )
 {
 echo "Could not connect.\n";
 die( print_r( sqlsrv_errors(), true));
 }
+else {
+//    echo "connection established 1";
+}
+
+if( $conn2 === false )
+{
+echo "Could not connect.\n";
+die( print_r( sqlsrv_errors(), true));
+}
+else {
+//    echo "connection established 2";
+}
+
+
 
 if (isset($_POST['codeResult'])) {
     $qrResult = $_POST['codeResult'];
@@ -76,7 +103,7 @@ if (isset($_POST['codeResult'])) {
     
     $sql_select1 = "SELECT * From Total_Stock
     WHERE GOODS_CODE = '$qrResult'or PART_NUMBER = '$qrResult' or ITEM_CODE = '$qrResult' ";
-    $sql_select1_run = sqlsrv_query( $conn, $sql_select1 );
+    $sql_select1_run = sqlsrv_query( $conn1, $sql_select1 );
     
     if( $sql_select1_run === false) {
         die( print_r( sqlsrv_errors(), true) );
@@ -128,10 +155,24 @@ if (isset($_POST['codeResult'])) {
 
                 <div class="result-container ">
                 <label class="text-warning pr-2">Order No.</label>
-                <input type="text"  class="txtbox" name="orderNum" id="orderNum" value="">
+                <input type="text"  autocomplete="off"  class="txtbox" name="orderNum" id="orderNum" value="">
+                </div>
+
+                <div class="result-container ">
+                <label class="text-warning pr-2">Remarks</label>
+                <form action="" method="POST">
+                    <select class="text-white bg-primary" name="SelectRemark" id="SelectRemark">
+                    <option value="none" class="dropdown-item bg-dark text-white px-5" disabled selected>Select Remark</option>
+                    <option value="ISSUED-TO-PRODUCTION" class="dropdown-item bg-primary text-white">ISSUED TO PRODUCTION</option>
+                    <option value="SHIP-TO-CUSTOMER" class="dropdown-item text-white" >SHIP TO CUSTOMER</option>
+                    <option value="ENGINEERING-EVALUATION" class="dropdown-item text-white" >ENGINEERING EVALUATION</option>
+                    <option value="RETURN-TO-SUPPLIER" class="dropdown-item text-white" >RETURN TO SUPPLIER</option>
+                    <option value="DISPOSE" class="dropdown-item text-white" >DISPOSE</option>
+                    </select>
+                </form>
                 </div>
                 
-                <!-- THIS IS WHERE TO PLACE CODE FOR INVOICE -->
+                <!--  CODE FOR INVOICE -->
                 
                 <div class = "old_invoice_div">
                 <?php 
@@ -139,72 +180,73 @@ if (isset($_POST['codeResult'])) {
                     date_default_timezone_set('Asia/Hong_Kong');  
                     $date = date('m-d-Y H:i:s');
 
+                    $noInfo = "N/A";
+
                              echo '
                              <div class="c2" id=""><table class="rounded table table-bordered">
                              
                              <thead class="thead bg-secondary">
                                  <tr class="text-white ">
-                                 <th scope="col">DATE RECEIVED</th>
+                                 <th scope="col">RECEIVED DATE</th>
                                  <th scope="col">QTY RECEIVED</th>
-                                 <th scope="col">INVOICE NO.</th>       
+                                 <th scope="col">INVOICE NO.</th>  
+                                 <th scope="col">REMARKS</th>      
                                  </tr>
                                </thead>
                              <tbody>';
 
+                    //  //QUERY FOR FETCHING RETURNED MATERIALS FROM PRODUCTION
+                    $sql_select_returned = "SELECT * FROM [returned_tbl]
+                                            WHERE GOODS_CODE = '$qrResult' or ITEM_CODE = '$qrResult'
+                                            ORDER BY id ASC";
+                    $params = array();
+                    $options =  array( "Scrollable" => SQLSRV_CURSOR_KEYSET );
+
+                    $sql_select_returned_run = sqlsrv_query( $conn2, $sql_select_returned, $params, $options);
+                    $row_count = sqlsrv_num_rows( $sql_select_returned_run );
+
+                    if($sql_select_returned_run && $row_count){
+                        while ($row_ret = sqlsrv_fetch_array($sql_select_returned_run , SQLSRV_FETCH_ASSOC)){
+                            echo '<tr class="active bg-danger">
+                                       <td class="text-white">'.$row_ret['DATE_RECEIVED']->format("m-d-Y").'</td>
+                                       <td class="text-white">'.$row_ret['QTY_S_RET'].'</td>
+                                       <td class="text-white">'."(RETURNED)".'</td>
+                                       <td class="text-white">'.$row_ret['REMARKS'].'</td>
+                                       </tr>';
+                        }
+                    }
+
+                    
+
+
+                     //QUERY FOR FETCHING RECEIVED MATERIALS FROM SUPPLIER
                      $sql_select1 = "SELECT DATE_RECEIVE, GOODS_CODE,INVOICE, SUM(QTY_S) as total_qty 
-                     FROM [Receive] WHERE GOODS_CODE = '$qrResult' or ITEM_CODE = '$qrResult' GROUP BY DATE_RECEIVE, [INVOICE], [GOODS_CODE]";
-                     $sql_select1_run = sqlsrv_query( $conn, $sql_select1 );
-                             if( $sql_select1_run  === false) {
+                     FROM [Receive] 
+                     WHERE GOODS_CODE = '$qrResult' or ITEM_CODE = '$qrResult' AND QTY_S > 0 
+                     GROUP BY DATE_RECEIVE, [INVOICE], [GOODS_CODE]";
+                     
+                     $sql_select1_run = sqlsrv_query( $conn1, $sql_select1 );
+                             if(!$sql_select1_run) {
                              die( print_r( sqlsrv_errors(), true) );
-                             }
+                             }else{
 
-                             if($sql_select1_run)
-                             {
-                                 while($row = sqlsrv_fetch_array($sql_select1_run, SQLSRV_FETCH_ASSOC))
-                                 {
-                 
-                                    $total_stock_qtys = $row['total_qty'];
+                                while($row = sqlsrv_fetch_array($sql_select1_run, SQLSRV_FETCH_ASSOC))
+                                {
+                                   $total_stock_qtys = $row['total_qty'];
 
-                                    if ($total_stock_qtys > 0)
-                                    {
-                                        $total_qtys[] = $row['total_qty']; 
-                                        $e_invoice[] = $row['INVOICE'];
-                                        
-                                        echo '<tr class="active">
-                                        <td class="text-white">'.$row['DATE_RECEIVE']->format("m-d-Y").'</td>
-                                        <td class="text-white">'.$row['total_qty'].'</td>
-                                        <td class="text-white">'.$row['INVOICE'].'</td>
-                                        </tr>';
-                                    }   
-                                 }
-                                 $earliest_qtys = $total_qtys[0];
-                                 $earliest_invoice = $e_invoice[0]; 
-                             }               
+                                   if ($total_stock_qtys > 0)
+                                   {   
+                                       echo '<tr class="active">
+                                       <td class="text-white">'.$row['DATE_RECEIVE']->format("m-d-Y").'</td>
+                                       <td class="text-white">'.$row['total_qty'].'</td>
+                                       <td class="text-white">'.$row['INVOICE'].'</td>
+                                       <td class="text-white">'.$noInfo.'</td>
+                                       </tr>';
+                                   }   
+                                }
+                            }               
                              echo '</tbody></table></div>';
 
-//                                 //hidden table 
-//         $sql_99 = "SELECT * FROM [Receive]
-//         WHERE GOODS_CODE = '$qrResult' or ITEM_CODE = '$qrResult' 
-//         ORDER BY id";
-
-// $sql_99_run = sqlsrv_query( $conn, $sql_99);
-
-// if ($sql_99_run){
-// while($row = sqlsrv_fetch_array($sql_99_run , SQLSRV_FETCH_ASSOC))
-// {
-// echo '<table class="table-bordered"><tr class="active">
-// <td class="text-white">'.$row['id'].'</td>
-//                         <td class="text-white">'.$row['DATE_RECEIVE']->format("m-d-Y").'</td>
-//                         <td class="text-white">'.$row['QTY'].'</td>
-//                         <td class="text-white">'.$row['INVOICE'].'</td>
-//                         </tr></table>';
-// }
-// }
-
-
-                        
-
-// //hidden table 
                 ?>
                 </div>
               
@@ -233,13 +275,17 @@ if (isset($_POST['codeResult'])) {
                             <!-- We display the details entered by the user here -->
                             <table class="table">
                                 <tr>
-                                    <th>Issued QTY :</th>
+                                    <th>Issued Quantity :</th>
                                     <td id="" class="text-dark"><input type="text" readonly class="txtbox text-primary" name="issuedQty2" id="issuedQty2" value=""></td>
                                     
                                 </tr>
                                 <tr>
-                                    <th>Order No. :</th>
+                                    <th>Order Number :</th>
                                     <td id=""><input type="text" readonly class="txtbox text-primary" name="orderNum2" id="orderNum2" value=""></td>
+                                </tr>
+                                <tr>
+                                    <th>Remarks</th>
+                                    <td id=""><input type="text" readonly class="txtbox text-primary" name="remarks" id="remarks" value=""></td>
                                 </tr>
                                 
                             </table>

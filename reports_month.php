@@ -22,6 +22,11 @@
     <link rel="stylesheet" href="css/styles.css">
 
     <title>Reports</title>
+    <style>
+      .c2{
+        overflow-x: scroll;
+      }
+    </style>
     
   </head>
   <body>    
@@ -74,15 +79,17 @@ if (!empty($_POST["partNumber"]))
 echo '<div class="table_reports bg-light">';
 $date = date('M d, Y');
 
-    echo '<div class="c2" id=""><table class="table table-bordered">
-    <thead class="thead bg-primary py-1">
+    echo '<h3 class="text-center text-white bg-secondary rounded py-1">Transaction Report</h3>
+    <div class="c2" id=""><table class="table table-bordered">
+    <thead class="thead bg-dark py-1">
         <tr class="text-white">
-        <th scope="col" class="w-25 text-center">DATE</th>
+        <th scope="col" class="w-25">DATE</th>
         <th scope="col" class="w-25">RECEIVED</th>
         <th scope="col" class="w-25">ISSUED</th>
         <th scope="col" class="w-25">STOCK</th>
-        <th scope="col" class="w-25">INVOICE#</th>
-        <th scope="col" class="w-25">ORDER#</th>
+        <th scope="col" class="w-25">INVOICE #</th>
+        <th scope="col" class="w-25">ORDER #</th>
+        <th scope="col" class="w-25">REMARKS</th>
         </tr>
       </thead>
 
@@ -137,6 +144,7 @@ if ($selectedMonth == "all"){
         <td class="">'.$row['TOTAL_STOCK'].'</td>
         <td class="">'.$row['INVOICE_KIT'].'</td>
         <td class="">'.$row['ORDER_NO'].'</td>
+        <td class="">'.$row['REMARKS'].'</td>
         </tr> </tbody>';
       }
     }
@@ -167,6 +175,7 @@ if ($selectedMonth == "all"){
         <td class="">'.$row['TOTAL_STOCK'].'</td>
         <td class="">'.$row['INVOICE_KIT'].'</td>
         <td class="">'.$row['ORDER_NO'].'</td>
+        <td class="">'.$row['REMARKS'].'</td>
         </tr> </tbody>';
       }
     }

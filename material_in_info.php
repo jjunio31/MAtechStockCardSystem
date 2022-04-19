@@ -40,6 +40,13 @@
             width: 7.5rem;
             }
         }
+
+        #SelectRemark{
+            width: 50%;
+            border-radius: 25px;
+            border: 2px solid white;
+            padding: .2rem; 
+        }
   
         
     </style>
@@ -115,14 +122,20 @@ if (isset($_POST['codeResult'])) {
                 <input  type="number" min="1" required step="1" onkeypress="return event.keyCode === 8 || event.charCode >= 48 && event.charCode <= 57" name = "returnedqty" id="returnedqty">
                 </div>
 
-                <div class="result-container ">
+                <!-- <div class="result-container ">
                 <label class="text-warning pr-2">Invoice No.</label>
-                <input type="text"  class="txtbox" name="invoice" id="invoice" value="">
-                </div>
+                <input type="text"  autocomplete="off" class="txtbox" name="invoice" id="invoice" value="">
+                </div> -->
 
                 <div class="result-container ">
-                <label class="text-warning pr-2">Reason</label>
-                <input type="text" class="txtbox bg-white text-black" name="reason" id="reason" value="N/A">
+                <label class="text-warning pr-2">Remarks</label>
+                <form action="" method="POST">
+                    <select class="text-white bg-primary" name="SelectRemark" id="SelectRemark">
+                    <option value="none" class="dropdown-item bg-primary text-white px-5" disabled selected>Select Remark</option>
+                    <option value="NON-MOVING" class="dropdown-item text-white" >NON-MOVING</option>
+                    <option value="RETURN-TO-SUPPLIER" class="dropdown-item bg-primary text-white">RETURN TO SUPPLIER</option>
+                    </select>
+                </form>
                 </div>
                 
                 <div class="result-container d-flex justify-content-center"> 
@@ -153,17 +166,13 @@ if (isset($_POST['codeResult'])) {
                             <!-- We display the details entered by the user here -->
                             <table class="table">
                                 <tr>
-                                    <th>Returned QTY :</th>
+                                    <th>Returned Quantity :</th>
                                     <td id="" class="text-dark"><input type="text" readonly class="txtbox text-primary" name="returnedqty2" id="returnedqty2" value=""></td>
                                     
                                 </tr>
                                 <tr>
-                                    <th>Invoice No. :</th>
-                                    <td id=""><input type="text" readonly class="txtbox text-primary" name="invoice2" id="invoice2" value=""></td>
-                                </tr>
-                                <tr>
-                                    <th>Reason :</th>
-                                    <td id=""><input type="text" readonly class="txtbox text-primary" name="reason2" id="reason2" value=""></td>
+                                    <th>Remarks :</th>
+                                    <td id=""><input type="text" readonly class="txtbox text-primary" name="remarks" id="remarks" value=""></td>
                                 </tr>
                             </table>
 
