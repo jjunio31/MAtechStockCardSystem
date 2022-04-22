@@ -1,23 +1,7 @@
 <?php
-$serverName = "192.168.2.15,40001";
-$connectionInfo1 = array( "UID" => "iqc_db_user_dev", "PWD" => "iqcdbuserdev", "Database" => "MA_Receiving");
-$conn1 = sqlsrv_connect($serverName, $connectionInfo1);
 
-if( $conn1 === false )
-{
-echo "Could not connect.\n";
-die( print_r( sqlsrv_errors(), true));
-}
+include 'connection/connections.php';
 
-// Conn for StockCard
-$connectionInfo2 = array( "UID" => "iqc_db_user_dev", "PWD" => "iqcdbuserdev", "Database" => "StockCard");
-$conn2 = sqlsrv_connect($serverName, $connectionInfo2);
-
-if( $conn2 === false )
-{
-echo "Could not connect.\n";
-die( print_r( sqlsrv_errors(), true));
-}
 
 
 if (!empty($_POST["partNumber"])){ 
@@ -78,7 +62,7 @@ if($sql_select_run && $sql_select_stock_run){
 
             // if $sql_update_run, SAVE TRANSACTION TO RETURNED TABLE AND TRANSACTION TABLE
 
-                if($sql_update_run){
+                if($sql_update_run){ 
                     echo "Total Stock is updated to $new_total_stock.\n";
 
                     //QUERY to INSERT to transaction_record_tbl

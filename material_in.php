@@ -1,46 +1,10 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<?php
 
-    <!-- Instascan-->
-    <script type="text/javascript" src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+      //INCLUDE HEADER FROM HTML FOLDER
+      include 'html/header.php';
+      include 'html/nav.php';
 
-    <!--font-awesome CDN-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    
-
-    <!-- bootstrap CDN and CSS-->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="css/styles.css">
-
-    <!-- Jquery CDN-->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
-    
-   
-    <title>Material In</title>
-
-  </head>
-  <body>    
-            <!-- topnav -->
-            <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-            <div class="companyNameDiv"><a class="navbar-brand companyName" href="#">M.A. Technology Inc.</a></div>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-              <a class="nav-item nav-link text-white bg-primary" href="reports.php">Reports</a>
-              <a class="nav-item nav-link text-white bg-primary" href="material_in.php">Material-In</a>
-              <a class="nav-item nav-link text-white bg-primary" href="material_out.php">Material-Out</a>
-              <!-- <a class="nav-item nav-link text-info" href="stocks.php">Stocks</a> -->
-              <a class="nav-item nav-link text-white bg-primary" id="logout" href="logOut.php">Logout<i class="fa-solid fa-power-off fa-lg" id="logout_icon"></i></a>
-            </div>
-            </div>
-            </nav>
+?>
 
             <!-- Material Out Section-->
   <div class="container-fluid">
@@ -55,19 +19,20 @@
                         </audio>
                         
                     </div>
-                    <div class="controlsDiv">
-                      <button  class="control" id="on-camera">Open Camera</button>
-                      <button  class="control" id="off-camera">Close Camera</button>
-                      <button  class="btn btn-dark btn-md control switch" id="flashlight-icon"><i class="fa-solid fa-lightbulb fa-xl"></i></button>
-                      
-                    </div>
+                   
+                    <?php
+                          //INCLUDE CAMERA BUTTONS FROM HTML FOLDER
+                          include 'html/cameraButtons.php';
+                    ?>
+
+
               </div>
 
                 <div class="scanresultdiv">
 
                     <div class="formresult bg-dark" >
                   
-                    <h3 class="text-center text-white">Material-In</h3>
+                    <h3 class="text-center text-white material-title">Material-In</h3>
                     <div class="qrResultDiv d-flex justify-content-center">
                     <input type="text" name="qrResult" id="qrResult" value="">
                     </div>

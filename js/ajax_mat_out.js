@@ -1,5 +1,26 @@
-$(document).ready(function () {
 
+   
+   //AJAX FOR MODAL BREAKDOWN
+   $(document).ready(function () {
+    $("#breakdown-btn").click(function (e) { 
+        e.preventDefault();
+
+        var goodsCode = $('input[id=goodsCode]').val();
+        $.ajax({
+            type: "post",
+            url: "modal_breakdown.php",
+            data: {goodsCode:goodsCode},
+            dataType: "text",
+            success: function (response) {
+                
+                $('#breakdownDiv').html(response);
+            }
+        });
+    });
+});
+
+
+$(document).ready(function () {
     //type info to modal
     $("#issuedQty").keyup(function(e){
         var val = $(this).val();
@@ -13,9 +34,7 @@ $(document).ready(function () {
 
       $("#SelectRemark").change(function(e){
         var selectedRemark = $("#SelectRemark").children("option:selected").val();
-        $("#remarks").val(selectedRemark);
-        console.log(selectedRemark);
-        
+        $("#remarks").val(selectedRemark); 
       });
 
       
@@ -36,6 +55,7 @@ $(document).ready(function () {
     $('#submitIssued').click(function (e) { 
         e.preventDefault();
 
+        var totalReturnedValue = $('input[id=totalReturnedValue]').val();
         var goodsCode = $('input[id=goodsCode]').val();
         var itemCode = $('input[id=itemCode]').val();
         var partNumber = $('input[id=partNumber]').val();
@@ -48,8 +68,11 @@ $(document).ready(function () {
 
         //convert string to int 
 
+        var totalReturnedValueQty = parseInt(totalReturnedValue);
         var currentQty = parseInt(current_Qty);
         var issuedQty = parseInt(issued_Qty);
+        
+
 
         if(issuedQty == ""){
 
@@ -60,14 +83,19 @@ $(document).ready(function () {
             if(orderNum == "")
         {
             alert ('Please input Order Number');
-        }
 
-        else if (issuedQty > currentQty)
-        {
+        }else if (issuedQty > currentQty){
+
             alert('Over Quantity');
             
-        }else if(selectedRemark == "none"){
+        }else if (selectedRemark == "none"){
+
             alert('Please Select Remarks');
+
+        }
+        else if(totalReturnedValueQty > 0 && issuedQty > totalReturnedValueQty){
+
+            alert ('Unable to process request. \n Release' + " " + totalReturnedValueQty + " " +'returned materials first before releasing new invoices.');
         }
 
         else {

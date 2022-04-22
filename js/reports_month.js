@@ -1,4 +1,5 @@
 $(document).ready(function(){
+
     $("select#SelectMonth").change(function(){
 
         var selectedMonth = $(this).children("option:selected").val();
