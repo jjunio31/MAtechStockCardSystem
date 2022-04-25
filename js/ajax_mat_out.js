@@ -93,7 +93,7 @@ $(document).ready(function () {
             alert('Please Select Remarks');
 
         }
-        else if(totalReturnedValueQty > 0 && issuedQty > totalReturnedValueQty){
+        else if(issuedQty > totalReturnedValueQty){
 
             alert ('Unable to process request. \n Release' + " " + totalReturnedValueQty + " " +'returned materials first before releasing new invoices.');
         }

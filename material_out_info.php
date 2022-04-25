@@ -130,12 +130,8 @@ if (isset($_POST['codeResult'])) {
     WHERE GOODS_CODE = '$qrResult'or PART_NUMBER = '$qrResult' or ITEM_CODE = '$qrResult' ";
     $sql_select1_run = sqlsrv_query( $conn1, $sql_select1 );
 
-    if( $sql_select1_run === false) {
-        die( print_r( sqlsrv_errors(), true) );
-    }
 
 
-    //QUERY to get 
     $sql_part_number = "SELECT PART_NUMBER From [Receive]
     WHERE GOODS_CODE = '$qrResult'or PART_NUMBER = '$qrResult' or ITEM_CODE = '$qrResult' ";
     $sql_part_number_run = sqlsrv_query( $conn1, $sql_part_number );
@@ -145,21 +141,48 @@ if (isset($_POST['codeResult'])) {
             $partNumber = $row_partNumber['PART_NUMBER'];
         }
     
-    
+    if( $sql_select1_run === false) {
+        die( print_r( sqlsrv_errors(), true) );
+    }
+
 
     if($sql_select1_run){
         while($row = sqlsrv_fetch_array($sql_select1_run, SQLSRV_FETCH_ASSOC))
         {
-             
+            
            ?>
            
            <div class="scan-result bg-dark">
 
-            <?php
-                //INCLUDE GOODSCODE, ITEMCODE, MATERIALS, PARTNUMBER, TOTALSTOCK, LOCATION FROM HTML FOLDER
-                include 'html/materialsInfo.php';
-            ?>
-            
+                <div class="result-container ">
+                <label class="text-warning label">Goods Code</label>
+                <input type="text" readonly class="txtbox bg-secondary text-warning" name="goodscode" id="goodsCode" value="<?php echo $row['GOODS_CODE']?>">
+                </div>
+               
+                <div class="result-container ">
+                <label class="text-warning label">Item Code</label>
+                <input type="text" readonly class="txtbox bg-secondary text-warning" name="itemCode" id="itemCode" value="<?php echo $row['ITEM_CODE']?>">
+                </div>
+
+                <div class="result-container ">
+                <label class="text-warning pr-2">Part Name</label>
+                <input type="text" readonly class="txtbox bg-secondary text-warning" name="partName" id="partName" value="<?php echo $row['MATERIALS']?>">
+                </div>
+
+                <div class="result-container ">
+                <label class="text-warning pr-2">Part Number</label>
+                <input type="text" readonly class="txtbox bg-secondary text-warning" name="partNumber" id="partNumber" value="<?php echo $partNumber?>">
+                </div>
+
+                <div class="result-container ">
+                <label class="text-warning pr-2">Total Stock</label>
+                <input type="text" readonly class="txtbox bg-secondary text-warning" name="qty" id="qty" value="<?php echo $row['TOTAL_STOCK']?>">
+                </div>
+
+                <div class="result-container ">
+                <label class="text-warning pr-2">Location</label>
+                <input type="text" readonly class="txtbox bg-secondary text-warning" name="location" id="location" value="<?php echo $row['LOC']?>">
+                </div>
 
                 <div class="result-container ">
                 <label class="text-warning pr-2">Issued QTY</label>
@@ -167,7 +190,7 @@ if (isset($_POST['codeResult'])) {
                 </div>
 
                 <!--hidden input for total returned QTY-->
-                <input type="number" readonly class="txtbox bg-secondary text-warning" name="totalReturnedValue" id="totalReturnedValue" value="<?php echo $total_qty_ret?>">
+                <input type="text" readonly class="txtbox bg-secondary text-warning" name="totalReturnedValue" id="totalReturnedValue" value="<?php echo $total_qty_ret?>">
                 <!--hidden input for total returned QTY-->
 
                 <div class="result-container ">

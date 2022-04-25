@@ -7,6 +7,20 @@ body{
     font-family: 'Poppins', sans-serif;
     
 }
+#formInfo{
+    margin-top: .3rem;
+    margin-bottom: .7rem;
+    border-radius: 10px;
+    width: 100%;
+    height: auto;
+}
+
+input{
+    border-radius: 25px;
+    border: 2px solid white;
+    padding: 15px; 
+    height: 11px;
+}
 
 .result-container{
     display: flex;
@@ -44,6 +58,8 @@ body{
 .previewDiv{
     height: 100% ;
     width: 100% ;
+    
+    
 }
 
 #preview{
@@ -82,11 +98,6 @@ body{
 }
 .formresult{
     border-radius: 10px;
-}
-
-.navbar-nav{
-    margin-left: auto;
-    margin-right: 1rem;
 }
 
 .control {
@@ -131,6 +142,10 @@ body{
     height: auto;
     width: 100%;
     border-radius: 10px;
+}
+
+#flashlight-icon{
+    display: none;
 }
 
 .container-fluid{
@@ -178,7 +193,10 @@ label{
       text-align: center;
       border-radius: 25px;
   }
- 
+  .navbar-nav{
+      margin-left: auto;
+      margin-right: 1rem;
+  }
   #logout{
       margin-right: 2rem;
   }

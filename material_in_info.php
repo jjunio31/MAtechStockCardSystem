@@ -15,7 +15,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
 
-   
+  
     <style>
 
         #btn_showReport{
@@ -99,15 +99,45 @@ if (isset($_POST['codeResult'])) {
            
            <div class="scan-result bg-dark">
 
-           <?php
-                //INCLUDE GOODSCODE, ITEMCODE, MATERIALS, PARTNUMBER, TOTALSTOCK, LOCATION FROM HTML FOLDER
-                include 'html/materialsInfo.php';
-            ?>
+           <div class="result-container ">
+                <label class="text-warning label">Goods Code</label>
+                <input type="text" readonly class="txtbox bg-secondary text-warning" name="goodscode" id="goodsCode" value="<?php echo $row['GOODS_CODE']?>">
+                </div>
+               
+                <div class="result-container ">
+                <label class="text-warning label">Item Code</label>
+                <input type="text" readonly class="txtbox bg-secondary text-warning" name="itemCode" id="itemCode" value="<?php echo $row['ITEM_CODE']?>">
+                </div>
+
+                <div class="result-container ">
+                <label class="text-warning pr-2">Part Name</label>
+                <input type="text" readonly class="txtbox bg-secondary text-warning" name="partName" id="partName" value="<?php echo $row['MATERIALS']?>">
+                </div>
+
+                <div class="result-container ">
+                <label class="text-warning pr-2">Part Number</label>
+                <input type="text" readonly class="txtbox bg-secondary text-warning" name="partNumber" id="partNumber" value="<?php echo $partNumber?>">
+                </div>
+
+                <div class="result-container ">
+                <label class="text-warning pr-2">Total Stock</label>
+                <input type="number" readonly class="txtbox bg-secondary text-warning" name="currentQty" id="currentQty" value="<?php echo $row['TOTAL_STOCK']?>">
+                </div>
+
+                <div class="result-container ">
+                <label class="text-warning pr-2">Location</label>
+                <input type="text" readonly class="txtbox bg-secondary text-warning" name="location" id="location" value="<?php echo $row['LOC']?>">
+                </div>
 
                 <div class="result-container ">
                 <label class="text-warning pr-2">Received QTY</label>
                 <input  type="number" min="1" required step="1" onkeypress="return event.keyCode === 8 || event.charCode >= 48 && event.charCode <= 57" name = "returnedqty" id="returnedqty">
                 </div>
+
+                <!-- <div class="result-container ">
+                <label class="text-warning pr-2">Invoice No.</label>
+                <input type="text"  autocomplete="off" class="txtbox" name="invoice" id="invoice" value="">
+                </div> -->
 
                 <div class="result-container ">
                 <label class="text-warning pr-2">Remarks</label>
@@ -124,6 +154,10 @@ if (isset($_POST['codeResult'])) {
                 <div class="result-container d-flex justify-content-center"> 
                 <h6 id="messageDisplay" class="text-warning"></h6>
                 </div>
+
+                <!-- <div class="result-container d-flex justify-content-center" id="btnDiv1">
+                <button type="submit" class="btn btn-primary btn-block control" id="saveBTN">Save Data</button>
+                </div> -->
 
                 <div class="result-container d-flex justify-content-center" id="modalbtn">
                 <input type="button" name="submit" value="SAVE DATA" id="submitBtn" data-toggle="modal" data-target="#confirm-submit" class="btn btn-primary btn-block control" />
