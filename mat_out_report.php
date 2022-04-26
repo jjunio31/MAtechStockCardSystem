@@ -20,9 +20,14 @@
     <title>Reports</title>
     <link rel="stylesheet" href="css/styles.css">
     <style>
+      
+
+      @media (max-width:767px){
+    
       .c2{
         overflow-x: scroll;
       }
+    }
     </style>
   </head>
   <body>

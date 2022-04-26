@@ -39,10 +39,10 @@ if (!empty($_POST["selectedRemark"]))
 if (!empty($_POST["goodsCode"])){ $goodsCode = $_POST['goodsCode']; }
 if (!empty($_POST["itemCode"])){ $itemCode = $_POST['itemCode']; }
 if (!empty($_POST["currentQty"])){ $currentQty = $_POST['currentQty']; }
-if (!empty($_POST["issuedQty"])){ $issuedQty = $_POST['issuedQty']; }
+if (!empty($_POST["issuedQty"])){ $issued_Qty = $_POST['issuedQty']; }
 if (!empty($_POST["orderNum"])){ $orderNum = $_POST['orderNum']; }
 
-
+$issuedQty = (int)$issued_Qty ;
 
 function UPDATE_STOCK_AND_TRANSACTION($conn1, $conn2, $total_stock, $issuedQty, $goodsCode, $itemCode, $partNumber, $partName, $orderNum, $remark){
     $new_total_stock = $total_stock - $issuedQty;
@@ -84,6 +84,7 @@ if( $sql_select_stock_run === false) {
         {
             $total_stock = $row['TOTAL_STOCK'];
         }
+        
 }
 
 //QUERY TO SUM QTY_S_RET OF RETURNED TABLE
@@ -118,7 +119,7 @@ if($row_count_returned > 0){
 
              // UPDATE TOTAL STOCK and SAVE TRANSACTION FUNCTION
             UPDATE_STOCK_AND_TRANSACTION($conn1, $conn2, $total_stock, $issuedQty, $goodsCode, $itemCode, $partNumber, $partName, $orderNum, $remark);
-                
+            
                    
                 while ($issuedQty> 0) {
                     $sql_select_returned = "SELECT TOP 1 * FROM [returned_tbl]
@@ -165,6 +166,7 @@ if($row_count_returned > 0){
 
     // UPDATE TOTAL STOCK and SAVE TRANSACTION FUNCTION
     UPDATE_STOCK_AND_TRANSACTION($conn1, $conn2, $total_stock, $issuedQty, $goodsCode, $itemCode, $partNumber, $partName, $orderNum, $remark);
+
 
 while ($issuedQty > 0) {
     $sql_select_receive = "SELECT TOP 1 * FROM [Receive]

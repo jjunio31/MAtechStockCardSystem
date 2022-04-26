@@ -98,36 +98,10 @@ if (isset($_POST['codeResult'])) {
            ?>
            
            <div class="scan-result bg-dark">
-
-           <div class="result-container ">
-                <label class="text-warning label">Goods Code</label>
-                <input type="text" readonly class="txtbox bg-secondary text-warning" name="goodscode" id="goodsCode" value="<?php echo $row['GOODS_CODE']?>">
-                </div>
-               
-                <div class="result-container ">
-                <label class="text-warning label">Item Code</label>
-                <input type="text" readonly class="txtbox bg-secondary text-warning" name="itemCode" id="itemCode" value="<?php echo $row['ITEM_CODE']?>">
-                </div>
-
-                <div class="result-container ">
-                <label class="text-warning pr-2">Part Name</label>
-                <input type="text" readonly class="txtbox bg-secondary text-warning" name="partName" id="partName" value="<?php echo $row['MATERIALS']?>">
-                </div>
-
-                <div class="result-container ">
-                <label class="text-warning pr-2">Part Number</label>
-                <input type="text" readonly class="txtbox bg-secondary text-warning" name="partNumber" id="partNumber" value="<?php echo $partNumber?>">
-                </div>
-
-                <div class="result-container ">
-                <label class="text-warning pr-2">Total Stock</label>
-                <input type="number" readonly class="txtbox bg-secondary text-warning" name="currentQty" id="currentQty" value="<?php echo $row['TOTAL_STOCK']?>">
-                </div>
-
-                <div class="result-container ">
-                <label class="text-warning pr-2">Location</label>
-                <input type="text" readonly class="txtbox bg-secondary text-warning" name="location" id="location" value="<?php echo $row['LOC']?>">
-                </div>
+ 
+           <?php 
+                include 'html/materialsInfo.php';
+            ?>
 
                 <div class="result-container ">
                 <label class="text-warning pr-2">Received QTY</label>
@@ -143,10 +117,9 @@ if (isset($_POST['codeResult'])) {
                 <label class="text-warning pr-2">Remarks</label>
                 <form action="" method="POST">
                     <select class="text-white bg-primary" name="SelectRemark" id="SelectRemark">
-                    <option value="none" class="dropdown-item bg-primary text-white px-5" disabled selected>Select Remark</option>
-                    <option value="NON-MOVING" class="dropdown-item text-white" >NON-MOVING</option>
+                    <option value="NON-MOVING" class="dropdown-item text-white" selected >NON-MOVING</option>
                     <option value="RETURN-TO-SUPPLIER" class="dropdown-item bg-primary text-white">RETURN TO SUPPLIER</option>
-                    <option value="INCORRECT-INPUT" class="dropdown-item bg-primary text-white">EDIT</option>
+                    <option value="EDIT" class="dropdown-item bg-primary text-white">EDIT</option>
                     </select>
                 </form>
                 </div>

@@ -7,7 +7,6 @@ $(document).ready(function(){
         var itemCode = $('input[id=itemCode]').val();
         var partNumber = $('input[id=partNumber]').val();
 
-            
         $.ajax({
             type: "POST",
             url: "reports_month.php",

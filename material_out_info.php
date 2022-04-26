@@ -57,19 +57,6 @@
             padding: .2rem; 
         }
 
-        @media (max-width:767px){
-    
-            label{
-                width: 7.5rem;
-            }
-            .c2{
-                overflow-x: scroll;
-            }
-            td{
-                font-size: .8rem;
-            }
-        }
-       
        .icon-modal{
            font-weight: 300;
        }
@@ -153,36 +140,10 @@ if (isset($_POST['codeResult'])) {
            ?>
            
            <div class="scan-result bg-dark">
-
-                <div class="result-container ">
-                <label class="text-warning label">Goods Code</label>
-                <input type="text" readonly class="txtbox bg-secondary text-warning" name="goodscode" id="goodsCode" value="<?php echo $row['GOODS_CODE']?>">
-                </div>
-               
-                <div class="result-container ">
-                <label class="text-warning label">Item Code</label>
-                <input type="text" readonly class="txtbox bg-secondary text-warning" name="itemCode" id="itemCode" value="<?php echo $row['ITEM_CODE']?>">
-                </div>
-
-                <div class="result-container ">
-                <label class="text-warning pr-2">Part Name</label>
-                <input type="text" readonly class="txtbox bg-secondary text-warning" name="partName" id="partName" value="<?php echo $row['MATERIALS']?>">
-                </div>
-
-                <div class="result-container ">
-                <label class="text-warning pr-2">Part Number</label>
-                <input type="text" readonly class="txtbox bg-secondary text-warning" name="partNumber" id="partNumber" value="<?php echo $partNumber?>">
-                </div>
-
-                <div class="result-container ">
-                <label class="text-warning pr-2">Total Stock</label>
-                <input type="text" readonly class="txtbox bg-secondary text-warning" name="qty" id="qty" value="<?php echo $row['TOTAL_STOCK']?>">
-                </div>
-
-                <div class="result-container ">
-                <label class="text-warning pr-2">Location</label>
-                <input type="text" readonly class="txtbox bg-secondary text-warning" name="location" id="location" value="<?php echo $row['LOC']?>">
-                </div>
+ 
+           <?php 
+                include 'html/materialsInfo.php';
+            ?>
 
                 <div class="result-container ">
                 <label class="text-warning pr-2">Issued QTY</label>
@@ -202,8 +163,7 @@ if (isset($_POST['codeResult'])) {
                 <label class="text-warning pr-2">Remarks</label>
                 <form action="" method="POST">
                     <select class="text-white bg-primary" name="SelectRemark" id="SelectRemark">
-                    <option value="none" class="dropdown-item bg-dark text-white px-5" disabled selected>Select Remark</option>
-                    <option value="ISSUED-TO-PRODUCTION" class="dropdown-item bg-primary text-white">ISSUED TO PRODUCTION</option>
+                    <option value="ISSUED-TO-PRODUCTION" class="dropdown-item bg-primary text-white" selected>ISSUED TO PRODUCTION</option>
                     <option value="SHIP-TO-CUSTOMER" class="dropdown-item text-white" >SHIP TO CUSTOMER</option>
                     <option value="ENGINEERING-EVALUATION" class="dropdown-item text-white" >ENGINEERING EVALUATION</option>
                     <option value="RETURN-TO-SUPPLIER" class="dropdown-item text-white" >RETURN TO SUPPLIER</option>
@@ -233,9 +193,9 @@ if (isset($_POST['codeResult'])) {
 
                 $count_result_invoice = sqlsrv_num_rows( $sql_get_rowcount_run );
 
-
-                    date_default_timezone_set('Asia/Hong_Kong');  
-                    $date = date('m-d-Y H:i:s');
+                date_default_timezone_set('Asia/Hong_Kong');  
+                $date = date('m-d-Y H:i:s');
+                   
 
                     $noInfo = "N/A";
 
@@ -264,6 +224,8 @@ if (isset($_POST['codeResult'])) {
                     $row_count = sqlsrv_num_rows( $sql_select_returned_run );
 
                     if($sql_select_returned_run && $row_count){
+                        date_default_timezone_set('Asia/Hong_Kong');  
+                        $date = date('m-d-Y H:i:s');
 
                         while ($row_ret = sqlsrv_fetch_array($sql_select_returned_run , SQLSRV_FETCH_ASSOC)){
                             echo '<tr class="active bg-danger">
@@ -424,6 +386,28 @@ if (isset($_POST['codeResult'])) {
 </form>
 
 <script src="js/ajax_mat_out.js"></script>
+<script>
+      //AJAX FOR MODAL BREAKDOWN
+  $(document).ready(function () {
+    $("#breakdown-btn").click(function (e) { 
+        e.preventDefault();
+
+        var qrResult = $('input[id=goodsCode]').val();
+        $.ajax({
+            type: "post",
+            url: "modal_breakdown.php",
+            data: {qrResult:qrResult},
+            dataType: "text",
+            success: function (response) {
+                
+                $('#breakdownDiv').html(response);
+            }
+        });
+    });
+  });
+      
+
+</script>
 </body>
 </html>
 

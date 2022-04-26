@@ -22,8 +22,7 @@
     <link rel="stylesheet" href="css/styles.css">
 
     <title>Reports</title>
-    
-    
+
   </head>
   <body>    
 <?php
@@ -76,7 +75,8 @@ echo '<div class="table_reports bg-light">';
 $date = date('M d, Y');
 
     echo '<h3 class="text-center text-white bg-secondary rounded py-1">Transaction Report</h3>
-    <div class="c2" id=""><table class="table table-bordered">
+    <div class="c2" id=""><table class="table table-bordered .w-auto">
+    <thead></thead>
     <thead class="thead bg-dark py-1">
         <tr class="text-white">
         <th scope="col" class="w-25">DATE</th>
@@ -88,7 +88,6 @@ $date = date('M d, Y');
         <th scope="col" class="w-25">REMARKS</th>
         </tr>
       </thead>
-
     <tbody>';
 
     
@@ -141,7 +140,7 @@ if ($selectedMonth == "all"){
         <td class="">'.$row['INVOICE_KIT'].'</td>
         <td class="">'.$row['ORDER_NO'].'</td>
         <td class="">'.$row['REMARKS'].'</td>
-        </tr> </tbody>';
+        </tr>';
       }
     }
 
@@ -172,7 +171,7 @@ if ($selectedMonth == "all"){
         <td class="">'.$row['INVOICE_KIT'].'</td>
         <td class="">'.$row['ORDER_NO'].'</td>
         <td class="remark">'.$row['REMARKS'].'</td>
-        </tr> </tbody>';
+        </tr>';
       }
     }
 

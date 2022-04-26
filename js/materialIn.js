@@ -50,6 +50,7 @@ $(document).ready(function(){
                         success: function(data)
                         {
                             $("#formDiv").html(data);
+                            
                            
                         }
                     });
@@ -72,7 +73,7 @@ $(document).ready(function(){
 
                         success:function(data){
                             $("#formDiv").html(data);
-                            
+                            console.log(codeResult);
                         }
                     })
                 }

@@ -1,45 +1,33 @@
 
-   
-   //AJAX FOR MODAL BREAKDOWN
-   $(document).ready(function () {
-    $("#breakdown-btn").click(function (e) { 
-        e.preventDefault();
 
-        var goodsCode = $('input[id=goodsCode]').val();
-        $.ajax({
-            type: "post",
-            url: "modal_breakdown.php",
-            data: {goodsCode:goodsCode},
-            dataType: "text",
-            success: function (response) {
-                
-                $('#breakdownDiv').html(response);
-            }
-        });
-    });
+
+$('#submitBtn').click(function (e) { 
+    var selectedRemark = $('#SelectRemark').children("option:selected").val();
+    var issuedQty = $('#issuedQty').val();
+    var orderNum = $('#orderNum').val();
+    $("#remarks").val(selectedRemark);
+    $("#issuedQty2").val(issuedQty);
+    $("#orderNum2").val(orderNum);    
 });
 
 
-$(document).ready(function () {
-    //type info to modal
-    $("#issuedQty").keyup(function(e){
-        var val = $(this).val();
-        $("#issuedQty2").val(val);
-      });
+    // //type info to modal
+    // $("#issuedQty").keyup(function(e){
+    //     var val = $(this).val();
+    //     $("#issuedQty2").val(val);
+    //   });
     
-      $("#orderNum").keyup(function(e){
-        var val = $(this).val();
-        $("#orderNum2").val(val);
-      });
+    //   $("#orderNum").keyup(function(e){
+    //     var val = $(this).val();
+    //     $("#orderNum2").val(val);
+    //   });
 
-      $("#SelectRemark").change(function(e){
-        var selectedRemark = $("#SelectRemark").children("option:selected").val();
-        $("#remarks").val(selectedRemark); 
-      });
+    //   $("#SelectRemark").change(function(e){
+    //     var selectedRemark = $("#SelectRemark").children("option:selected").val();
+    //     $("#remarks").val(selectedRemark); 
+    //   });
 
       
-
-    $(document).ready(function() {
         $("#issuedQty, #orderNum").keyup(function () {
             if ($("#issuedQty").val() && $("#orderNum").val()) {
                $("#submitBtn").show();
@@ -48,12 +36,15 @@ $(document).ready(function () {
                $("#submitBtn").hide();
             }
          });
-    });
 
-      
+
+    var bilang = 0;
  
     $('#submitIssued').click(function (e) { 
         e.preventDefault();
+
+        
+        if (bilang == 0){
 
         var totalReturnedValue = $('input[id=totalReturnedValue]').val();
         var goodsCode = $('input[id=goodsCode]').val();
@@ -67,39 +58,33 @@ $(document).ready(function () {
         
 
         //convert string to int 
-
         var totalReturnedValueQty = parseInt(totalReturnedValue);
         var currentQty = parseInt(current_Qty);
         var issuedQty = parseInt(issued_Qty);
         
 
+        console.log(totalReturnedValueQty);
 
         if(issuedQty == ""){
 
             alert ('Please input quantity');
             
-        }else {
-
-            if(orderNum == "")
-        {
+        }else if(orderNum == ""){
+        
             alert ('Please input Order Number');
 
         }else if (issuedQty > currentQty){
 
             alert('Over Quantity');
             
-        }else if (selectedRemark == "none"){
-
-            alert('Please Select Remarks');
-
-        }
-        else if(issuedQty > totalReturnedValueQty){
+        }else if(totalReturnedValueQty > 0 && issuedQty > totalReturnedValueQty){
 
             alert ('Unable to process request. \n Release' + " " + totalReturnedValueQty + " " +'returned materials first before releasing new invoices.');
         }
 
         else {
 
+            
             $.ajax({
                 type: "post",
                 url: "material_out_submit.php",
@@ -135,20 +120,21 @@ $(document).ready(function () {
                     success: function (response) {
                         $('#report').html(response);
                     }
-            })
+            });
                     
             });
 
+            bilang = 1;
 
-
+        } 
         }
-
-        }
-
-       
+              
   
-    })
-});
+    });
+
+    
+
+
 
 
 

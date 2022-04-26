@@ -54,16 +54,16 @@ $(document).ready(function(){
             });
         });
 
-          $(document).ready(function () {
+         
             $("#on-camera").click(function (e) { 
               e.preventDefault();
               $('.previewDiv').show();
             });
-          });
+          
 
           //AJAX on LIVE SEARCH
 
-          $(document).ready(function () {
+         
               $("#qrResult").keyup(function (e) { 
                   var codeResult = $(this).val();
 
@@ -76,11 +76,12 @@ $(document).ready(function(){
 
                         success:function(data){
                             $("#formDiv").html(data)
+                            console.log(codeResult);
                         }
                     })
                 }
               });
-          });
+         
 
 $(document).ready(function () {
     $("#off-camera").click(function (e) { 

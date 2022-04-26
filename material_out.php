@@ -1,46 +1,17 @@
 <!doctype html>  
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Instascan-->
-    <script type="text/javascript" src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+<?php 
+//INCLUDE HEADERS FROM HTML FOLDER
+  include 'html/head.php';
+?>
 
-    <!--font-awesome CDN-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    
-
-    <!-- bootstrap CDN and CSS-->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    
-
-    <!-- Jquery CDN-->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-
-    <!-- Custom CSS -->
-    <link rel="stylesheet" type="text/css" href="css/styles.css">
-
-    <title>Stock Card System</title>
-
-  </head>
   <body>    
-            <!-- topnav -->
-            <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-            <a class="navbar-brand companyName" href="#">M.A. Technology Inc.</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-              <a class="nav-item nav-link text-white bg-primary" href="reports.php">Reports</a>
-              <a class="nav-item nav-link text-white bg-primary" href="material_in.php">Material-In</a>
-              <a class="nav-item nav-link text-white bg-primary" href="material_out.php">Material-Out</a>
-              <a class="nav-item nav-link text-white bg-primary" id="logout" href="logOut.php">Logout<i class="fa-solid fa-power-off fa-lg"></i></a>
-            </div>
-            </div>
-            </nav>
+
+<?php 
+//INCLUDE NAVIGATION FROM HTML FOLDER
+  include 'html/nav.php';
+?>
 
             <!-- Material Out Section-->
   <div class="container-fluid">
@@ -56,12 +27,9 @@
                         </audio>
                         
                     </div>
-                    <div class="controlsDiv">
-                      <button  class="control" id="on-camera">Open Camera</button>
-                      <button  class="control" id="off-camera">Close Camera</button>
-                      <button  class="btn btn-dark btn-md control switch" id="flashlight-icon"><i class="fa-solid fa-lightbulb fa-xl"></i></button>
-                      
-                    </div>
+                    <?php   
+                    include 'html/scannerbtn.php';
+                    ?>
               </div>
 
                 <div class="scanresultdiv">
