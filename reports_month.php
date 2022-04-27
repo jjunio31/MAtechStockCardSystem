@@ -1,29 +1,11 @@
 <!doctype html> 
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Instascan-->
-    <script type="text/javascript" src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+  <?php 
+    //INCLUDE HEADERS FROM HTML FOLDER
+      include 'html/head.php';
+  ?>
 
-    <!--font-awesome CDN-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    
-
-    <!-- bootstrap CDN and CSS-->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    
-
-    <!-- Jquery CDN-->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    
-    <link rel="stylesheet" href="css/styles.css">
-
-    <title>Reports</title>
-
-  </head>
   <body>    
 <?php
 $serverName = "192.168.2.15,40001";
@@ -45,18 +27,48 @@ if( $conn2 === false )
 echo "Could not connect.\n";
 die( print_r( sqlsrv_errors(), true));
 }
-  
+
+
+if (!empty($_POST['codeResult']))
+{ 
+  $codeResult = $_POST['codeResult'];
+}
+
+if (!empty($_POST['n']))
+{ 
+  $currentMonth_Default = $_POST['n']; 
+  $currentMonthDefault = (int) $currentMonth_Default;
+}
+
+
+
 if (!empty($_POST["selectedMonth"]))
 { 
     $selectedMonth = $_POST['selectedMonth']; 
-
 }
+//
+if (empty($_POST["selectedMonth"]))
+{ 
+    $selectedMonth = $currentMonthDefault;
+}else{
+  $selectedMonth = $_POST['selectedMonth']; 
+}
+//
 
 if (!empty($_POST["goodsCode"]))
 { 
   $goodsCode = $_POST['goodsCode']; 
-
 }
+//
+if (empty($_POST["goodsCode"]))
+{ 
+  $goodsCode = $codeResult;
+}else{
+  $goodsCode = $_POST["goodsCode"];
+}
+//
+
+
 if (!empty($_POST["itemCode"]))
 { 
   $itemCode = $_POST['itemCode']; 
@@ -67,6 +79,7 @@ if (!empty($_POST["partNumber"]))
 { 
   $partNumber = $_POST['partNumber']; 
 }
+
 
 
 
@@ -117,7 +130,7 @@ switch ($selectedMonth){
 
 if ($selectedMonth == "all"){
 
-  $sql_select1 = "SELECT * FROM transaction_record_tbl WHERE GOODS_CODE = '$goodsCode' AND ITEM_CODE = '$itemCode'
+  $sql_select1 = "SELECT * FROM transaction_record_tbl WHERE GOODS_CODE = '$goodsCode'
   ORDER BY id ASC;";
 
     $sql_select1_run = sqlsrv_query($conn2, $sql_select1);
@@ -147,7 +160,7 @@ if ($selectedMonth == "all"){
 
 }else {
 
-  $sql_select1 = "SELECT * FROM transaction_record_tbl WHERE GOODS_CODE = '$goodsCode' 
+  $sql_select1 = "SELECT * FROM transaction_record_tbl WHERE GOODS_CODE = '$goodsCode'
   AND TRANSACTION_DATE BETWEEN '$currentYear/$selectedMonth/01 00:00:00' AND '$currentYear/$selectedMonth/$endDay 23:59:59'
   ORDER BY id ASC;";
 

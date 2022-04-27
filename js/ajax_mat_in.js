@@ -64,7 +64,7 @@ $("#returnedqty").keyup(function () {
               e.preventDefault();
               $.ajax({
                   type: "post",
-                  url: "mat_in_report.php",
+                  url: "mat_report.php",
                   data: {
                       goodsCode:goodsCode,
                       itemCode:itemCode,

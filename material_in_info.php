@@ -79,8 +79,6 @@ if (isset($_POST['codeResult'])) {
             $partNumber = $row_partNumber['PART_NUMBER'];
         }
 
-
-    
     $sql_select1 = "SELECT * From Total_Stock
     WHERE GOODS_CODE = '$qrResult'or PART_NUMBER = '$qrResult' or ITEM_CODE = '$qrResult'";
     $sql_select1_run = sqlsrv_query( $conn, $sql_select1 );
@@ -107,11 +105,6 @@ if (isset($_POST['codeResult'])) {
                 <label class="text-warning pr-2">Received QTY</label>
                 <input  type="number" min="1" required step="1" onkeypress="return event.keyCode === 8 || event.charCode >= 48 && event.charCode <= 57" name = "returnedqty" id="returnedqty">
                 </div>
-
-                <!-- <div class="result-container ">
-                <label class="text-warning pr-2">Invoice No.</label>
-                <input type="text"  autocomplete="off" class="txtbox" name="invoice" id="invoice" value="">
-                </div> -->
 
                 <div class="result-container ">
                 <label class="text-warning pr-2">Remarks</label>

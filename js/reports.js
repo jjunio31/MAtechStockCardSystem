@@ -23,6 +23,7 @@ $(document).ready(function(){
                    }).catch(function(e) {
                        console.error(e);
                    });
+
                    scanner.addListener('scan',function(c){
                        document.getElementById('qrResult').value=c;
 
@@ -47,41 +48,45 @@ $(document).ready(function(){
                         {
                             $("#formDiv").html(data);
                             $('#messageDisplay2').text(response);
+                            // console.log(codeResult);
+
+                            //AJAX TO PASS CURRENT MONTH TO reports_month.php
+                            var d = new Date(),
+                            n = '0' + (d.getMonth()+1);
+                    
+                            $.ajax({
+                                type: "post",
+                                url: "reports_month.php",
+                                data: {
+                                    n:n,
+                                    codeResult:codeResult
+                                },
+                                dataType: "text",
+                                success: function (data) {
+                                    $('.monthReportDiv').html(data);
+                                    // console.log(n);
+                                }
+                            });
+                    //AJAX TO PASS CURRENT MONTH TO reports_month.php
                         }
                     });
+ 
+                    
+                    
+                    
+
+
 
                    });
             });
         });
 
          
-            $("#on-camera").click(function (e) { 
-              e.preventDefault();
-              $('.previewDiv').show();
-            });
+$("#on-camera").click(function (e) { 
+    e.preventDefault();
+    $('.previewDiv').show();
+});
           
-
-          //AJAX on LIVE SEARCH
-
-         
-              $("#qrResult").keyup(function (e) { 
-                  var codeResult = $(this).val();
-
-                if(codeResult != ""){
-                    $.ajax({
-
-                        url:"reports_info.php",
-                        method:"POST",
-                        data:{codeResult:codeResult},
-
-                        success:function(data){
-                            $("#formDiv").html(data)
-                            console.log(codeResult);
-                        }
-                    })
-                }
-              });
-         
 
 $(document).ready(function () {
     $("#off-camera").click(function (e) { 

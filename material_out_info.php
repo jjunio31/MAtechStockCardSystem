@@ -168,7 +168,7 @@ if (isset($_POST['codeResult'])) {
                     <option value="ENGINEERING-EVALUATION" class="dropdown-item text-white" >ENGINEERING EVALUATION</option>
                     <option value="RETURN-TO-SUPPLIER" class="dropdown-item text-white" >RETURN TO SUPPLIER</option>
                     <option value="DISPOSE" class="dropdown-item text-white" >DISPOSE</option>
-                    <option value="INCORRECT-INPUT" class="dropdown-item bg-primary text-white">EDIT</option>
+                    <option value="EDIT" class="dropdown-item bg-primary text-white">EDIT</option>
                     </select>
                 </form>
                 </div>

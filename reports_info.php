@@ -121,6 +121,17 @@ if (isset($_POST['codeResult'])) {
 
 <script src="js/reports.js"></script>
 <script src="js/reports_month.js"></script>
+
+<script>
+    $(document).ready(function () {
+        var d = new Date(),
+        n = '0' + (d.getMonth()+1);
+
+        $('#SelectMonth option:eq('+n+')').prop('selected', true);
+
+    });
+
+</script>
 </body>
 </html>
 

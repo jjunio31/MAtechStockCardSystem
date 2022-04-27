@@ -97,13 +97,10 @@ if($sql_update_run){
 
     if(!$sql_insert_returned_run) {
     echo "Unable to process transaction" . die( print_r( sqlsrv_errors(), true) );
-    }else{
-        echo ('Transaction recorded');
     }
 
-    //QUERY to INSERT to transaction_record_tbl
-    
 
+    //QUERY to INSERT to transaction_record_tbl
     $sql_insert = "INSERT INTO transaction_record_tbl (TRANSACTION_DATE, GOODS_CODE, ITEM_CODE, QTY_ISSUED, QTY_RECEIVED, TOTAL_STOCK, PART_NUMBER, PART_NAME, REMARKS) 
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) ";
     $params1 = array($date, $goodsCode, $itemCode, '0', $returnedqty, $new_total_stock, $partNumber, $partName, $remark );
@@ -111,10 +108,7 @@ if($sql_update_run){
 
     if(!$sql_insert_run) {
          echo "Unable to process transaction" . die( print_r( sqlsrv_errors(), true) );
-    }else{
-        echo ('Returned recorded');
     }
-
 
 } 
 
