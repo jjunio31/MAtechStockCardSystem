@@ -2,9 +2,10 @@ $(document).ready(function () {
     $("#reportsTable td.rowDate").each(function (index, child) {
       var completeDate = $(this).html();
       var numDate = completeDate.substring (0 , 2);
-      console.log(typeof numDate );
+      
 
-     
+      // var numDate = "12";
+      // console.log(numDate);
 
       switch(numDate) {
         case "01":
@@ -34,11 +35,13 @@ $(document).ready(function () {
 
         case "06":
           // code block
-          $(this).parent("tr").css("background-color","#000000");
+          $(".color").css("color","#f2f2f2");
+          $(this).parent("tr").css("background-color","#262626");
         break;
 
         case "07":
           // code block
+          $(".color").css("color","#333333");
           $(this).parent("tr").css("background-color","#ffc0cb");
           break;
 
@@ -50,7 +53,7 @@ $(document).ready(function () {
         case "09":
           // code block
           $(".color").css("color","black");
-          $(this).parent("tr").css("background-color","#ffff00");
+          $(this).parent("tr").css("background-color","#ffff33");
           break;
 
         case "10":
@@ -66,7 +69,8 @@ $(document).ready(function () {
 
         case "12":
           // code block
-          $(this).parent("tr").css("background-color","#b30000");
+          $(".color").css("color","#e6e6e6");
+          $(this).parent("tr").css("background-color","#990000");
         break;
         
       }

@@ -1,9 +1,13 @@
 <?php 
   session_start();
 
+  $fName = $_SESSION['fullName'];
+  $firstName = explode(' ',trim($fName)); //GET FIRSTNAME OF USER WHEN SESSION START
+
   if(!isset($_SESSION['username']))
   {
     header("Location:index.php");
+    
   }
 ?>
 

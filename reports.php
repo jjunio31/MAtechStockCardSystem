@@ -4,6 +4,8 @@
 <?php 
 //INCLUDE HEADERS FROM HTML FOLDER
   include 'html/head.php';
+
+   
 ?>
 
   <body>   
@@ -17,7 +19,7 @@
   <div class="container-fluid">
                 
               <div class="scandiv bg-dark">
-              <p class="text-info font-italic" id="date">Today is <span><?php $date = date('M d, Y'); echo $date; ?></span> </p>
+              <p class="text-white" id="date"><?php echo "Hi," . " " . $firstName[0]."!". " "?>Today is <span><?php $date = date('M d, Y'); echo $date; ?></span> </p>
                 <h3 class="text-center text-warning">QR Code Scanner</h3>
               
                     <div class="previewDiv">
@@ -38,7 +40,7 @@
                   
                     <h3 class="text-center text-warning material-title">Search Report</h3>
                     <div class="qrResultDiv d-flex justify-content-center">
-                    <input type="text" name="qrResult" id="qrResult" value="">
+                    <input type="text" name="qrResult" id="qrResult" value="" placeholder="Goods Code">
                     </div>
                       
 

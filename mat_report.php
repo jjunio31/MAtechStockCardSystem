@@ -81,7 +81,7 @@ switch ($currentMonth){
             }
             
             $date = date('M d, Y');
-            echo '<h3 class="text-center text-white bg-dark rounded py-1">Transaction Report</h3>
+            echo '<h3 class="text-center text-warning bg-dark rounded py-1">Transaction Report</h3>
             <div class="c2" id=""><table class="table table-bordered" id="reportsTable">
             
             <thead class="thead-dark">

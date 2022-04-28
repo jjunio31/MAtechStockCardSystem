@@ -1,5 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Lobster&family=Open+Sans&family=Poppins:wght@500&display=swap');
-
+::-webkit-input-placeholder {
+    text-align: center;
+ }
+ 
+ :-moz-placeholder { /* Firefox 18- */
+    text-align: center;  
+ }
+ 
+ ::-moz-placeholder {  /* Firefox 19+ */
+    text-align: center;  
+ }
+ 
+ :-ms-input-placeholder {  
+    text-align: center; 
+ }
 body{
     box-sizing: border-box;
     margin: 0;
@@ -257,6 +271,7 @@ label{
 
 #qrResult{
     width: 50%;
+    
     
 } 
 

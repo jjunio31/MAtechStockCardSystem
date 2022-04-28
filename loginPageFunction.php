@@ -39,13 +39,10 @@ else{
          #creates sessions
 
          while($row = sqlsrv_fetch_array($result)){
-             echo $_SESSION['id'] = $row['id'];
+            //  echo $_SESSION['id'] = $row['id'];
+             $_SESSION['fullName'] = $row['Full_Name'];
              $_SESSION['username'] = $row['empNum'];
-             $_SESSION['password'] = $row['password'];
-
-            
-
-             
+             $_SESSION['password'] = $row['password'];         
              
          }
      }
