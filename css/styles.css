@@ -87,7 +87,8 @@ body{
 }
 .material-title{
     padding: 0;
-    margin: 0;;
+    margin: 0;
+    font-size: 1.8rem;
 }
 .formresult{
     border-radius: 10px;
@@ -168,6 +169,8 @@ input{
 label{
     width: 9rem;
     margin-bottom: 0;
+    color: #FFFFFF;
+    font-family: 'Poppins', sans-serif;
 }
 
 .reportsPreview{
@@ -272,3 +275,15 @@ label{
 
 }
 
+input, table{
+    text-transform: uppercase;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 100;
+}
+
+#SelectMonth{
+    width: 50%;
+    border-radius: 25px;
+    border: 2px solid white;
+    padding: .2rem; 
+}

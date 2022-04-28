@@ -60,9 +60,9 @@ $sql_get_rowcount = "SELECT * FROM dbo.[Receive]
                              
                              <thead class="thead">
                                  <tr class="text-white">
-                                 <th scope="col">Invoice #</th> 
-                                 <th scope="col">Received</th>
-                                 <th scope="col">Remaining</th>
+                                 <th >Invoice #</th> 
+                                 <th >Received</th>
+                                 <th >Remaining</th>
                                  </tr>
                                </thead>
                              <tbody>';

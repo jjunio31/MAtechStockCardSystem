@@ -101,9 +101,9 @@ if($sql_update_run){
 
 
     //QUERY to INSERT to transaction_record_tbl
-    $sql_insert = "INSERT INTO transaction_record_tbl (TRANSACTION_DATE, GOODS_CODE, ITEM_CODE, QTY_ISSUED, QTY_RECEIVED, TOTAL_STOCK, PART_NUMBER, PART_NAME, REMARKS) 
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) ";
-    $params1 = array($date, $goodsCode, $itemCode, '0', $returnedqty, $new_total_stock, $partNumber, $partName, $remark );
+    $sql_insert = "INSERT INTO transaction_record_tbl (TRANSACTION_DATE, GOODS_CODE, ITEM_CODE, QTY_ISSUED, QTY_RECEIVED, TOTAL_STOCK, PART_NUMBER, PART_NAME, REMARKS, INVOICE_KIT) 
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
+    $params1 = array($date, $goodsCode, $itemCode, '0', $returnedqty, $new_total_stock, $partNumber, $partName, $remark, 'RETURNED');
     $sql_insert_run = sqlsrv_query($conn2, $sql_insert, $params1);
 
     if(!$sql_insert_run) {

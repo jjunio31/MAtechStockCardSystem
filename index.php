@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="css/login.css">
     
     
-    <title>Material Stocks System</title>
+    <title>Stock Card System Login</title>
   </head>
   <body class="bg-dark">
     <div class="wrapper bg-light">

@@ -1,6 +1,6 @@
 <?php
-    $serverName = "192.168.2.15,40001";
-    $connectionInfo = array( "UID" => "iqc_db_user_dev", "PWD" => "iqcdbuserdev", "Database" => "GlobalAccess");
+    $serverName = "192.168.2.14";
+    $connectionInfo = array( "UID" => "software", "PWD" => "specialist", "Database" => "GlobalAccess");
     $conn = sqlsrv_connect($serverName, $connectionInfo);
 
     if( $conn === false )
@@ -9,6 +9,6 @@
      die( print_r( sqlsrv_errors(), true));
      }
      else {
-        //echo "connection established";
+      //   echo "connection established";
      }
 ?>

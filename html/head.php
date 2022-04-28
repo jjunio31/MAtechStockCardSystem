@@ -1,3 +1,12 @@
+<?php 
+  session_start();
+
+  if(!isset($_SESSION['username']))
+  {
+    header("Location:index.php");
+  }
+?>
+
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -20,5 +29,87 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="css/styles.css">
     <title>Stock Card System</title>
+    <style>
+     
+     body{
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: 'Poppins', sans-serif;
+      }
+      label, .qrResult{
+        width: 9rem;
+        margin-bottom: 0;
+        color: #FFFFFF;
+        font-family: 'Poppins', sans-serif;
+      }
+      table{
+        width: 100%;
+      }
+
+        th{
+        width: 14%;
+        }
+
+        th, td{
+          text-align: center;
+          padding-top: 0 !important;
+          padding-bottom: 0 !important;
+          margin: 0;
+        }
+
+        .rowDate, .rowRemarks, .rowInvoice, .rowOrder{
+          font-size: .8rem;
+        }
+
+        @media (max-width:810px){
+    
+        th{
+            font-size: .7rem;
+            padding: 0 !important;
+          }
+
+        table{
+                overflow-x: scroll;
+          }
+          
+        }
+
+        #btn_showReport{
+            margin: 0;
+            display: none;
+        }
+        #btnDiv1, #btnDiv2{
+            margin: 0;
+            padding: 0;
+        }
+        #submitIssued{
+            margin: 0;
+        }
+        #btnDiv2{
+            margin-top: .3rem;
+            
+        }
+
+        #SelectRemark{
+            width: 50%;
+            border-radius: 25px;
+            border: 2px solid white;
+            padding: .2rem; 
+        }
+
+        .old_invoice_div{
+            max-width: 850px;
+            margin: auto;
+        }
+
+       .icon-modal{
+           font-weight: 300;
+       }
+       #totalReturnedValue{
+           display: none;
+       }
+
+    </style>
 
   </head>

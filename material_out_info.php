@@ -1,71 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scan Result</title>
-    <!-- bootstrap CDN and CSS-->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-   
-    <!--font-awesome CDN-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    <link rel="stylesheet" type="text/css" href="css/styles.css" />
-    <!-- Jquery CDN-->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    <style>
-        
-       
-        #btn_showReport{
-            margin: 0;
-            display: none;
-        }
+<?php 
+//INCLUDE HEADERS FROM HTML FOLDER
+  include 'html/head.php';
+?>
 
-        #btnDiv1, #btnDiv2{
-            margin: 0;
-            padding: 0;
-        }
-        #submitIssued{
-            margin: 0;
-        }
-        #btnDiv2{
-            margin-top: .3rem;
-            
-        }
-    
-         th, tr, td {
-        font-size: .9rem;
-        padding: .5rem !important;
-        height: 15px;
-        }
-
-        th{
-        font-size: .8rem;
-        padding: .2rem !important;
-        }
-
-        .old_invoice_div{
-            max-width: 850px;
-            margin: auto;
-        }
-
-        #SelectRemark{
-            width: 50%;
-            border-radius: 25px;
-            border: 2px solid white;
-            padding: .2rem; 
-        }
-
-       .icon-modal{
-           font-weight: 300;
-       }
-       #totalReturnedValue{
-           display: none;
-       }
-
-    </style>
-</head>
 <body>
 <form  id="formInfo" method="post">
 <?php
@@ -98,6 +38,8 @@ else {
 
 if (isset($_POST['codeResult'])) {
     $qrResult = $_POST['codeResult'];
+
+    // $qrResult = 'RE0-00056';
 
 
 
@@ -146,7 +88,7 @@ if (isset($_POST['codeResult'])) {
             ?>
 
                 <div class="result-container ">
-                <label class="text-warning pr-2">Issued QTY</label>
+                <label class="">Issued QTY</label>
                 <input  type="number" min="1" required step="1" onkeypress="return event.keyCode === 8 || event.charCode >= 48 && event.charCode <= 57" id="issuedQty">
                 </div>
 
@@ -155,12 +97,12 @@ if (isset($_POST['codeResult'])) {
                 <!--hidden input for total returned QTY-->
 
                 <div class="result-container ">
-                <label class="text-warning pr-2">Order No.</label>
+                <label class="">Order No.</label>
                 <input type="text"  autocomplete="off"  class="txtbox" name="orderNum" id="orderNum" value="">
                 </div>
 
                 <div class="result-container ">
-                <label class="text-warning pr-2">Remarks</label>
+                <label class="">Remarks</label>
                 <form action="" method="POST">
                     <select class="text-white bg-primary" name="SelectRemark" id="SelectRemark">
                     <option value="ISSUED-TO-PRODUCTION" class="dropdown-item bg-primary text-white" selected>ISSUED TO PRODUCTION</option>
@@ -200,13 +142,13 @@ if (isset($_POST['codeResult'])) {
                     $noInfo = "N/A";
 
                              echo '
-                             <div class="c2" id=""><table class="rounded table table-bordered">
+                             <div class="" id=""><table class="rounded table table-bordered">
                              
                              <thead class="thead bg-secondary">
-                                 <tr class="text-white ">
-                                 <th scope="col">RECEIVED DATE</th>
-                                 <th scope="col">QTY RECEIVED</th>
-                                 <th scope="col">INVOICE NO.</th>  
+                                 <tr class="text-white align-middle">
+                                 <th >RECEIVED DATE</th>
+                                 <th >QTY RECEIVED</th>
+                                 <th >INVOICE NO.</th>  
                                      
                                  </tr>
                                </thead>
@@ -229,9 +171,9 @@ if (isset($_POST['codeResult'])) {
 
                         while ($row_ret = sqlsrv_fetch_array($sql_select_returned_run , SQLSRV_FETCH_ASSOC)){
                             echo '<tr class="active bg-danger">
-                                       <td class="text-white">'.$row_ret['DATE_RECEIVED']->format("m-d-Y").'</td>
-                                       <td class="text-white">'.$row_ret['QTY_S_RET'].'</td>
-                                       <td class="text-white">'."(RETURNED)".'</td>
+                                       <td class="text-white align-middle rowDate">'.$row_ret['DATE_RECEIVED']->format("m-d-Y").'</td>
+                                       <td class="text-white align-middle">'.$row_ret['QTY_S_RET'].'</td>
+                                       <td class="text-white align-middle rowInvoice">'."(RETURNED)".'</td>
                                        </tr>';
                         }
                     }
@@ -256,9 +198,9 @@ if (isset($_POST['codeResult'])) {
                                         {   
                                         
                                             echo '<tr class="active">
-                                            <td class="text-white">'.$row['DATE_RECEIVE']->format("m-d-Y").'</td>
-                                            <td class="text-white">'.$row['total_qty'].'</td>
-                                            <td class="text-white">'.$row['INVOICE'].' '. '<a id="breakdown-btn" data-toggle="modal" data-target="#myModal">
+                                            <td class="text-white align-middle rowDate">'.$row['DATE_RECEIVE']->format("m-d-Y").'</td>
+                                            <td class="text-white align-middle">'.$row['total_qty'].'</td>
+                                            <td class="text-white align-middle rowInvoice">'.$row['INVOICE'].' '. '<a id="breakdown-btn" data-toggle="modal" data-target="#myModal">
                                             <i class="fa-regular fa-circle-up fa-xl text-white icon-modal"></i></a>' .'</td>
                                             </tr>';
                                             
@@ -267,9 +209,9 @@ if (isset($_POST['codeResult'])) {
                                    }else{
 
                                             echo '<tr class="active">
-                                            <td class="text-white">'.$row['DATE_RECEIVE']->format("m-d-Y").'</td>
-                                            <td class="text-white">'.$row['total_qty'].'</td>
-                                            <td class="text-white">'.$row['INVOICE'].'</td>
+                                            <td class="text-white align-middle rowDate">'.$row['DATE_RECEIVE']->format("m-d-Y").'</td>
+                                            <td class="text-white align-middle">'.$row['total_qty'].'</td>
+                                            <td class="text-white align-middle rowInvoice">'.$row['INVOICE'].'</td>
                                             </tr>';
                                         
                                    }

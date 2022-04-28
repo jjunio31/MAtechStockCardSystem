@@ -8,7 +8,12 @@ $username = $_POST['username'] ?? '';
 $password = $_POST['pword'] ?? '';
 
 #searches for email and password in the database
-$query = "SELECT * FROM [dbo].[tblLog_In] WHERE username='{$username}' AND [password]='{$password}'";
+$query = "SELECT * FROM [dbo].[tblEnrolled_List] 
+        WHERE empNum='$username' 
+        AND [password]='$password' 
+        AND isActive ='True' 
+        AND Software_Name='STOCK_CARD'";
+
 $result = sqlsrv_query($conn, $query);  
 
 #checks if the search was made
@@ -35,11 +40,19 @@ else{
 
          while($row = sqlsrv_fetch_array($result)){
              echo $_SESSION['id'] = $row['id'];
-             $_SESSION['username'] = $row['username'];
+             $_SESSION['username'] = $row['empNum'];
              $_SESSION['password'] = $row['password'];
+
+            
+
+             
+             
          }
      }
 }
 
+
+
 ?>
 
+ 

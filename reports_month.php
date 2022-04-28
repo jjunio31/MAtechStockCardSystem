@@ -83,22 +83,21 @@ if (!empty($_POST["partNumber"]))
 
 
 
-
 echo '<div class="table_reports bg-light">';
 $date = date('M d, Y');
 
-    echo '<h3 class="text-center text-white bg-secondary rounded py-1">Transaction Report</h3>
-    <div class="c2" id=""><table class="table table-bordered .w-auto">
+    echo '<h3 class="text-center text-white bg-dark rounded py-1">Transaction Report</h3>
+    <div class="c2" id=""><table class="table table-bordered .w-auto" id="reportsTable">
     <thead></thead>
     <thead class="thead bg-dark py-1">
         <tr class="text-white">
-        <th scope="col" class="w-25">DATE</th>
-        <th scope="col" class="w-25">RECEIVED</th>
-        <th scope="col" class="w-25">ISSUED</th>
-        <th scope="col" class="w-25">STOCK</th>
-        <th scope="col" class="w-25">INVOICE #</th>
-        <th scope="col" class="w-25">ORDER #</th>
-        <th scope="col" class="w-25">REMARKS</th>
+        <th class="">DATE</th>
+        <th class="">RECEIVED</th>
+        <th class="">ISSUED</th>
+        <th class="">STOCK</th>
+        <th class="">INVOICE #</th>
+        <th class="">ORDER #</th>
+        <th class="">REMARKS</th>
         </tr>
       </thead>
     <tbody>';
@@ -145,14 +144,14 @@ if ($selectedMonth == "all"){
       while($row = sqlsrv_fetch_array($sql_select1_run, SQLSRV_FETCH_ASSOC))
       {
 
-        echo '<tr class="active bg-primary text-white">
-        <td class="">'.$row['TRANSACTION_DATE']->format("m-d-Y (h:i:sa)").'</td>
-        <td class="">'.$row['QTY_RECEIVED'].'</td>
-        <td class="">'.$row['QTY_ISSUED'].'</td>
-        <td class="">'.$row['TOTAL_STOCK'].'</td>
-        <td class="">'.$row['INVOICE_KIT'].'</td>
-        <td class="">'.$row['ORDER_NO'].'</td>
-        <td class="">'.$row['REMARKS'].'</td>
+        echo '<tr class="active text-white">
+        <td class="align-middle rowDate color">'.$row['TRANSACTION_DATE']->format("m-d-Y (h:i:sa)").'</td>
+        <td class="align-middle color">'.$row['QTY_RECEIVED'].'</td>
+        <td class="align-middle color">'.$row['QTY_ISSUED'].'</td>
+        <td class="align-middle color">'.$row['TOTAL_STOCK'].'</td>
+        <td class="align-middle rowInvoice color">'.$row['INVOICE_KIT'].'</td>
+        <td class="align-middle rowOrder color">'.$row['ORDER_NO'].'</td>
+        <td class="align-middle rowRemarks color">'.$row['REMARKS'].'</td>
         </tr>';
       }
     }
@@ -176,14 +175,14 @@ if ($selectedMonth == "all"){
       while($row = sqlsrv_fetch_array($sql_select1_run, SQLSRV_FETCH_ASSOC))
       {
 
-        echo '<tr class="active bg-primary text-white">
-        <td class="">'.$row['TRANSACTION_DATE']->format("m-d-Y (h:i:sa)").'</td>
-        <td class="">'.$row['QTY_RECEIVED'].'</td>
-        <td class="">'.$row['QTY_ISSUED'].'</td>
-        <td class="">'.$row['TOTAL_STOCK'].'</td>
-        <td class="">'.$row['INVOICE_KIT'].'</td>
-        <td class="">'.$row['ORDER_NO'].'</td>
-        <td class="remark">'.$row['REMARKS'].'</td>
+        echo '<tr class="active text-white">
+        <td class="align-middle rowDate color">'.$row['TRANSACTION_DATE']->format("m-d-Y (h:i:sa)").'</td>
+        <td class="align-middle color">'.$row['QTY_RECEIVED'].'</td>
+        <td class="align-middle color">'.$row['QTY_ISSUED'].'</td>
+        <td class="align-middle color">'.$row['TOTAL_STOCK'].'</td>
+        <td class="align-middle rowInvoice color">'.$row['INVOICE_KIT'].'</td>
+        <td class="align-middle rowOrder color">'.$row['ORDER_NO'].'</td>
+        <td class="align-middle rowRemarks color">'.$row['REMARKS'].'</td>
         </tr>';
       }
     }
@@ -194,16 +193,11 @@ if ($selectedMonth == "all"){
   echo '</div>';
   
 ?>
-<script>
-
-
-  
-</script>
 
 
 
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    
+    <script src="js/table_bg_color.js"></script>
   </body>
 </html>

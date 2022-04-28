@@ -18,7 +18,7 @@
                 
               <div class="scandiv bg-dark">
               <p class="text-info font-italic" id="date">Today is <span><?php $date = date('M d, Y'); echo $date; ?></span> </p>
-                <h3 class="text-center text-white">QR Code Scanner</h3>
+                <h3 class="text-center text-warning">QR Code Scanner</h3>
               
                     <div class="previewDiv ">
                         <video id="preview" class="reportsPreview" style="background-image: url('img/open-box.png');"></video>
@@ -36,7 +36,7 @@
 
                     <div class="formresult bg-dark" >
                   
-                    <h3 class="text-center text-white material-title">Material-out</h3>
+                    <h3 class="text-center text-warning material-title">Material-out</h3>
                     <div class="qrResultDiv d-flex justify-content-center">
                     <input type="text" name="qrResult" id="qrResult" value="">
                     </div>

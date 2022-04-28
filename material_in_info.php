@@ -1,57 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scan Result</title>
-    <!-- bootstrap CDN and CSS-->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="css/styles.css" />
-    <!-- Font AWESOME -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
- 
-    <!-- Jquery CDN-->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
 
-  
-    <style>
+<?php 
+//INCLUDE HEADERS FROM HTML FOLDER
+  include 'html/head.php';
+?>
 
-        #btn_showReport{
-            margin: 0;
-            display: none;
-        }
-        #btnDiv1, #btnDiv2{
-            margin: 0;
-            padding: 0;
-        }
-        #submitIssued{
-            margin: 0;
-        }
-        #btnDiv2{
-            margin-top: .3rem;
-            
-        }
-
-        @media (max-width:767px){
-    
-            label{
-            width: 7.5rem;
-            }
-        }
-
-        #SelectRemark{
-            width: 50%;
-            border-radius: 25px;
-            border: 2px solid white;
-            padding: .2rem; 
-        }
-  
-        
-    </style>
-<link rel="stylesheet" type="text/css" href="css/styles.css" />
-</head>
 <body>
     
 <form  id="formInfo" method="post">
@@ -102,12 +56,12 @@ if (isset($_POST['codeResult'])) {
             ?>
 
                 <div class="result-container ">
-                <label class="text-warning pr-2">Received QTY</label>
+                <label class="text-white">Received QTY</label>
                 <input  type="number" min="1" required step="1" onkeypress="return event.keyCode === 8 || event.charCode >= 48 && event.charCode <= 57" name = "returnedqty" id="returnedqty">
                 </div>
 
                 <div class="result-container ">
-                <label class="text-warning pr-2">Remarks</label>
+                <label class="text-white">Remarks</label>
                 <form action="" method="POST">
                     <select class="text-white bg-primary" name="SelectRemark" id="SelectRemark">
                     <option value="NON-MOVING" class="dropdown-item text-white" selected >NON-MOVING</option>

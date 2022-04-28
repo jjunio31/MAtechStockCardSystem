@@ -1,33 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scan Result</title>
-    <!-- bootstrap CDN and CSS-->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="css/styles.css" />
-    <!-- Jquery CDN-->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    <style>
-
-
-
-        .table_reports{
-            overflow: scroll;
-        }
-
-        #SelectMonth{
-            width: 50%;
-            border-radius: 25px;
-            border: 2px solid white;
-            padding: .2rem; 
-        }
-
-      
-    </style>
-</head>
+<?php 
+//INCLUDE HEADERS FROM HTML FOLDER
+  include 'html/head.php';
+?>
 <body>
     
 <?php
@@ -83,7 +59,7 @@ if (isset($_POST['codeResult'])) {
             ?>
 
                 <div class="result-container ">
-                <label class="text-warning pr-2">Select Month</label>
+                <label class="">Select Month</label>
                 <form action="" method="POST">
                     <select class="text-white bg-primary" name="SelectMonth" id="SelectMonth">
                     <option value="none" disabled selected class="dropdown-item bg-dark text-primary px-5">Select Month</option>

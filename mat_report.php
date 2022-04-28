@@ -81,18 +81,18 @@ switch ($currentMonth){
             }
             
             $date = date('M d, Y');
-            echo '<h3 class="text-center text-white bg-secondary rounded py-1">Transaction Report</h3>
-            <div class="c2" id=""><table class="table table-bordered">
+            echo '<h3 class="text-center text-white bg-dark rounded py-1">Transaction Report</h3>
+            <div class="c2" id=""><table class="table table-bordered" id="reportsTable">
             
             <thead class="thead-dark">
                 <tr>
-                <th scope="col">DATE</th>
-                <th scope="col">RECEIVED</th>
-                <th scope="col">ISSUED</th>
-                <th scope="col">STOCK</th>
-                <th scope="col">INVOICE #</th>
-                <th scope="col">ORDER #</th>
-                <th scope="col">REMARKS</th>
+                <th >DATE</th>
+                <th >RECEIVED</th>
+                <th >ISSUED</th>
+                <th >STOCK</th>
+                <th >INVOICE #</th>
+                <th >ORDER #</th>
+                <th >REMARKS</th>
                 
                 </tr>
               </thead>
@@ -107,14 +107,14 @@ switch ($currentMonth){
                     {
 
                     
-                    echo '<tr class="active text-white bg-secondary">
-                                      <td class="">'.$row['TRANSACTION_DATE']->format("m-d-Y (h:i:sa)").'</td>
-                                      <td class="">'.$row['QTY_RECEIVED'].'</td>
-                                      <td class="">'.$row['QTY_ISSUED'].'</td>
-                                      <td class="">'.$row['TOTAL_STOCK'].'</td>
-                                      <td class="">'.$row['INVOICE_KIT'].'</td>
-                                      <td class="">'.$row['ORDER_NO'].'</td>
-                                      <td class="">'.$row['REMARKS'].'</td>
+                    echo '<tr class="active text-white">
+                                      <td class="align-middle rowDate color">'.$row['TRANSACTION_DATE']->format("m-d-Y (h:i:sa)").'</td>
+                                      <td class="align-middle color">'.$row['QTY_RECEIVED'].'</td>
+                                      <td class="align-middle color">'.$row['QTY_ISSUED'].'</td>
+                                      <td class="align-middle color">'.$row['TOTAL_STOCK'].'</td>
+                                      <td class="align-middle rowInvoice color">'.$row['INVOICE_KIT'].'</td>
+                                      <td class="align-middle rowOrder color">'.$row['ORDER_NO'].'</td>
+                                      <td class="align-middle rowRemarks color">'.$row['REMARKS'].'</td>
                                 </tr>';
 
                     }
@@ -134,7 +134,8 @@ switch ($currentMonth){
          
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-</body>
+    <script src="js/table_bg_color.js"></script>
+  </body>
 </html>
  
 
