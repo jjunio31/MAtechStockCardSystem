@@ -2,23 +2,16 @@
 <html lang="en">
 
 <?php 
-//INCLUDE HEADERS FROM HTML FOLDER
-  include 'html/head.php';
+    include 'html/head.php';
+    include 'connections/ma_receiving_conn.php'; 
+    // include 'connections/stock_card_conn.php';
 ?>
 
 <body>
     
 <form  id="formInfo" method="post">
 <?php
-$serverName = "192.168.2.15,40001";
-$connectionInfo = array( "UID" => "iqc_db_user_dev", "PWD" => "iqcdbuserdev", "Database" => "MA_Receiving");
-$conn = sqlsrv_connect($serverName, $connectionInfo);
 
-if( $conn === false )
-{
-echo "Could not connect.\n";
-die( print_r( sqlsrv_errors(), true));
-}
 
 if (isset($_POST['codeResult'])) {
     $qrResult = $_POST['codeResult'];}
@@ -26,7 +19,7 @@ if (isset($_POST['codeResult'])) {
 
     $sql_part_number = "SELECT PART_NUMBER From [Receive]
     WHERE GOODS_CODE = '$qrResult'or PART_NUMBER = '$qrResult' or ITEM_CODE = '$qrResult' ";
-    $sql_part_number_run = sqlsrv_query( $conn, $sql_part_number );
+    $sql_part_number_run = sqlsrv_query( $conn1, $sql_part_number );
 
     while($row_partNumber = sqlsrv_fetch_array($sql_part_number_run, SQLSRV_FETCH_ASSOC))
         {
@@ -35,7 +28,7 @@ if (isset($_POST['codeResult'])) {
 
     $sql_select1 = "SELECT * From Total_Stock
     WHERE GOODS_CODE = '$qrResult'or PART_NUMBER = '$qrResult' or ITEM_CODE = '$qrResult'";
-    $sql_select1_run = sqlsrv_query( $conn, $sql_select1 );
+    $sql_select1_run = sqlsrv_query( $conn1, $sql_select1 );
     
 
     if( $sql_select1_run === false) {
@@ -59,7 +52,7 @@ if (isset($_POST['codeResult'])) {
                 <label class="text-white">Received QTY</label>
                 <input  type="number" min="1" required step="1" onkeypress="return event.keyCode === 8 || event.charCode >= 48 && event.charCode <= 57" name = "returnedqty" id="returnedqty">
                 </div>
-
+ 
                 <div class="result-container ">
                 <label class="text-white">Remarks</label>
                 <form action="" method="POST">
@@ -90,30 +83,29 @@ if (isset($_POST['codeResult'])) {
                 <div class="modal fade" id="confirm-submit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <div class="modal-header">
+                        <div class="modal-header h5">
                             Confirm Details
                         </div>
                         <div class="modal-body">
                             Are you sure you want to save the following details?
 
                             <!-- We display the details entered by the user here -->
-                            <table class="table">
+                            <table class=" table-bordered">
                                 <tr>
-                                    <th>Returned Quantity :</th>
-                                    <td id="" class="text-dark"><input type="text" readonly class="txtbox text-primary" name="returnedqty2" id="returnedqty2" value=""></td>
+                                    <th class="check-info-label-modal align-middle">Received Quantity :</th>
+                                    <td id="typed-info align-middle" class="text-dark"><input type="text" readonly class="txtbox text-primary" name="returnedqty2" id="returnedqty2" value=""></td>
                                     
                                 </tr>
                                 <tr>
-                                    <th>Remarks :</th>
-                                    <td id=""><input type="text" readonly class="txtbox text-primary" name="remarks" id="remarks" value=""></td>
+                                    <th class="check-info-label-modal align-middle">Remarks :</th>
+                                    <td id="typed-info align-middle"><input type="text" readonly class="txtbox text-primary" name="remarks" id="remarks" value=""></td>
                                 </tr>
                             </table>
-
                         </div>
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                            <button href="#" id="saveBTN" class="btn btn-success success" data-dismiss="modal">Save</button>
+                            <button id="saveBTN" class="btn btn-success success" data-dismiss="modal">Save</button>
                         </div>
                     </div>
                 </div>

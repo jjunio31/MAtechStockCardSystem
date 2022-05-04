@@ -111,13 +111,10 @@ a:hover {
 
 .btn.btn-block {
     border-radius: 20px;
-    background-color: #400485;
-    color: #fff
+   
 }
 
-.btn.btn-block:hover {
-    background-color: #55268be0
-}
+
 
 @media(max-width: 575px) {
     .wrapper {
@@ -140,6 +137,3 @@ a:hover {
     width: 90%;
 }
 
-#btn-submit{
-    background-color: #292b2c;
-}

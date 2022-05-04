@@ -2,31 +2,14 @@
 <html lang="en">
 
   <?php 
-    //INCLUDE HEADERS FROM HTML FOLDER
-      include 'html/head.php';
+    include 'html/head.php';
+    include 'connections/ma_receiving_conn.php'; 
+    include 'connections/stock_card_conn.php';
+    // include 'get_ajax.php';
   ?>
 
   <body>    
 <?php
-$serverName = "192.168.2.15,40001";
-$connectionInfo1 = array( "UID" => "iqc_db_user_dev", "PWD" => "iqcdbuserdev", "Database" => "MA_Receiving");
-$conn1 = sqlsrv_connect($serverName, $connectionInfo1);
-
-if( $conn1 === false )
-{
-echo "Could not connect.\n";
-die( print_r( sqlsrv_errors(), true));
-}
-
-// Conn for StockCard
-$connectionInfo2 = array( "UID" => "iqc_db_user_dev", "PWD" => "iqcdbuserdev", "Database" => "StockCard");
-$conn2 = sqlsrv_connect($serverName, $connectionInfo2);
-
-if( $conn2 === false )
-{
-echo "Could not connect.\n";
-die( print_r( sqlsrv_errors(), true));
-}
 
 
 if (!empty($_POST['codeResult']))
@@ -82,12 +65,24 @@ if (!empty($_POST["partNumber"]))
 
 
 
-
 echo '<div class="table_reports bg-light">';
 $date = date('M d, Y');
 
-    echo '<h3 class="text-center text-warning bg-dark rounded py-1">Transaction Report</h3>
-    <div class="c2" id=""><table class="table table-bordered .w-auto" id="reportsTable">
+    echo '
+    <div class="bg-dark rounded py-1 transaction-header-div">
+    
+    <h3 class="text-center text-warning transction-title">Transaction Report</h3>
+    
+    </div>
+  
+    <div class="bg-dark rounded print-div">
+    
+    <button id="btnPrint" onclick="window.print()" class="btn btn-sm btn-primary success text-center">Print</button>
+    </div>
+    
+    <div class="c2" id="">
+
+    <table class="table table-bordered .w-auto" id="reportsTable">
     <thead></thead>
     <thead class="thead bg-dark py-1">
         <tr class="text-white">
@@ -102,9 +97,10 @@ $date = date('M d, Y');
       </thead>
     <tbody>';
 
-    
+
 $currentYear = date("Y");
 $endDay = '';
+
 
 switch ($selectedMonth){
   case '01':
@@ -127,10 +123,12 @@ switch ($selectedMonth){
     break;
 }
 
+
+
 if ($selectedMonth == "all"){
 
   $sql_select1 = "SELECT * FROM transaction_record_tbl WHERE GOODS_CODE = '$goodsCode'
-  ORDER BY id ASC;";
+  ORDER BY id DESC;";
 
     $sql_select1_run = sqlsrv_query($conn2, $sql_select1);
 
@@ -161,7 +159,7 @@ if ($selectedMonth == "all"){
 
   $sql_select1 = "SELECT * FROM transaction_record_tbl WHERE GOODS_CODE = '$goodsCode'
   AND TRANSACTION_DATE BETWEEN '$currentYear/$selectedMonth/01 00:00:00' AND '$currentYear/$selectedMonth/$endDay 23:59:59'
-  ORDER BY id ASC;";
+  ORDER BY id DESC;";
 
     $sql_select1_run = sqlsrv_query($conn2, $sql_select1);
 
@@ -189,7 +187,10 @@ if ($selectedMonth == "all"){
 
 }
 
-  echo '</tbody></table></div>';
+  
+  echo '</tbody>
+        </table>
+        </div>';
   echo '</div>';
   
 ?>
@@ -199,5 +200,7 @@ if ($selectedMonth == "all"){
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src="js/table_bg_color.js"></script>
+    <!-- <script src="js/print.js"></script> -->
+
   </body>
 </html>

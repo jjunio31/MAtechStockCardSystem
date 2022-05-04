@@ -3,36 +3,14 @@
 
   <?php 
     include 'html/head.php';
+    include 'connections/ma_receiving_conn.php'; 
+    include 'connections/stock_card_conn.php';
   ?>
   
   <body>
 
 
   <?php
-$serverName = "192.168.2.15,40001";
-$connectionInfo1 = array( "UID" => "iqc_db_user_dev", "PWD" => "iqcdbuserdev", "Database" => "MA_Receiving");
-$conn1 = sqlsrv_connect($serverName, $connectionInfo1);
-
-$connectionInfo2 = array( "UID" => "iqc_db_user_dev", "PWD" => "iqcdbuserdev", "Database" => "StockCard");
-$conn2 = sqlsrv_connect($serverName, $connectionInfo2);
-
-if( $conn1 === false )
-{
-echo "Could not connect.\n";
-die( print_r( sqlsrv_errors(), true));
-}
-else {
-//    echo "connection established 1";
-}
-
-if( $conn2 === false )
-{
-echo "Could not connect.\n";
-die( print_r( sqlsrv_errors(), true));
-}
-else {
-//    echo "connection established 2";
-}
 
 if (!empty($_POST["goodsCode"])){ 
     $goodsCode = $_POST['goodsCode']; 
@@ -70,7 +48,7 @@ switch ($currentMonth){
 
     $sql_select1 = "SELECT * FROM transaction_record_tbl WHERE GOODS_CODE = '$goodsCode' 
     AND TRANSACTION_DATE BETWEEN '$currentYear/$currentMonth/01 00:00:00' AND '$currentYear/$currentMonth/$endDay 23:59:59'
-    ORDER BY id ASC;";
+    ORDER BY id DESC;";
 
 
 
@@ -81,7 +59,7 @@ switch ($currentMonth){
             }
             
             $date = date('M d, Y');
-            echo '<h3 class="text-center text-warning bg-dark rounded py-1">Transaction Report</h3>
+            echo '<div class="bg-dark rounded py-1"><h3 class="text-center text-warning">Transaction Report</h3></div>
             <div class="c2" id=""><table class="table table-bordered" id="reportsTable">
             
             <thead class="thead-dark">

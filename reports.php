@@ -2,10 +2,9 @@
 <html lang="en">
 
 <?php 
-//INCLUDE HEADERS FROM HTML FOLDER
-  include 'html/head.php';
 
-   
+  include 'html/head.php';  //INCLUDE HEADERS FROM HTML FOLDER
+
 ?>
 
   <body>   
@@ -49,11 +48,11 @@
                   <div id="formDiv" class="bg-dark"></div> <!--div for Result (AJAX)-->
 
                   <!--div for Report (AJAX)-->
-                  <div id="reportDiv" class="bg-light">
-                  <div class="report" id="report">
+                  <!-- <div id="reportDiv" class="bg-light">
+                  <div class="report" id="report"> -->
                   
 
-                  </div>
+                  <!-- </div> -->
 
                   </div> 
 

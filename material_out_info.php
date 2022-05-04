@@ -2,38 +2,15 @@
 <html lang="en">
 
 <?php 
-//INCLUDE HEADERS FROM HTML FOLDER
-  include 'html/head.php';
-?>
+    include 'html/head.php';
+    include 'connections/ma_receiving_conn.php'; 
+    include 'connections/stock_card_conn.php';
+  ?>
 
 <body>
 <form  id="formInfo" method="post">
+
 <?php
-$serverName = "192.168.2.15,40001";
-$connectionInfo1 = array( "UID" => "iqc_db_user_dev", "PWD" => "iqcdbuserdev", "Database" => "MA_Receiving");
-$conn1 = sqlsrv_connect($serverName, $connectionInfo1);
-
-$connectionInfo2 = array( "UID" => "iqc_db_user_dev", "PWD" => "iqcdbuserdev", "Database" => "StockCard");
-$conn2 = sqlsrv_connect($serverName, $connectionInfo2);
-
-if( $conn1 === false )
-{
-echo "Could not connect.\n";
-die( print_r( sqlsrv_errors(), true));
-}
-else {
-//    echo "connection established 1";
-}
-
-if( $conn2 === false )
-{
-echo "Could not connect.\n";
-die( print_r( sqlsrv_errors(), true));
-}
-else {
-//    echo "connection established 2";
-}
-
 
 
 if (isset($_POST['codeResult'])) {
@@ -47,12 +24,14 @@ if (isset($_POST['codeResult'])) {
     $sql_total_ret = "SELECT SUM(QTY_S_RET) as total_qty_ret FROM returned_tbl WHERE GOODS_CODE = '$qrResult'";
                      
     $sql_total_ret_run = sqlsrv_query( $conn2, $sql_total_ret );
-    while($row_total_ret = sqlsrv_fetch_array($sql_total_ret_run, SQLSRV_FETCH_ASSOC))
-    {
-       $total_qty_ret = $row_total_ret['total_qty_ret'];
+        while($row_total_ret = sqlsrv_fetch_array($sql_total_ret_run, SQLSRV_FETCH_ASSOC))
+        {
+        $total_qty_ret = $row_total_ret['total_qty_ret'];
 
-    }
-
+        }
+    
+   
+    
 
 
     $sql_select1 = "SELECT * From Total_Stock
@@ -242,26 +221,25 @@ if (isset($_POST['codeResult'])) {
                 <div class="modal fade" id="confirm-submit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <div class="modal-header">
+                        <div class="modal-header h5">
                             Confirm Details
                         </div>
                         <div class="modal-body">
                             Are you sure you want to save the following details?
 
                             <!-- We display the details entered by the user here -->
-                            <table class="table">
+                            <table class="table-bordered">
                                 <tr>
-                                    <th>Issued Quantity :</th>
-                                    <td id="" class="text-dark"><input type="text" readonly class="txtbox text-primary" name="issuedQty2" id="issuedQty2" value=""></td>
-                                    
+                                    <th class="check-info-label-modal">Issued Quantity :</th>
+                                    <td id="typed-info" class="text-dark"><input type="text" readonly class="txtbox text-primary" name="issuedQty2" id="issuedQty2" value=""></td>
                                 </tr>
                                 <tr>
-                                    <th>Order Number :</th>
-                                    <td id=""><input type="text" readonly class="txtbox text-primary" name="orderNum2" id="orderNum2" value=""></td>
+                                    <th class="check-info-label-modal">Order Number :</th>
+                                    <td id="typed-info"><input type="text" readonly class="txtbox text-primary" name="orderNum2" id="orderNum2" value=""></td>
                                 </tr>
                                 <tr>
-                                    <th>Remarks</th>
-                                    <td id=""><input type="text" readonly class="txtbox text-primary" name="remarks" id="remarks" value=""></td>
+                                    <th class="check-info-label-modal">Remarks :</th>
+                                    <td id="typed-info"><input type="text" readonly class="txtbox text-primary" name="remarks" id="remarks" value=""></td>
                                 </tr>
                                 
                             </table>
@@ -270,7 +248,7 @@ if (isset($_POST['codeResult'])) {
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                            <button href="#" id="submitIssued" class="btn btn-success success" data-dismiss="modal">Save</button>
+                            <button href="#" id="submitIssued" class="btn btn-primary success" data-dismiss="modal">Save</button>
                         </div>
                     </div>
                 </div>

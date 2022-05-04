@@ -1,25 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php 
-//INCLUDE HEADERS FROM HTML FOLDER
-  include 'html/head.php';
+    include 'html/head.php';
+    include 'connections/ma_receiving_conn.php'; 
+    // include 'connections/stock_card_conn.php';
 ?>
 <body>
     
 <?php
 
-$serverName = "192.168.2.15,40001";
-$connectionInfo = array( "UID" => "iqc_db_user_dev", "PWD" => "iqcdbuserdev", "Database" => "MA_Receiving");
-$conn = sqlsrv_connect($serverName, $connectionInfo);
 
-if( $conn === false )
-{
-echo "Could not connect.\n";
-die( print_r( sqlsrv_errors(), true));
-}
-else {
-    //echo "connection established";
-}
 
 
 if (isset($_POST['codeResult'])) {
@@ -28,7 +18,7 @@ if (isset($_POST['codeResult'])) {
 
     $sql_part_number = "SELECT PART_NUMBER From [Receive]
     WHERE GOODS_CODE = '$qrResult'or PART_NUMBER = '$qrResult' or ITEM_CODE = '$qrResult' ";
-    $sql_part_number_run = sqlsrv_query( $conn, $sql_part_number );
+    $sql_part_number_run = sqlsrv_query( $conn1, $sql_part_number );
 
     while($row_partNumber = sqlsrv_fetch_array($sql_part_number_run, SQLSRV_FETCH_ASSOC))
         {
@@ -39,7 +29,7 @@ if (isset($_POST['codeResult'])) {
     
     $sql_select = "SELECT TOP 1 * From Total_Stock
     WHERE GOODS_CODE = '$qrResult'or PART_NUMBER = '$qrResult' or ITEM_CODE = '$qrResult'";
-    $sql_select_run = sqlsrv_query( $conn, $sql_select );
+    $sql_select_run = sqlsrv_query( $conn1, $sql_select );
 
     if( $sql_select_run === false) {
         die( print_r( sqlsrv_errors(), true) );
@@ -59,7 +49,7 @@ if (isset($_POST['codeResult'])) {
             ?>
 
                 <div class="result-container ">
-                <label class="">Select Month</label>
+                <label class="">Month</label>
                 <form action="" method="POST">
                     <select class="text-white bg-primary" name="SelectMonth" id="SelectMonth">
                     <option value="none" disabled selected class="dropdown-item bg-dark text-primary px-5">Select Month</option>

@@ -1,28 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 
-  <?php   
+  <?php 
     include 'html/head.php';
+    include 'connections/ma_receiving_conn.php'; 
+    // include 'connections/stock_card_conn.php';
   ?>
   
 <body>
 
 <?php 
 
-$serverName = "192.168.2.15,40001";
-$connectionInfo1 = array( "UID" => "iqc_db_user_dev", "PWD" => "iqcdbuserdev", "Database" => "MA_Receiving");
-$conn1 = sqlsrv_connect($serverName, $connectionInfo1);
-
-if( $conn1 === false )
-{
-echo "Could not connect.\n";
-die( print_r( sqlsrv_errors(), true));
-}
-else {
-//    echo "connection established 1";
-}
-
-// DATA FROM AJAX--
 if (!empty($_POST["qrResult"])){ $qrResult = $_POST['qrResult']; }
 
 
@@ -42,7 +30,6 @@ GROUP BY DATE_RECEIVE, [INVOICE], [GOODS_CODE]";
                  $total_stock_qtys = $row['total_qty'];
              }
          }
-
 
 
 $sql_get_rowcount = "SELECT * FROM dbo.[Receive] 

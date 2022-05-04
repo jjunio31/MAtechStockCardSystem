@@ -1,5 +1,5 @@
 <?php
-  include 'login_connection.php';
+  include 'connections/login_connection.php';
   include 'loginPageFunction.php';
 ?>
 
@@ -23,16 +23,16 @@
   <body class="bg-dark">
     <div class="wrapper bg-light">
         <div class="h2 text-center"><img src="img/matech_logo.png" class="matech_logo" alt="M.A Technologies Inc."></div>
-        <div class="h4 text-muted text-center pt-2">Enter your login details</div>
-        <form class="pt-3" action="loginPageFunction.php" method="post" >
+        <div style="background: #3C5393" class="h3 text-center text-white rounded align-middle py-1"><span class="shadow-lg">Stock Card System</span></div>
+        <div class="text-muted text-center pt-2"><span class="h6 text-center">Enter your login details</span></div>
+        <form class="pt-1" action="loginPageFunction.php" method="post" >
             <div class="form-group">
                 <div class="input-field"> <span class="far fa-user p-2"></span> <input type="text" placeholder="Username" autocomplete="off" required class="username bg-light" id="username" name="username"> </div>
             </div>
-            <div class="form-group py-1 pb-2">
+            <div class="form-group py-1 pb-1">
                 <div class="input-field"> <span class="fas fa-lock p-2"></span> <input type="password" placeholder="Enter your Password" required class="password bg-light" id="pword" name="pword"> <button class="btn bg-white text-muted"> <span class="far fa-eye-slash"></span> </button> </div>
             </div>
-            <div class="d-flex align-items-start">
-            </div> <button class="btn btn-block text-center my-3" id="btn-submit" btn->Log in</button>
+            <button style="background: #3C5393" class="btn btn-block text-center my-3 btn-primary" id="btn-submit" btn->Log in</button>
         </form>
     </div>
     
