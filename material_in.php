@@ -15,7 +15,7 @@
 ?>
 
 
-            <!-- Material Out Section-->
+            <!-- Material In Section-->
   <div class="container-fluid">
                 
               <div class="scandiv bg-dark">
@@ -36,13 +36,11 @@
                 <div class="scanresultdiv">
 
                     <div class="formresult bg-dark" >
-                  
                     <h3 class="text-center text-warning material-title">Material-In</h3>
                     <div class="qrResultDiv d-flex justify-content-center">
                     <input type="text" name="qrResult" id="qrResult" value="" placeholder="Goods Code">
                     </div>
                       
-
                 </div>
 
                   <div id="formDiv" class="bg-dark"></div> <!--div for Result (AJAX)-->

@@ -12,6 +12,10 @@
 
 <?php
 
+if(isset($_POST['AssybuttonVal'])){
+    $AssybuttonVal = $_POST['AssybuttonVal'];
+    
+}
 
 if (isset($_POST['codeResult'])) {
     $qrResult = $_POST['codeResult'];
@@ -21,7 +25,10 @@ if (isset($_POST['codeResult'])) {
 
 
     //QUERY FOR FETCHING RETURNED MATERIALS 
-    $sql_total_ret = "SELECT SUM(QTY_S_RET) as total_qty_ret FROM returned_tbl WHERE GOODS_CODE = '$qrResult'";
+    $sql_total_ret = "SELECT SUM(QTY_S_RET) 
+                      as total_qty_ret 
+                      FROM returned_tbl 
+                      WHERE GOODS_CODE = '$qrResult'";
                      
     $sql_total_ret_run = sqlsrv_query( $conn2, $sql_total_ret );
         while($row_total_ret = sqlsrv_fetch_array($sql_total_ret_run, SQLSRV_FETCH_ASSOC))
@@ -29,32 +36,31 @@ if (isset($_POST['codeResult'])) {
         $total_qty_ret = $row_total_ret['total_qty_ret'];
 
         }
-    
-   
-    
 
-
-    $sql_select1 = "SELECT * From Total_Stock
-    WHERE GOODS_CODE = '$qrResult'or PART_NUMBER = '$qrResult' or ITEM_CODE = '$qrResult' ";
-    $sql_select1_run = sqlsrv_query( $conn1, $sql_select1 );
-
-
-
-    $sql_part_number = "SELECT PART_NUMBER From [Receive]
-    WHERE GOODS_CODE = '$qrResult'or PART_NUMBER = '$qrResult' or ITEM_CODE = '$qrResult' ";
+    $sql_part_number = "SELECT PART_NUMBER From MS21_MASTER_LIST
+                        WHERE GOODS_CODE = '$qrResult'
+                        or PART_NUMBER = '$qrResult' 
+                        or ITEM_CODE = '$qrResult' ";
     $sql_part_number_run = sqlsrv_query( $conn1, $sql_part_number );
 
     while($row_partNumber = sqlsrv_fetch_array($sql_part_number_run, SQLSRV_FETCH_ASSOC))
         {
             $partNumber = $row_partNumber['PART_NUMBER'];
         }
+   
+        $sql_select = "SELECT * From Total_Stock
+        WHERE GOODS_CODE = '$qrResult'
+        AND ASSY_LINE = '$AssybuttonVal';";
+        $sql_select1_run = sqlsrv_query( $conn1, $sql_select );
+    
+
     
     if( $sql_select1_run === false) {
         die( print_r( sqlsrv_errors(), true) );
     }
 
 
-    if($sql_select1_run){
+    if($sql_select1_run){ 
         while($row = sqlsrv_fetch_array($sql_select1_run, SQLSRV_FETCH_ASSOC))
         {
             
@@ -93,19 +99,20 @@ if (isset($_POST['codeResult'])) {
                     </select>
                 </form>
                 </div>
+
                 
                 <!--  CODE FOR INVOICE -->
                 
                 <div class = "old_invoice_div">
                 <?php 
 
-                //CHECK ROW-COUNT of INVOICE
+                //CHECK ROW-COUNT of INVOICE FIFO
 
                 $sql_get_rowcount = "SELECT GOODS_CODE, INVOICE, COUNT(*) as invoice_count
                                     FROM [Receive]
                                     WHERE GOODS_CODE = '$qrResult'
+                                    AND [STATUS] = 'INSPECTED'
                                     GROUP BY GOODS_CODE, INVOICE HAVING COUNT (*) > 1;";
-                
 
                 $params_invoice_count = array();
                 $options_invoice_count =  array( "Scrollable" => SQLSRV_CURSOR_KEYSET );
@@ -114,10 +121,10 @@ if (isset($_POST['codeResult'])) {
 
                 $count_result_invoice = sqlsrv_num_rows( $sql_get_rowcount_run );
 
+
                 date_default_timezone_set('Asia/Hong_Kong');  
                 $date = date('m-d-Y H:i:s');
                    
-
                     $noInfo = "N/A";
 
                              echo '
@@ -128,12 +135,11 @@ if (isset($_POST['codeResult'])) {
                                  <th >RECEIVED DATE</th>
                                  <th >QTY RECEIVED</th>
                                  <th >INVOICE NO.</th>  
-                                     
                                  </tr>
                                </thead>
                              <tbody>';
 
-                    //  //QUERY FOR FETCHING RETURNED MATERIALS FROM PRODUCTION
+                    //QUERY FOR FETCHING RETURNED MATERIALS FROM PRODUCTION
                     $sql_select_returned = "SELECT * FROM [returned_tbl]
                                             WHERE GOODS_CODE = '$qrResult'
                                             AND QTY_S_RET > 0
@@ -153,22 +159,24 @@ if (isset($_POST['codeResult'])) {
                                        <td class="text-white align-middle rowDate">'.$row_ret['DATE_RECEIVED']->format("m-d-Y").'</td>
                                        <td class="text-white align-middle">'.$row_ret['QTY_S_RET'].'</td>
                                        <td class="text-white align-middle rowInvoice">'."(RETURNED)".'</td>
-                                       </tr>';
+                                  </tr>';
                         }
                     }
 
                      //QUERY FOR FETCHING RECEIVED MATERIALS FROM SUPPLIER
-                     $sql_select1 = "SELECT DATE_RECEIVE, GOODS_CODE,INVOICE, SUM(QTY_S) as total_qty 
-                     FROM [Receive] 
-                     WHERE GOODS_CODE = '$qrResult' AND QTY_S > 0 AND [STATUS] = 'INSPECTED'
-                     GROUP BY DATE_RECEIVE, [INVOICE], [GOODS_CODE]";
+                     $sql_select_total_qty = "SELECT DATE_RECEIVE, GOODS_CODE, INVOICE, SUM(QTY_S) as total_qty 
+                                              FROM [Receive] 
+                                              WHERE GOODS_CODE = '$qrResult' AND QTY_S > 0 
+                                              AND [STATUS] = 'INSPECTED'
+                                              AND ASY_LINE  = '$AssybuttonVal'
+                                              GROUP BY DATE_RECEIVE, [INVOICE], [GOODS_CODE]";
                      
-                     $sql_select1_run = sqlsrv_query( $conn1, $sql_select1 );
-                             if(!$sql_select1_run) {
+                     $sql_select_total_qty_run = sqlsrv_query( $conn1, $sql_select_total_qty );
+                             if(!$sql_select_total_qty_run) {
                              die( print_r( sqlsrv_errors(), true) );
                              }else{
 
-                                while($row = sqlsrv_fetch_array($sql_select1_run, SQLSRV_FETCH_ASSOC))
+                                while($row = sqlsrv_fetch_array($sql_select_total_qty_run, SQLSRV_FETCH_ASSOC))
                                 {
                                    $total_stock_qtys = $row['total_qty'];
                                  
@@ -179,7 +187,7 @@ if (isset($_POST['codeResult'])) {
                                             echo '<tr class="active">
                                             <td class="text-white align-middle rowDate">'.$row['DATE_RECEIVE']->format("m-d-Y").'</td>
                                             <td class="text-white align-middle">'.$row['total_qty'].'</td>
-                                            <td class="text-white align-middle rowInvoice">'.$row['INVOICE'].' '. '<a id="breakdown-btn" data-toggle="modal" data-target="#myModal">
+                                            <td class="text-white align-middle rowInvoice">'.$row['INVOICE'].' '. '<a id="breakdown-btn" style="display: none;" data-toggle="modal" data-target="#myModal">
                                             <i class="fa-regular fa-circle-up fa-xl text-white icon-modal"></i></a>' .'</td>
                                             </tr>';
                                             
@@ -256,8 +264,7 @@ if (isset($_POST['codeResult'])) {
                 <!-- END MODAL CONFIRM SAVE-->
 
 
-
-
+                
                 <!--  MODAL CHECK INVOICE BREAKDOWN TABLE-->
 
                         <div class="container bg-dark">
@@ -293,7 +300,7 @@ if (isset($_POST['codeResult'])) {
             </div>
             
            <?php
-        }
+        } 
     }
     else
     {

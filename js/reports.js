@@ -40,43 +40,48 @@ $(document).ready(function(){
                        var codeResult = $('input[id=qrResult]').val();
 
                        $.ajax({
-                        type: "POST",
-                        url: "reports_info.php",
+                        type: "post",
+                        url: "assyLine.php",
                         data: {codeResult: codeResult},
                         dataType: "text",
-                        success: function(data, response)
-                        {
-                            $("#formDiv").html(data);
-                            $('#messageDisplay2').text(response);
-                            // console.log(codeResult);
-
-                            //AJAX TO PASS CURRENT MONTH TO reports_month.php
-                            var d = new Date(),
-                            n = '0' + (d.getMonth()+1);
-                    
-                            $.ajax({
-                                type: "post",
-                                url: "reports_month.php",
-                                data: {
-                                    n:n,
-                                    codeResult:codeResult
-                                },
-                                dataType: "text",
-                                success: function (data) {
-                                    $('.monthReportDiv').html(data);
-                                    // console.log(n);
-                                }
-                            });
-                    //AJAX TO PASS CURRENT MONTH TO reports_month.php
+                        success: function (data) {
+                         $("#assyLineDiv").html(data);
                         }
                     });
+
+                    //    $.ajax({
+                    //     type: "POST",
+                    //     url: "reports_info.php",
+                    //     data: {codeResult: codeResult},
+                    //     dataType: "text",
+                    //     success: function(data, response)
+                    //     {
+                    //         $("#formDiv").html(data);
+                    //         $('#messageDisplay2').text(response);
+                    //         // console.log(codeResult);
+
+                    //         //AJAX TO PASS CURRENT MONTH TO reports_month.php
+                    //         var d = new Date(),
+                    //         n = '0' + (d.getMonth()+1);
+                    
+                    //         $.ajax({
+                    //             type: "post",
+                    //             url: "reports_month.php",
+                    //             data: {
+                    //                 n:n,
+                    //                 codeResult:codeResult
+                    //             },
+                    //             dataType: "text",
+                    //             success: function (data) {
+                    //                 $('.monthReportDiv').html(data);
+                    //                 // console.log(n);
+                    //             }
+                    //         });
+                    // //AJAX TO PASS CURRENT MONTH TO reports_month.php
+                    //     }
+                    // });
  
                     
-                    
-                    
-
-
-
                    });
             });
         });

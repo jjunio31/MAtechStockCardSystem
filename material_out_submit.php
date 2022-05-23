@@ -108,8 +108,8 @@ if($row_count_returned > 0){
                    
                 while ($issuedQty> 0) {
                     $sql_select_returned = "SELECT TOP 1 * FROM [returned_tbl]
-                                        WHERE GOODS_CODE = '$goodsCode' AND QTY_S_RET > 0
-                                        ORDER BY id ASC";
+                                            WHERE GOODS_CODE = '$goodsCode' AND QTY_S_RET > 0
+                                            ORDER BY id ASC";
                     $params = array();
                     $options =  array( "Scrollable" => SQLSRV_CURSOR_KEYSET );
                     
@@ -124,16 +124,16 @@ if($row_count_returned > 0){
                         if($issuedQty> $checkQTY) {
                 
                             $sql_update_ret = "UPDATE returned_tbl
-                                            SET QTY_S_RET = 0
-                                            WHERE id = $checkID";
+                                               SET QTY_S_RET = 0
+                                               WHERE id = $checkID";
                             $sql_update_ret_run = sqlsrv_query($conn2, $sql_update_ret);
                         
                         } else {
                                         $issuedQty-=$checkQTY;
                                         $new2 = $issuedQty *-1;
                                         $sql_update_ret = "UPDATE returned_tbl
-                                                        SET QTY_S_RET = $new2
-                                                        WHERE id = $checkID";
+                                                           SET QTY_S_RET = $new2
+                                                           WHERE id = $checkID";
                                         $sql_update_ret_run = sqlsrv_query($conn2, $sql_update_ret);
                 
                         }

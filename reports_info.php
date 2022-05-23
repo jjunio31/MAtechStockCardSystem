@@ -9,15 +9,17 @@
     
 <?php
 
-
+if(isset($_POST['AssybuttonVal'])){
+    $AssybuttonVal = $_POST['AssybuttonVal'];
+}
 
 
 if (isset($_POST['codeResult'])) {
     $qrResult = $_POST['codeResult'];
 
 
-    $sql_part_number = "SELECT PART_NUMBER From [Receive]
-    WHERE GOODS_CODE = '$qrResult'or PART_NUMBER = '$qrResult' or ITEM_CODE = '$qrResult' ";
+    $sql_part_number = "SELECT PART_NUMBER From MS21_MASTER_LIST
+    WHERE GOODS_CODE = '$qrResult' or PART_NUMBER = '$qrResult' or ITEM_CODE = '$qrResult' ";
     $sql_part_number_run = sqlsrv_query( $conn1, $sql_part_number );
 
     while($row_partNumber = sqlsrv_fetch_array($sql_part_number_run, SQLSRV_FETCH_ASSOC))
@@ -25,11 +27,26 @@ if (isset($_POST['codeResult'])) {
             $partNumber = $row_partNumber['PART_NUMBER'];
         }
 
+    //Count Row of Assy
+    $sql_select_assy = "SELECT ASSY_LINE 
+                        FROM Total_Stock
+                        WHERE GOODS_CODE = '$qrResult'";
+    $paramsAssy = array();
+    $optionsAssy =  array( "Scrollable" => SQLSRV_CURSOR_KEYSET );
+    $stmtAssy = sqlsrv_query( $conn1, $sql_select_assy, $paramsAssy, $optionsAssy );
+    $row_count_Assy = sqlsrv_num_rows($stmtAssy);
 
-    
-    $sql_select = "SELECT TOP 1 * From Total_Stock
-    WHERE GOODS_CODE = '$qrResult'or PART_NUMBER = '$qrResult' or ITEM_CODE = '$qrResult'";
-    $sql_select_run = sqlsrv_query( $conn1, $sql_select );
+    if($row_count_Assy > 1){
+        $sql_select = "SELECT * From Total_Stock
+        WHERE GOODS_CODE = '$qrResult'
+        AND ASSY_LINE = '$AssybuttonVal'";
+        $sql_select_run = sqlsrv_query( $conn1, $sql_select );
+    }else{
+        $sql_select = "SELECT * From Total_Stock
+        WHERE GOODS_CODE = '$qrResult'";
+        $sql_select_run = sqlsrv_query( $conn1, $sql_select );
+    }
+  
 
     if( $sql_select_run === false) {
         die( print_r( sqlsrv_errors(), true) );
@@ -102,4 +119,6 @@ if (isset($_POST['codeResult'])) {
 </html>
 
 
-              
+  
+
+    

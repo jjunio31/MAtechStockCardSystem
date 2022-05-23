@@ -24,6 +24,11 @@
 </div>
 
 <div class="result-container ">
+<label class="">Assembly Line</label>
+<input type="text" readonly class="txtbox bg-secondary text-white" name="AssyLine" id="AssyLine" value="<?php echo $row['ASSY_LINE']?>">
+</div>
+
+<!-- <div class="result-container ">
 <label class="">Location</label>
 <input type="text" readonly class="txtbox bg-secondary text-white" name="location" id="currentStock" value="<?php echo $row['LOC']?>">
-</div>
+</div> -->

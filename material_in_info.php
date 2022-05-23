@@ -17,7 +17,7 @@ if (isset($_POST['codeResult'])) {
     $qrResult = $_POST['codeResult'];}
 
 
-    $sql_part_number = "SELECT PART_NUMBER From [Receive]
+    $sql_part_number = "SELECT PART_NUMBER From MS21_MASTER_LIST
     WHERE GOODS_CODE = '$qrResult'or PART_NUMBER = '$qrResult' or ITEM_CODE = '$qrResult' ";
     $sql_part_number_run = sqlsrv_query( $conn1, $sql_part_number );
 

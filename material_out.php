@@ -40,11 +40,11 @@
                     <div class="qrResultDiv d-flex justify-content-center">
                     <input type="text" name="qrResult" id="qrResult" value="" placeholder="Goods Code">
                     </div>
-                      
+                    <div class="assyLineDiv" id="assyLineDiv" style="width: 100%;"></div>
 
                 </div>
 
-                  <div id="formDiv" class="bg-dark"></div> <!--div for Result (AJAX)-->
+                  <div id="formDiv" class="bg-dark"></div> <!--div for Material INFO LIKE GOODS_CODE, ITEM_CODE, PARTNAME/NUMBER, ETC. (AJAX)-->
 
                   <!--div for Report (AJAX)-->
                   <div id="reportDiv" class="bg-light">

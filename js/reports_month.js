@@ -6,6 +6,8 @@ $(document).ready(function(){
         var goodsCode = $('input[id=goodsCode]').val();
         var itemCode = $('input[id=itemCode]').val();
         var partNumber = $('input[id=partNumber]').val();
+        var AssybuttonVal = $('input[id=AssybuttonVal]').val();
+        
 
         $.ajax({
             type: "POST",
@@ -14,7 +16,8 @@ $(document).ready(function(){
                 selectedMonth:selectedMonth,
                 goodsCode:goodsCode,
                 itemCode:itemCode,
-                partNumber:partNumber
+                partNumber:partNumber,
+                AssybuttonVal:AssybuttonVal
             },
             dataType: "text",
             success: function (data) {

@@ -11,6 +11,11 @@
   <body>    
 <?php
 
+if(isset($_POST['AssybuttonVal'])){
+  $AssybuttonVal = $_POST['AssybuttonVal'];
+}
+
+echo '<input type="text" style="display:none;" class="AssybuttonVal" id="AssybuttonVal" value="'.$AssybuttonVal .'">';
 
 if (!empty($_POST['codeResult']))
 { 
@@ -93,6 +98,7 @@ $date = date('M d, Y');
         <th class="">INVOICE #</th>
         <th class="">ORDER #</th>
         <th class="">REMARKS</th>
+        <th class="">ASSY LINE</th>
         </tr>
       </thead>
     <tbody>';
@@ -127,7 +133,7 @@ switch ($selectedMonth){
 
 if ($selectedMonth == "all"){
 
-  $sql_select1 = "SELECT * FROM transaction_record_tbl WHERE GOODS_CODE = '$goodsCode'
+  $sql_select1 = "SELECT * FROM transaction_record_tbl WHERE GOODS_CODE = '$goodsCode' AND ASSY_LINE = '$AssybuttonVal'
   ORDER BY id DESC;";
 
     $sql_select1_run = sqlsrv_query($conn2, $sql_select1);
@@ -150,6 +156,7 @@ if ($selectedMonth == "all"){
         <td class="align-middle rowInvoice color">'.$row['INVOICE_KIT'].'</td>
         <td class="align-middle rowOrder color">'.$row['ORDER_NO'].'</td>
         <td class="align-middle rowRemarks color">'.$row['REMARKS'].'</td>
+        <td class="align-middle color">'.$row['ASSY_LINE'].'</td>
         </tr>';
       }
     }
@@ -157,7 +164,7 @@ if ($selectedMonth == "all"){
 
 }else {
 
-  $sql_select1 = "SELECT * FROM transaction_record_tbl WHERE GOODS_CODE = '$goodsCode'
+  $sql_select1 = "SELECT * FROM transaction_record_tbl WHERE GOODS_CODE = '$goodsCode' AND ASSY_LINE = '$AssybuttonVal'
   AND TRANSACTION_DATE BETWEEN '$currentYear/$selectedMonth/01 00:00:00' AND '$currentYear/$selectedMonth/$endDay 23:59:59'
   ORDER BY id DESC;";
 
@@ -181,6 +188,7 @@ if ($selectedMonth == "all"){
         <td class="align-middle rowInvoice color">'.$row['INVOICE_KIT'].'</td>
         <td class="align-middle rowOrder color">'.$row['ORDER_NO'].'</td>
         <td class="align-middle rowRemarks color">'.$row['REMARKS'].'</td>
+        <td class="align-middle color">'.$row['ASSY_LINE'].'</td>
         </tr>';
       }
     }

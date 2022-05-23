@@ -40,10 +40,12 @@
                     <h3 class="text-center text-warning material-title">Search Report</h3>
                     <div class="qrResultDiv d-flex justify-content-center">
                     <input type="text" name="qrResult" id="qrResult" value="" placeholder="Goods Code">
+                    
                     </div>
+                    <div class="assyLineDiv" id="assyLineDiv" style="width: 100%;"></div>
                       
 
-                </div>
+                    </div>
 
                   <div id="formDiv" class="bg-dark"></div> <!--div for Result (AJAX)-->
 
@@ -71,7 +73,5 @@
     <script src="js/reportLiveSearch.js"></script>
     <script src="js/reports_month.js"></script>
     <script src="js/logout.js"></script>
-    
-
 </body>
 </html>

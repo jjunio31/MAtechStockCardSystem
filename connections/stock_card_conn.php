@@ -27,6 +27,5 @@ die( print_r( sqlsrv_errors(), true));
 //     echo "Connection Established";
 // }
 
-
 ?>
 

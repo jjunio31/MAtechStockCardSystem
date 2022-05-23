@@ -9,7 +9,6 @@
   
   <body>
 
-
   <?php
 
 if (!empty($_POST["goodsCode"])){ 
@@ -45,11 +44,9 @@ switch ($currentMonth){
   }
 
 
-
     $sql_select1 = "SELECT * FROM transaction_record_tbl WHERE GOODS_CODE = '$goodsCode' 
     AND TRANSACTION_DATE BETWEEN '$currentYear/$currentMonth/01 00:00:00' AND '$currentYear/$currentMonth/$endDay 23:59:59'
     ORDER BY id DESC;";
-
 
 
     $sql_select1_run = sqlsrv_query( $conn2, $sql_select1 );
@@ -93,7 +90,7 @@ switch ($currentMonth){
                                       <td class="align-middle rowInvoice color">'.$row['INVOICE_KIT'].'</td>
                                       <td class="align-middle rowOrder color">'.$row['ORDER_NO'].'</td>
                                       <td class="align-middle rowRemarks color">'.$row['REMARKS'].'</td>
-                                </tr>';
+                          </tr>';
 
                     }
                 }

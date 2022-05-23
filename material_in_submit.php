@@ -41,7 +41,7 @@ if( $sql_select_run === false) {
 
 //SELECT Total_Stock $new_total_stock 
 $sql_select_stock = "SELECT TOTAL_STOCK From Total_Stock
-WHERE GOODS_CODE = '$goodsCode'";
+                     WHERE GOODS_CODE = '$goodsCode'";
 $sql_select_stock_run = sqlsrv_query( $conn1, $sql_select_stock);
 
 if( $sql_select_stock_run === false) {
@@ -57,7 +57,7 @@ if( $sql_select_stock_run === false) {
 
         //QUERY to UPDATE TOTAL STOCK
         $sql_update= "UPDATE Total_Stock set TOTAL_STOCK = $new_total_stock
-        WHERE GOODS_CODE = '$goodsCode'";
+                      WHERE GOODS_CODE = '$goodsCode'";
         $sql_update_run = sqlsrv_query($conn1, $sql_update);
 
         if($sql_update_run){
@@ -75,7 +75,7 @@ if($sql_update_run){
 
     //QUERY to INSERT Returned Table
     $sql_insert_returned = "INSERT INTO [StockCard].[dbo].[returned_tbl] (DATE_RECEIVED, GOODS_CODE, ITEM_CODE, PART_NAME, PART_NUMBER, QTY_RECEIVED, REMARKS, QTY_S_RET)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?) ";
+                            VALUES (?, ?, ?, ?, ?, ?, ?, ?) ";
     $params2 = array($date, $goodsCode, $itemCode,  $partName, $partNumber, $returnedqty, $remark, $returnedqty );
     $sql_insert_returned_run = sqlsrv_query($conn2, $sql_insert_returned , $params2);
 
@@ -86,7 +86,7 @@ if($sql_update_run){
 
     //QUERY to INSERT to transaction_record_tbl
     $sql_insert = "INSERT INTO transaction_record_tbl (TRANSACTION_DATE, GOODS_CODE, ITEM_CODE, QTY_ISSUED, QTY_RECEIVED, TOTAL_STOCK, PART_NUMBER, PART_NAME, REMARKS, INVOICE_KIT) 
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
+                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
     $params1 = array($date, $goodsCode, $itemCode, '0', $returnedqty, $new_total_stock, $partNumber, $partName, $remark, 'RETURNED');
     $sql_insert_run = sqlsrv_query($conn2, $sql_insert, $params1);
 
@@ -95,18 +95,6 @@ if($sql_update_run){
     }
 
 } 
-
-
-
-
-
-            
-       
-
-            
-    
-            
-
 
 
 ?>

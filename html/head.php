@@ -34,6 +34,10 @@
     <link rel="stylesheet" type="text/css" href="css/styles.css">
     <title>Stock Card System</title>
     <style>
+
+      #breakdown-btn{
+        display: none;
+      }
      
      body{
         box-sizing: border-box;
@@ -52,7 +56,7 @@
       }
 
         th{
-        width: 14%;
+        width: 12.5%;
         }
 
         th, td{

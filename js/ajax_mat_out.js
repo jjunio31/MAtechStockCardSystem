@@ -1,6 +1,3 @@
-
-
-
 $('#submitBtn').click(function (e) { 
     var selectedRemark = $('#SelectRemark').children("option:selected").val();
     var issuedQty = $('#issuedQty').val();
@@ -9,23 +6,6 @@ $('#submitBtn').click(function (e) {
     $("#issuedQty2").val(issuedQty);
     $("#orderNum2").val(orderNum);    
 });
-
-
-    // //type info to modal
-    // $("#issuedQty").keyup(function(e){
-    //     var val = $(this).val();
-    //     $("#issuedQty2").val(val);
-    //   });
-    
-    //   $("#orderNum").keyup(function(e){
-    //     var val = $(this).val();
-    //     $("#orderNum2").val(val);
-    //   });
-
-    //   $("#SelectRemark").change(function(e){
-    //     var selectedRemark = $("#SelectRemark").children("option:selected").val();
-    //     $("#remarks").val(selectedRemark); 
-    //   });
 
       
         $("#issuedQty, #orderNum").keyup(function () {
@@ -61,9 +41,6 @@ $('#submitBtn').click(function (e) {
         var totalReturnedValueQty = parseInt(totalReturnedValue);
         var currentQty = parseInt(current_Qty);
         var issuedQty = parseInt(issued_Qty);
-        
-
-        console.log(totalReturnedValueQty);
 
         if(issuedQty == ""){
 
