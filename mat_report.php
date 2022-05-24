@@ -18,6 +18,10 @@ if (!empty($_POST["itemCode"])){
      $itemCode = $_POST['itemCode']; 
 }
 
+if (!empty($_POST["Assy"])){
+  $Assy = $_POST['Assy']; 
+}
+
 $currentYear = date("Y");
 $currentMonth = date("m");
 $endDay = '';
@@ -44,7 +48,7 @@ switch ($currentMonth){
   }
 
 
-    $sql_select1 = "SELECT * FROM transaction_record_tbl WHERE GOODS_CODE = '$goodsCode' 
+    $sql_select1 = "SELECT * FROM transaction_record_tbl WHERE GOODS_CODE = '$goodsCode' AND ASSY_LINE = '$Assy'
     AND TRANSACTION_DATE BETWEEN '$currentYear/$currentMonth/01 00:00:00' AND '$currentYear/$currentMonth/$endDay 23:59:59'
     ORDER BY id DESC;";
 
@@ -68,6 +72,7 @@ switch ($currentMonth){
                 <th >INVOICE #</th>
                 <th >ORDER #</th>
                 <th >REMARKS</th>
+                <th >ASSY LINE</th>
                 
                 </tr>
               </thead>
@@ -90,6 +95,7 @@ switch ($currentMonth){
                                       <td class="align-middle rowInvoice color">'.$row['INVOICE_KIT'].'</td>
                                       <td class="align-middle rowOrder color">'.$row['ORDER_NO'].'</td>
                                       <td class="align-middle rowRemarks color">'.$row['REMARKS'].'</td>
+                                      <td class="align-middle rowRemarks color">'.$row['ASSY_LINE'].'</td>
                           </tr>';
 
                     }

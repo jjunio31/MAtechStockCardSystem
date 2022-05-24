@@ -43,17 +43,28 @@ $(document).ready(function(){
                        var codeResult = $('input[id=qrResult]').val();
 
                        $.ajax({
-                        type: "POST",
-                        url: "material_in_info.php",
+                        type: "post",
+                        url: "assyLine_mat_in.php",
                         data: {codeResult: codeResult},
                         dataType: "text",
-                        success: function(data)
-                        {
-                            $("#formDiv").html(data);
-                            
-                           
+                        success: function (data) {
+                         $("#assyLineDiv").html(data);
+                         
                         }
                     });
+
+                    //    $.ajax({
+                    //     type: "POST",
+                    //     url: "material_in_info.php",
+                    //     data: {codeResult: codeResult},
+                    //     dataType: "text",
+                    //     success: function(data)
+                    //     {
+                    //         $("#formDiv").html(data);
+                            
+                           
+                    //     }
+                    // });
 
                    });
             });

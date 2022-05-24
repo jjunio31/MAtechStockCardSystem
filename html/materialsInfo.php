@@ -20,15 +20,11 @@
 
 <div class="result-container ">
 <label class="">Total Stock</label>
-<input type="text" readonly class="txtbox bg-secondary text-white" name="qty" id="currentStock" value="<?php echo $row['TOTAL_STOCK']?>">
+<input type="number" readonly class="txtbox bg-secondary text-white" name="qty" id="currentStock" value="<?php echo $row['TOTAL_STOCK']?>">
 </div>
 
 <div class="result-container ">
 <label class="">Assembly Line</label>
-<input type="text" readonly class="txtbox bg-secondary text-white" name="AssyLine" id="AssyLine" value="<?php echo $row['ASSY_LINE']?>">
+<input type="text" readonly class="txtbox bg-secondary text-white" name="Assy" id="Assy" value="<?php echo $row['ASSY_LINE']?>">
 </div>
 
-<!-- <div class="result-container ">
-<label class="">Location</label>
-<input type="text" readonly class="txtbox bg-secondary text-white" name="location" id="currentStock" value="<?php echo $row['LOC']?>">
-</div> -->

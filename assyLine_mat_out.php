@@ -27,18 +27,21 @@
  
 
  //SHOW BUTTON FOR ASSY LINE
+ echo '<ul class="assyButton" style="width: 100%; margin: 0; padding: 0; text-align: center;">';
  while($row_assy = sqlsrv_fetch_array($sql_select_assy_run, SQLSRV_FETCH_ASSOC))
      {
          echo '
-             <div class="text-center assyDiv">
-             <button style="width: 6rem; margin: auto;" 
+             
+             <button style="width: 6rem; margin: 3px" 
              class="btn btn-primary btn-sm assyBTN" 
              value="'.$row_assy["ASSY_LINE"].'"
-             id="assyBTN">'.$row_assy["ASSY_LINE"].'
+             id="assyBTN1">'.$row_assy["ASSY_LINE"].'
              </button>
-             </div>
+             
          ';
      }
+
+echo '</ul>';
 ?>
 
 <script>
@@ -59,6 +62,8 @@
                 dataType: "text",
                 success: function (data) {
                     $("#formDiv").html(data)
+                    console.log(AssybuttonVal);
+    
                 }
             });
         

@@ -12,6 +12,10 @@
 <form  id="formInfo" method="post">
 <?php
 
+if(isset($_POST['AssybuttonVal'])){
+    $AssybuttonVal = $_POST['AssybuttonVal'];
+    
+}
 
 if (isset($_POST['codeResult'])) {
     $qrResult = $_POST['codeResult'];}
@@ -27,7 +31,8 @@ if (isset($_POST['codeResult'])) {
         }
 
     $sql_select1 = "SELECT * From Total_Stock
-    WHERE GOODS_CODE = '$qrResult'or PART_NUMBER = '$qrResult' or ITEM_CODE = '$qrResult'";
+    WHERE GOODS_CODE = '$qrResult' 
+    AND ASSY_LINE = '$AssybuttonVal'";
     $sql_select1_run = sqlsrv_query( $conn1, $sql_select1 );
     
 

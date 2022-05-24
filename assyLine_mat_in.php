@@ -13,9 +13,9 @@
  $codeResult = $_POST['codeResult'];
  }
 
+
  echo '<input type="text" style="display:none;" class="codeResult" id="codeResult" value="'.$codeResult.'">';
 
- 
  $sql_select_assy = "SELECT GOODS_CODE, ASSY_LINE 
                      FROM [Total_Stock]
                      WHERE GOODS_CODE = '$codeResult' ";
@@ -42,6 +42,7 @@
      }
 
 echo '</ul>';
+
 ?>
 
 <script>
@@ -54,7 +55,7 @@ echo '</ul>';
 
             $.ajax({
                 type: "POST",
-                url: "reports_info.php",
+                url: "material_in_info.php",
                 data: {
                     AssybuttonVal:AssybuttonVal,
                     codeResult:codeResult
@@ -62,24 +63,8 @@ echo '</ul>';
                 dataType: "text",
                 success: function (data) {
                     $("#formDiv").html(data)
-                    // AJAX TO PASS CURRENT MONTH TO reports_month.php
-                  var d = new Date(),
-                  n = '0' + (d.getMonth()+1);
-                  
-                  $.ajax({
-                      type: "post",
-                      url: "reports_month.php",
-                      data: {
-                          n:n,
-                          codeResult:codeResult,
-                          AssybuttonVal:AssybuttonVal
-                      },
-                      dataType: "text",
-                      success: function (data) {
-                          $('.monthReportDiv').html(data);
-                          // console.log(n);
-                      }
-                  });
+                    console.log(AssybuttonVal);
+    
                 }
             });
         

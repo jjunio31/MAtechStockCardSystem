@@ -7,16 +7,16 @@ $('#submitBtn').click(function (e) {
     $("#orderNum2").val(orderNum);    
 });
 
+$("#issuedQty, #orderNum").keyup(function () {
+    if ($("#issuedQty").val() && $("#orderNum").val()) {
+        $("#submitBtn").show();
+    }
+    else {
+        $("#submitBtn").hide();
+    }
+});
+ 
       
-        $("#issuedQty, #orderNum").keyup(function () {
-            if ($("#issuedQty").val() && $("#orderNum").val()) {
-               $("#submitBtn").show();
-            }
-            else {
-               $("#submitBtn").hide();
-            }
-         });
-
 
     var bilang = 0;
  
@@ -34,7 +34,10 @@ $('#submitBtn').click(function (e) {
         var current_Qty = ($('input[id=qty]').val());
         var issued_Qty = $('input[id=issuedQty]').val();
         var orderNum = $('input[id=orderNum]').val();
+        var Assy = $('input[id=Assy]').val();
         var selectedRemark = $("#SelectRemark").children("option:selected").val();
+        var totalReturnedValue = $('input[id=totalReturnedValue]').val();
+        
         
 
         //convert string to int 
@@ -63,7 +66,7 @@ $('#submitBtn').click(function (e) {
 
             
             $.ajax({
-                type: "post",
+                type: "POST",
                 url: "material_out_submit.php",
                 data: { 
                     issuedQty:issuedQty,
@@ -73,7 +76,8 @@ $('#submitBtn').click(function (e) {
                     partNumber:partNumber,
                     partName:partName,
                     orderNum:orderNum,
-                    selectedRemark:selectedRemark
+                    selectedRemark:selectedRemark,
+                    Assy:Assy
                 },
                 dataType: "text",
                 success: function (response) {

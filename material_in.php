@@ -40,7 +40,7 @@
                     <div class="qrResultDiv d-flex justify-content-center">
                     <input type="text" name="qrResult" id="qrResult" value="" placeholder="Goods Code">
                     </div>
-                      
+                    <div class="assyLineDiv" id="assyLineDiv" style="width: 100%;"></div>
                 </div>
 
                   <div id="formDiv" class="bg-dark"></div> <!--div for Result (AJAX)-->

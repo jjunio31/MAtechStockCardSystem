@@ -33,6 +33,7 @@ $("#returnedqty").keyup(function () {
         var partName = $('input[id=partName]').val();
         var returnedqty = $('input[id=returnedqty]').val();
         var currentQty = $('input[id=currentQty]').val();
+        var Assy = $('input[id=Assy]').val();
         var selectedRemark = $('#SelectRemark').children("option:selected").val();
 
         console.log(goodsCode);
@@ -47,7 +48,8 @@ $("#returnedqty").keyup(function () {
                   partNumber:partNumber,
                   returnedqty:returnedqty,
                   currentQty:currentQty,
-                  selectedRemark:selectedRemark
+                  selectedRemark:selectedRemark,
+                  Assy:Assy
               },
               dataType: "text",
               success: function (response) {
@@ -55,6 +57,7 @@ $("#returnedqty").keyup(function () {
                   $('#submitBtn').hide();
                   console.log (selectedRemark);
                   console.log (returnedqty);
+                  console.log (Assy);
                   
               }
           });
@@ -68,6 +71,7 @@ $("#returnedqty").keyup(function () {
                   data: {
                       goodsCode:goodsCode,
                       itemCode:itemCode,
+                      Assy:Assy
                   },
                   dataType: "text",
                   success: function (response) {
